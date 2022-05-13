@@ -1,10 +1,14 @@
 import {StyleSheet, Text, View} from 'react-native';
 import MyFirstCOmponent from '@components/MyFirstCOmponent';
+import {colors} from '@theme/colors';
+import {size} from '@theme/fonts';
 
 const App = () => {
   return (
     <View style={styles.container}>
-      <Text>instagram clone! jeje 💃</Text>
+      <Text style={{color: colors.gray, fontSize: size.xlg}}>
+        instagram clone! jeje 💃
+      </Text>
       <MyFirstCOmponent />
     </View>
   );
@@ -16,6 +20,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'red',
+    backgroundColor: 'white',
   },
 });

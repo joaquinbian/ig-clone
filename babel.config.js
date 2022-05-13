@@ -28,7 +28,8 @@ module.exports = {
         ],
         root: ['./'],
         alias: {
-          '@components': './src/components', // path to your app folder
+          '@components': './src/components', // path to your app folder,
+          '@theme': './src/theme',
         },
       },
     ],

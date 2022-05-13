@@ -1,3 +1,5 @@
+import {TextStyle} from 'react-native';
+
 export const colors = {
   white: '#fff',
   black: '#000',
