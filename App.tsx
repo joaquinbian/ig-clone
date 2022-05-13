@@ -1,15 +1,13 @@
 import {StyleSheet, Text, View} from 'react-native';
-import MyFirstCOmponent from '@components/MyFirstCOmponent';
 import {colors} from '@theme/colors';
 import {size} from '@theme/fonts';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const App = () => {
   return (
     <View style={styles.container}>
-      <Text style={{color: colors.gray, fontSize: size.xlg}}>
-        instagram clone! jeje 💃
-      </Text>
-      <MyFirstCOmponent />
+      <Text style={{color: colors.white, fontSize: size.xlg}}>hello world</Text>
+      <AntDesign name="twitter" size={25} color="skyblue" />
     </View>
   );
 };
@@ -20,6 +18,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'white',
   },
 });
