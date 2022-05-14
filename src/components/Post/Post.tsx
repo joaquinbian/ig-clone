@@ -3,12 +3,34 @@ import {View, Text, Image} from 'react-native';
 import {styles} from './styles';
 import {colors} from '@theme/colors';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import {weight} from '@theme/fonts';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import BoldText from '@components/BoldText';
+
+const Comment = ({user, comment}: {comment: string; user: string}) => {
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+
+  const toggleLike = () => {
+    setIsLiked(isLiked => !isLiked);
+  };
+  return (
+    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <Text style={{color: colors.black, flex: 1}}>
+        <BoldText>{user}</BoldText> {comment}
+      </Text>
+      <AntDesign
+        onPress={toggleLike}
+        name={isLiked ? 'heart' : 'hearto'}
+        size={15}
+        style={styles.icon}
+        color={isLiked ? 'red' : colors.black}
+      />
+    </View>
+  );
+};
+
 const PostHeader = () => {
   return (
     <View
@@ -85,10 +107,18 @@ const PostFooter = () => {
           color={colors.black}
         />
       </View>
+      {/* likes */}
       <Text style={styles.postInfo}>
         liked by <BoldText>vadim sadim</BoldText> and{' '}
         <BoldText>85 others</BoldText>
       </Text>
+      {/* description */}
+      <Text style={{color: colors.black}}>
+        <BoldText>joaquin bianchi</BoldText> djsajdsajdsajdjsadjs djsajsanfndsaf
+        kjsankjsnfkjsanfkjsnsjnkjsanf nfskjnfjsanfs
+      </Text>
+      {/* comments */}
+      <Comment user="vadimsadim" comment="hola joaqui com andas ajajadjada" />
     </View>
   );
 };
