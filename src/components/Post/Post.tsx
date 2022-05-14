@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import {View, Text, Image} from 'react-native';
 import {styles} from './styles';
-import {colors} from '../../theme/colors';
+import {colors} from '@theme/colors';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import {weight} from '../../theme/fonts';
+import {weight} from '@theme/fonts';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import BoldText from '@components/BoldText';
 const PostHeader = () => {
   return (
     <View
@@ -29,9 +31,7 @@ const PostHeader = () => {
             marginRight: 10,
           }}
         />
-        <Text style={{color: colors.black, fontWeight: weight.bold}}>
-          joaquinbianchi
-        </Text>
+        <BoldText style={{color: colors.black}}>joaquinbianchi</BoldText>
       </View>
       <SimpleLineIcons
         name="options-vertical"
@@ -45,38 +45,57 @@ const PostHeader = () => {
 
 const PostFooter = () => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [isSaved, setIsSaved] = useState<boolean>(false);
 
   const toggleLike = () => {
     setIsLiked(isLiked => !isLiked);
   };
 
+  const toggleSave = () => {
+    setIsSaved(isSaved => !isSaved);
+  };
+
   return (
-    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-      <AntDesign
-        onPress={toggleLike}
-        name={isLiked ? 'heart' : 'hearto'}
-        size={24}
-        style={styles.icon}
-        color={isLiked ? 'red' : colors.black}
-      />
-      <Ionicons
-        name="chatbubble-outline"
-        size={24}
-        style={styles.icon}
-        color={colors.black}
-      />
-      <Feather name="send" size={24} style={styles.icon} color={colors.black} />
-      <Feather
-        name="bookmark"
-        size={24}
-        style={{marginLeft: 'auto'}}
-        color={colors.black}
-      />
+    <View>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <AntDesign
+          onPress={toggleLike}
+          name={isLiked ? 'heart' : 'hearto'}
+          size={24}
+          style={styles.icon}
+          color={isLiked ? 'red' : colors.black}
+        />
+        <Ionicons
+          name="chatbubble-outline"
+          size={24}
+          style={styles.icon}
+          color={colors.black}
+        />
+        <Feather
+          name="send"
+          size={24}
+          style={styles.icon}
+          color={colors.black}
+        />
+        <FontAwesome
+          onPress={toggleSave}
+          name={isSaved ? 'bookmark' : 'bookmark-o'}
+          size={24}
+          style={{marginLeft: 'auto', marginHorizontal: 5}}
+          color={colors.black}
+        />
+      </View>
+      <Text style={styles.postInfo}>
+        liked by <BoldText>vadim sadim</BoldText> and{' '}
+        <BoldText>85 others</BoldText>
+      </Text>
     </View>
   );
 };
 
 const Post = () => {
+  console.log('post executed');
+
   return (
     <View style={styles.post}>
       <PostHeader />

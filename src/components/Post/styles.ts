@@ -8,4 +8,8 @@ export const styles = StyleSheet.create({
   icon: {
     marginHorizontal: 5,
   },
+  postInfo: {
+    color: colors.black,
+    paddingHorizontal: 5,
+  },
 });
