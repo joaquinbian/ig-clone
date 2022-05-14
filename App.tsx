@@ -8,7 +8,6 @@ const App = () => {
   return (
     <View style={styles.container}>
       <Post />
-      <AntDesign name="twitter" size={25} color="skyblue" />
     </View>
   );
 };

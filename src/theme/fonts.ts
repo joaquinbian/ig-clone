@@ -9,7 +9,10 @@ export const size = {
   xxlg: 30,
 };
 
-export const weight: {[key: string]: TextStyle['fontWeight']} = {
+interface FontWeight {
+  [key: string]: TextStyle['fontWeight'];
+}
+export const weight: FontWeight = {
   bold: 'bold',
   normal: 'normal',
   thin: '400',

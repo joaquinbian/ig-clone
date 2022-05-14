@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, Image} from 'react-native';
 import {styles} from './styles';
 import {colors} from '../../theme/colors';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {weight} from '../../theme/fonts';
-
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Feather from 'react-native-vector-icons/Feather';
 const PostHeader = () => {
   return (
     <View
@@ -41,6 +43,39 @@ const PostHeader = () => {
   );
 };
 
+const PostFooter = () => {
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+
+  const toggleLike = () => {
+    setIsLiked(isLiked => !isLiked);
+  };
+
+  return (
+    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <AntDesign
+        onPress={toggleLike}
+        name={isLiked ? 'heart' : 'hearto'}
+        size={24}
+        style={styles.icon}
+        color={isLiked ? 'red' : colors.black}
+      />
+      <Ionicons
+        name="chatbubble-outline"
+        size={24}
+        style={styles.icon}
+        color={colors.black}
+      />
+      <Feather name="send" size={24} style={styles.icon} color={colors.black} />
+      <Feather
+        name="bookmark"
+        size={24}
+        style={{marginLeft: 'auto'}}
+        color={colors.black}
+      />
+    </View>
+  );
+};
+
 const Post = () => {
   return (
     <View style={styles.post}>
@@ -52,6 +87,7 @@ const Post = () => {
         style={{width: '100%', aspectRatio: 1}}
         resizeMode="cover"
       />
+      <PostFooter />
     </View>
   );
 };

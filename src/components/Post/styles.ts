@@ -5,4 +5,7 @@ export const styles = StyleSheet.create({
   post: {
     backgroundColor: colors.white,
   },
+  icon: {
+    marginHorizontal: 5,
+  },
 });
