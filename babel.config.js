@@ -30,6 +30,8 @@ module.exports = {
         alias: {
           '@components': './src/components', // path to your app folder,
           '@theme': './src/theme',
+          '@screens': './src/screens',
+          '@assets': './src/assets',
         },
       },
     ],

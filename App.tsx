@@ -2,11 +2,12 @@ import {StyleSheet, Text, View} from 'react-native';
 import {colors} from '@theme/colors';
 import {size} from '@theme/fonts';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Post from '@components/Post';
 
 const App = () => {
   return (
     <View style={styles.container}>
-      <Text style={{color: colors.white, fontSize: size.xlg}}>hello world</Text>
+      <Post />
       <AntDesign name="twitter" size={25} color="skyblue" />
     </View>
   );
