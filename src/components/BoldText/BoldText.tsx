@@ -3,7 +3,7 @@ import {StyleProp, StyleSheet, Text, TextStyle, View} from 'react-native';
 import {weight} from '@theme/fonts';
 
 interface Props {
-  children: string;
+  children: string | number | JSX.Element | JSX.Element[];
   style?: StyleProp<TextStyle>;
 }
 const BoldText = ({style, children}: Props) => {

@@ -32,6 +32,7 @@ module.exports = {
           '@theme': './src/theme',
           '@screens': './src/screens',
           '@assets': './src/assets',
+          '@interfaces': './src/interfaces',
         },
       },
     ],

@@ -8,34 +8,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import BoldText from '@components/BoldText';
-
-const Comment = ({user, comment}: {comment: string; user: string}) => {
-  const [isLiked, setIsLiked] = useState<boolean>(false);
-
-  const toggleLike = () => {
-    setIsLiked(isLiked => !isLiked);
-  };
-  return (
-    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-      <Text style={{color: colors.black, flex: 1}}>
-        <BoldText>{user}</BoldText> {comment}
-      </Text>
-      <AntDesign
-        onPress={toggleLike}
-        name={isLiked ? 'heart' : 'hearto'}
-        size={15}
-        style={styles.icon}
-        color={isLiked ? 'red' : colors.black}
-      />
-    </View>
-  );
-};
+import {IComment, IPost, IUser} from '@interfaces/Post';
+import Comment from '@components/Comment';
 
 const PostHeader = () => {
   return (
     <View
       style={{
-        paddingHorizontal: 5,
+        padding: 5,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -47,8 +27,8 @@ const PostHeader = () => {
           }}
           resizeMode="cover"
           style={{
-            width: 50,
-            height: 50,
+            width: 40,
+            height: 40,
             borderRadius: 25,
             marginRight: 10,
           }}
@@ -64,8 +44,20 @@ const PostHeader = () => {
     </View>
   );
 };
-
-const PostFooter = () => {
+interface FooterProps {
+  nOfLikes: number;
+  description: string;
+  user: IUser;
+  comments: IComment[];
+  numOfComments: number;
+}
+const PostFooter = ({
+  nOfLikes,
+  description,
+  user,
+  comments,
+  numOfComments,
+}: FooterProps) => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isSaved, setIsSaved] = useState<boolean>(false);
 
@@ -79,7 +71,12 @@ const PostFooter = () => {
 
   return (
     <View>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginHorizontal: 10,
+        }}>
         <AntDesign
           onPress={toggleLike}
           name={isLiked ? 'heart' : 'hearto'}
@@ -107,23 +104,36 @@ const PostFooter = () => {
           color={colors.black}
         />
       </View>
+
       {/* likes */}
       <Text style={styles.postInfo}>
         liked by <BoldText>vadim sadim</BoldText> and{' '}
-        <BoldText>85 others</BoldText>
+        <BoldText>
+          {isLiked ? `${nOfLikes + 1} others` : `${nOfLikes} others`}
+        </BoldText>
       </Text>
       {/* description */}
-      <Text style={{color: colors.black}}>
-        <BoldText>joaquin bianchi</BoldText> djsajdsajdsajdjsadjs djsajsanfndsaf
-        kjsankjsnfkjsanfkjsnsjnkjsanf nfskjnfjsanfs
+      <Text style={{color: colors.black, marginHorizontal: 5}}>
+        <BoldText>{user.username}</BoldText> {description}
+      </Text>
+      <Text style={{color: colors.lightgray, marginHorizontal: 5}}>
+        view all {numOfComments} comments
       </Text>
       {/* comments */}
-      <Comment user="vadimsadim" comment="hola joaqui com andas ajajadjada" />
+      {comments.map(comment => (
+        <Comment
+          key={comment.id}
+          user={comment.user}
+          comment={comment.comment}
+        />
+      ))}
     </View>
   );
 };
-
-const Post = () => {
+interface Props {
+  post: IPost;
+}
+const Post = ({post}: Props) => {
   console.log('post executed');
 
   return (
@@ -131,12 +141,18 @@ const Post = () => {
       <PostHeader />
       <Image
         source={{
-          uri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/1.jpg',
+          uri: post.image,
         }}
-        style={{width: '100%', aspectRatio: 1}}
+        style={styles.postImage}
         resizeMode="cover"
       />
-      <PostFooter />
+      <PostFooter
+        nOfLikes={post.nofLikes}
+        description={post.description}
+        user={post.user}
+        comments={post.comments}
+        numOfComments={post.nofComments}
+      />
     </View>
   );
 };
