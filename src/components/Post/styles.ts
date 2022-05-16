@@ -6,6 +6,25 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.white,
     // flex: 1,
   },
+  postHeader: {
+    padding: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    // backgroundColor: 'red',
+  },
+
+  userInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    // backgroundColor: 'blue',
+  },
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 25,
+    marginRight: 10,
+  },
   icon: {
     marginHorizontal: 5,
   },

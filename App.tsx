@@ -1,5 +1,6 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
 import Post from '@components/Post';
+import posts from '@assets/posts.json';
 const post = {
   id: '1',
   createdAt: '19 December 2021',
@@ -27,7 +28,7 @@ const post = {
       comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. H',
       user: {
         id: '2',
-        username: 'vadimnotjustdev',
+        username: 'anotheruser',
       },
     },
   ],
@@ -37,11 +38,14 @@ const App = () => {
   console.log(JSON.stringify(post));
 
   return (
-    <ScrollView style={styles.container}>
-      <Post post={post} />
-      {/* <Post post={post} /> */}
-      {/* <Post post={post} /> */}
-    </ScrollView>
+    <View style={styles.container}>
+      <FlatList
+        data={posts}
+        renderItem={({item}) => <Post post={item} />}
+        keyExtractor={item => item.id}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
   );
 };
 

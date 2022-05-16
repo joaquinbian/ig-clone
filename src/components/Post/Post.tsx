@@ -11,39 +11,6 @@ import BoldText from '@components/BoldText';
 import {IComment, IPost, IUser} from '@interfaces/Post';
 import Comment from '@components/Comment';
 
-const PostHeader = () => {
-  return (
-    <View
-      style={{
-        padding: 5,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Image
-          source={{
-            uri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg',
-          }}
-          resizeMode="cover"
-          style={{
-            width: 40,
-            height: 40,
-            borderRadius: 25,
-            marginRight: 10,
-          }}
-        />
-        <BoldText style={{color: colors.black}}>joaquinbianchi</BoldText>
-      </View>
-      <SimpleLineIcons
-        name="options-vertical"
-        size={16}
-        color="black"
-        //  style={styles.threeDots}
-      />
-    </View>
-  );
-};
 interface FooterProps {
   nOfLikes: number;
   description: string;
@@ -138,7 +105,22 @@ const Post = ({post}: Props) => {
 
   return (
     <View style={styles.post}>
-      <PostHeader />
+      {/* POST HEADER */}
+      <View style={styles.postHeader}>
+        <View style={styles.userInfo}>
+          <Image
+            source={{
+              uri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg',
+            }}
+            resizeMode="cover"
+            style={styles.avatar}
+          />
+          <BoldText style={{color: colors.black}}>joaquinbianchi</BoldText>
+        </View>
+        <SimpleLineIcons name="options-vertical" size={16} color="black" />
+      </View>
+
+      {/* POST IMAGE */}
       <Image
         source={{
           uri: post.image,
@@ -146,6 +128,8 @@ const Post = ({post}: Props) => {
         style={styles.postImage}
         resizeMode="cover"
       />
+
+      {/* POST FOOTER */}
       <PostFooter
         nOfLikes={post.nofLikes}
         description={post.description}
