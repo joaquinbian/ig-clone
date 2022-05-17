@@ -1,6 +1,5 @@
 import React, {useRef} from 'react';
 import {Pressable as PressableRN, PressableProps} from 'react-native';
-import {colors} from '../../theme/colors';
 
 interface IPressableProps extends PressableProps {
   children: JSX.Element[] | JSX.Element;

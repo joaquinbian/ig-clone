@@ -1,4 +1,4 @@
-import React, {useMemo, useRef, useState} from 'react';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from './styles';
 import {colors} from '@theme/colors';
@@ -25,6 +25,9 @@ const Post = ({post}: Props) => {
 
   const isTooLong = useMemo(() => post.description.length >= 20, []);
 
+  const likePost = useCallback(() => {
+    setIsLiked(true);
+  }, []);
   const toggleLike = () => {
     setIsLiked(isLiked => !isLiked);
   };
@@ -57,7 +60,7 @@ const Post = ({post}: Props) => {
       </View>
 
       {/* POST IMAGE */}
-      <Pressable onDoublePress={toggleLike}>
+      <Pressable onDoublePress={likePost}>
         <Image
           source={{
             uri: post.image,
