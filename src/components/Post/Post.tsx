@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, Text, Image} from 'react-native';
+import React, {useMemo, useRef, useState} from 'react';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from './styles';
 import {colors} from '@theme/colors';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
@@ -8,25 +8,22 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import BoldText from '@components/BoldText';
-import {IComment, IPost, IUser} from '@interfaces/Post';
+import {IPost} from '@interfaces/Post';
 import Comment from '@components/Comment';
+import Pressable from '@components/Pressable';
 
-interface FooterProps {
-  nOfLikes: number;
-  description: string;
-  user: IUser;
-  comments: IComment[];
-  numOfComments: number;
+interface Props {
+  post: IPost;
 }
-const PostFooter = ({
-  nOfLikes,
-  description,
-  user,
-  comments,
-  numOfComments,
-}: FooterProps) => {
+const Post = ({post}: Props) => {
+  console.log('post executed');
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isSaved, setIsSaved] = useState<boolean>(false);
+  const [viewMore, setViewMore] = useState<boolean>(false);
+
+  const lastTap = useRef<number>(0);
+
+  const isTooLong = useMemo(() => post.description.length >= 20, []);
 
   const toggleLike = () => {
     setIsLiked(isLiked => !isLiked);
@@ -36,72 +33,11 @@ const PostFooter = ({
     setIsSaved(isSaved => !isSaved);
   };
 
-  return (
-    <View>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginHorizontal: 10,
-        }}>
-        <AntDesign
-          onPress={toggleLike}
-          name={isLiked ? 'heart' : 'hearto'}
-          size={24}
-          style={styles.icon}
-          color={isLiked ? 'red' : colors.black}
-        />
-        <Ionicons
-          name="chatbubble-outline"
-          size={24}
-          style={styles.icon}
-          color={colors.black}
-        />
-        <Feather
-          name="send"
-          size={24}
-          style={styles.icon}
-          color={colors.black}
-        />
-        <FontAwesome
-          onPress={toggleSave}
-          name={isSaved ? 'bookmark' : 'bookmark-o'}
-          size={24}
-          style={{marginLeft: 'auto', marginHorizontal: 5}}
-          color={colors.black}
-        />
-      </View>
+  const toggleViewMore = () => {
+    setViewMore(viewMore => !viewMore);
+  };
 
-      {/* likes */}
-      <Text style={styles.postInfo}>
-        liked by <BoldText>vadim sadim</BoldText> and{' '}
-        <BoldText>
-          {isLiked ? `${nOfLikes + 1} others` : `${nOfLikes} others`}
-        </BoldText>
-      </Text>
-      {/* description */}
-      <Text style={{color: colors.black, marginHorizontal: 5}}>
-        <BoldText>{user.username}</BoldText> {description}
-      </Text>
-      <Text style={{color: colors.lightgray, marginHorizontal: 5}}>
-        view all {numOfComments} comments
-      </Text>
-      {/* comments */}
-      {comments.map(comment => (
-        <Comment
-          key={comment.id}
-          user={comment.user}
-          comment={comment.comment}
-        />
-      ))}
-    </View>
-  );
-};
-interface Props {
-  post: IPost;
-}
-const Post = ({post}: Props) => {
-  console.log('post executed');
+  //ver si puedo implementar el custom component Pressable con el onDoublePress
 
   return (
     <View style={styles.post}>
@@ -121,22 +57,88 @@ const Post = ({post}: Props) => {
       </View>
 
       {/* POST IMAGE */}
-      <Image
-        source={{
-          uri: post.image,
-        }}
-        style={styles.postImage}
-        resizeMode="cover"
-      />
+      <Pressable onDoublePress={toggleLike}>
+        <Image
+          source={{
+            uri: post.image,
+          }}
+          style={styles.postImage}
+          resizeMode="cover"
+        />
+      </Pressable>
 
       {/* POST FOOTER */}
-      <PostFooter
-        nOfLikes={post.nofLikes}
-        description={post.description}
-        user={post.user}
-        comments={post.comments}
-        numOfComments={post.nofComments}
-      />
+
+      <View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginHorizontal: 10,
+          }}>
+          <TouchableOpacity onPress={toggleLike} activeOpacity={0.9}>
+            <AntDesign
+              name={isLiked ? 'heart' : 'hearto'}
+              size={24}
+              style={styles.icon}
+              color={isLiked ? 'red' : colors.black}
+            />
+          </TouchableOpacity>
+          <Ionicons
+            name="chatbubble-outline"
+            size={24}
+            style={styles.icon}
+            color={colors.black}
+          />
+          <Feather
+            name="send"
+            size={24}
+            style={styles.icon}
+            color={colors.black}
+          />
+          <FontAwesome
+            onPress={toggleSave}
+            name={isSaved ? 'bookmark' : 'bookmark-o'}
+            size={24}
+            style={{marginLeft: 'auto', marginHorizontal: 5}}
+            color={colors.black}
+          />
+        </View>
+
+        {/* likes */}
+        <Text style={styles.postInfo}>
+          liked by <BoldText>vadim sadim</BoldText> and{' '}
+          <BoldText>
+            {isLiked
+              ? `${post.nofLikes + 1} others`
+              : `${post.nofLikes} others`}
+          </BoldText>
+        </Text>
+        {/* description */}
+        <Text
+          style={{color: colors.black, marginHorizontal: 5}}
+          numberOfLines={isTooLong && !viewMore ? 2 : 0}>
+          <BoldText>{post.user.username}</BoldText> {post.description}
+        </Text>
+        {isTooLong && !viewMore && (
+          <Text
+            style={{color: colors.lightgray, marginHorizontal: 5}}
+            onPress={toggleViewMore}>
+            view more
+          </Text>
+        )}
+        <Text style={{color: colors.lightgray, marginHorizontal: 5}}>
+          view all {post.nofComments} comments
+        </Text>
+        {/* comments */}
+        {post.comments.map(comment => (
+          <Comment
+            key={comment.id}
+            user={comment.user}
+            comment={comment.comment}
+          />
+        ))}
+      </View>
     </View>
   );
 };
