@@ -11,6 +11,7 @@ import BoldText from '@components/BoldText';
 import {IPost} from '@interfaces/Post';
 import Comment from '@components/Comment';
 import Pressable from '@components/Pressable';
+import Carousel from '@components/Carousel';
 
 interface Props {
   post: IPost;
@@ -61,13 +62,17 @@ const Post = ({post}: Props) => {
 
       {/* POST IMAGE */}
       <Pressable onDoublePress={likePost}>
-        <Image
-          source={{
-            uri: post.image,
-          }}
-          style={styles.postImage}
-          resizeMode="cover"
-        />
+        {post.images ? (
+          <Carousel images={post.images} />
+        ) : (
+          <Image
+            source={{
+              uri: post.image,
+            }}
+            style={styles.postImage}
+            resizeMode="cover"
+          />
+        )}
       </Pressable>
 
       {/* POST FOOTER */}
