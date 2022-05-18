@@ -76,7 +76,13 @@ const Post = ({post, isVisible}: Props) => {
         </Pressable>
       )}
       {post.images && <Carousel images={post.images} onLikePost={likePost} />}
-      {post.video && <VideoPlayer source={post.video} isVisible={isVisible} />}
+      {post.video && (
+        <VideoPlayer
+          source={post.video}
+          isVisible={isVisible}
+          onLikePost={likePost}
+        />
+      )}
 
       {/* POST FOOTER */}
 
