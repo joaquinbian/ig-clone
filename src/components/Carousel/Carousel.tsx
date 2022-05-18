@@ -1,15 +1,18 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {colors} from '@theme/colors';
 import {styles} from './styles';
+import Pressable from '@components/Pressable';
 import {
   View,
   FlatList,
   Image,
   useWindowDimensions,
   ViewToken,
+  ViewabilityConfig,
 } from 'react-native';
 interface ICarouselProps {
   images: string[];
+  onLikePost?: () => void;
 }
 
 interface IOnViewableItemsChanged {
@@ -17,29 +20,34 @@ interface IOnViewableItemsChanged {
   changed: ViewToken[];
 }
 
-const Carousel = ({images}: ICarouselProps) => {
+const Carousel = ({images, onLikePost}: ICarouselProps) => {
   const {width} = useWindowDimensions();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-  const onViewableItemsChanged = useCallback(
+  const onViewableItemsChanged = useRef(
     ({viewableItems, changed}: IOnViewableItemsChanged) => {
-      console.log('Visible items are', viewableItems);
-      console.log('Changed in this iteration', changed);
+      // console.log('Visible items are', viewableItems);
+      // console.log('Changed in this iteration', changed);
       setCurrentIndex(viewableItems[0].index!);
     },
-    [],
+  );
+
+  const viewabilityConfig: ViewabilityConfig = {
+    itemVisiblePercentThreshold: 50,
+  };
+
+  const renderItem = ({item}: {item: string}) => (
+    <Pressable onDoublePress={onLikePost}>
+      <Image source={{uri: item}} style={{width, aspectRatio: 1}} />
+    </Pressable>
   );
   return (
     <View>
       <FlatList
         data={images}
-        onViewableItemsChanged={onViewableItemsChanged}
-        viewabilityConfig={{
-          itemVisiblePercentThreshold: 50,
-        }}
-        renderItem={({item}) => (
-          <Image source={{uri: item}} style={{width, aspectRatio: 1}} />
-        )}
+        onViewableItemsChanged={onViewableItemsChanged.current}
+        viewabilityConfig={viewabilityConfig}
+        renderItem={renderItem}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
@@ -47,6 +55,7 @@ const Carousel = ({images}: ICarouselProps) => {
       <View style={styles.indexContainer}>
         {images.map((_, index) => (
           <View
+            key={index}
             style={[
               styles.circle,
               {

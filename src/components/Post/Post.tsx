@@ -61,10 +61,10 @@ const Post = ({post}: Props) => {
       </View>
 
       {/* POST IMAGE */}
-      <Pressable onDoublePress={likePost}>
-        {post.images ? (
-          <Carousel images={post.images} />
-        ) : (
+      {post.images ? (
+        <Carousel images={post.images} onLikePost={likePost} />
+      ) : (
+        <Pressable onDoublePress={likePost}>
           <Image
             source={{
               uri: post.image,
@@ -72,8 +72,8 @@ const Post = ({post}: Props) => {
             style={styles.postImage}
             resizeMode="cover"
           />
-        )}
-      </Pressable>
+        </Pressable>
+      )}
 
       {/* POST FOOTER */}
 
