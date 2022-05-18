@@ -2,10 +2,11 @@ import React from 'react';
 import {View, Text, FlatList, ListRenderItem} from 'react-native';
 import comments from '@assets/comments.json';
 import Comment from '@components/Comment';
+import Input from './Input';
 
 const CommentsScreen = () => {
   return (
-    <View>
+    <View style={{flex: 1}}>
       <FlatList
         data={comments}
         renderItem={({item}) => (
@@ -17,6 +18,7 @@ const CommentsScreen = () => {
         )}
         ItemSeparatorComponent={() => <View style={{marginVertical: 5}} />}
       />
+      <Input />
     </View>
   );
 };
