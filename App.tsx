@@ -1,6 +1,15 @@
-import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  ViewabilityConfig,
+  ViewToken,
+} from 'react-native';
 import Post from '@components/Post';
 import posts from '@assets/posts.json';
+import {useRef, useState} from 'react';
 const post = {
   id: '1',
   createdAt: '19 December 2021',
@@ -33,15 +42,33 @@ const post = {
     },
   ],
 };
-
+interface IOnViewableItemsChanged {
+  viewableItems: ViewToken[];
+  changed: ViewToken[];
+}
+const viewabilityConfig: ViewabilityConfig = {
+  itemVisiblePercentThreshold: 50,
+};
 const App = () => {
   console.log(JSON.stringify(post));
+  const [currentItem, setCurrentItem] = useState<null | string>(null);
+  const onViewableItemsChanged = useRef(
+    ({viewableItems, changed}: IOnViewableItemsChanged) => {
+      console.log('Visible items are', viewableItems);
+      // console.log('Changed in this iteration', changed);
+      setCurrentItem(viewableItems[0].item.id);
+    },
+  );
 
   return (
     <View style={styles.container}>
       <FlatList
         data={posts}
-        renderItem={({item}) => <Post post={item} />}
+        renderItem={({item}) => (
+          <Post post={item} isVisible={currentItem === item.id} />
+        )}
+        viewabilityConfig={viewabilityConfig}
+        onViewableItemsChanged={onViewableItemsChanged.current}
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
       />

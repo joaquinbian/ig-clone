@@ -12,17 +12,19 @@ import {IPost} from '@interfaces/Post';
 import Comment from '@components/Comment';
 import Pressable from '@components/Pressable';
 import Carousel from '@components/Carousel';
+import VideoPlayer from '@components/VideoPlayer';
 
 interface Props {
   post: IPost;
+  isVisible?: boolean;
 }
-const Post = ({post}: Props) => {
+const Post = ({post, isVisible}: Props) => {
   console.log('post executed');
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const [viewMore, setViewMore] = useState<boolean>(false);
 
-  const lastTap = useRef<number>(0);
+  console.log({isVisible, id: post.id});
 
   const isTooLong = useMemo(() => post.description.length >= 20, []);
 
@@ -61,9 +63,8 @@ const Post = ({post}: Props) => {
       </View>
 
       {/* POST IMAGE */}
-      {post.images ? (
-        <Carousel images={post.images} onLikePost={likePost} />
-      ) : (
+
+      {post.image && (
         <Pressable onDoublePress={likePost}>
           <Image
             source={{
@@ -74,6 +75,8 @@ const Post = ({post}: Props) => {
           />
         </Pressable>
       )}
+      {post.images && <Carousel images={post.images} onLikePost={likePost} />}
+      {post.video && <VideoPlayer source={post.video} isVisible={isVisible} />}
 
       {/* POST FOOTER */}
 
