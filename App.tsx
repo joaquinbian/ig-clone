@@ -10,6 +10,7 @@ import {
 import Post from '@components/Post';
 import posts from '@assets/posts.json';
 import {useRef, useState} from 'react';
+import CommentsScreen from '@screens/CommentsScreen';
 const post = {
   id: '1',
   createdAt: '19 December 2021',
@@ -62,7 +63,7 @@ const App = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
+      {/* <FlatList
         data={posts}
         renderItem={({item}) => (
           <Post post={item} isVisible={currentItem === item.id} />
@@ -71,7 +72,8 @@ const App = () => {
         onViewableItemsChanged={onViewableItemsChanged.current}
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
-      />
+      /> */}
+      <CommentsScreen />
     </View>
   );
 };

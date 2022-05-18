@@ -17,21 +17,25 @@ const Pressable = ({
 
   let timeOut: any;
   const _onPress = () => {
-    const tap = Date.now();
-    //ver si con un timeout puedo manejar lo del onpress
-    if (tap - lastTap.current < 300) {
-      // console.log('entro al double press');
+    if (onDoublePress !== undefined) {
+      const tap = Date.now();
+      //ver si con un timeout puedo manejar lo del onpress
+      if (tap - lastTap.current < 300) {
+        // console.log('entro al double press');
 
-      clearTimeout(timeOut);
-      onDoublePress?.();
+        clearTimeout(timeOut);
+        onDoublePress?.();
+      } else {
+        timeOut = setTimeout(() => {
+          onPress?.();
+        }, 500);
+      }
+      console.log(tap - lastTap.current);
+
+      lastTap.current = Date.now();
     } else {
-      timeOut = setTimeout(() => {
-        onPress?.();
-      }, 500);
+      onPress?.();
     }
-    console.log(tap - lastTap.current);
-
-    lastTap.current = Date.now();
   };
 
   return (
