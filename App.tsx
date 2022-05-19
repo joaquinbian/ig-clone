@@ -11,6 +11,7 @@ import Post from '@components/Post';
 import posts from '@assets/posts.json';
 import {useRef, useState} from 'react';
 import CommentsScreen from '@screens/CommentsScreen';
+import ProfileScreen from '@screens/ProfileScreen';
 const post = {
   id: '1',
   createdAt: '19 December 2021',
@@ -73,7 +74,8 @@ const App = () => {
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
       /> */}
-      <CommentsScreen />
+      {/* <CommentsScreen /> */}
+      <ProfileScreen />
     </View>
   );
 };

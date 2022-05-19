@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderTopWidth: 1,
     borderColor: colors.lightgray,
-    padding: 3,
+    padding: 5,
     alignItems: 'flex-end',
   },
   button: {marginBottom: 10},
