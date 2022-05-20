@@ -5,7 +5,8 @@ import {weight} from '@theme/fonts';
 export const styles = StyleSheet.create({
   avatar: {width: 100, aspectRatio: 1, borderRadius: 50},
   container: {
-    padding: 10,
+    // padding: 10,
+    flex: 1,
   },
   firstRow: {
     flexDirection: 'row',
