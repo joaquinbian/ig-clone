@@ -21,6 +21,7 @@ const FeedGridView = ({data, ListHeaderComponent}: IFeedGridView) => {
       numColumns={3}
       keyExtractor={(item, index) => `${item}-${index}`}
       showsVerticalScrollIndicator={false}
+      style={{marginHorizontal: -1}}
     />
   );
 };

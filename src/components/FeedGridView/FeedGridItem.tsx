@@ -12,9 +12,10 @@ const FeedGridItem = ({post}: IFeedGridItem) => {
     <View
       style={{
         flex: 1,
-        maxWidth: width / 3,
         aspectRatio: 1,
         padding: 1,
+        //check 33.33%
+        maxWidth: '33.33%',
       }}>
       <Image
         source={{uri: post.images ? post.images[0] : post.image}}
