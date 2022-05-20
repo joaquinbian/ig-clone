@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, Text, Image, useWindowDimensions, StyleSheet} from 'react-native';
 import {IPost} from '@interfaces/Post';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {colors} from '@theme/colors';
 
 interface IFeedGridItem {
   post: IPost;
@@ -23,8 +25,20 @@ const FeedGridItem = ({post}: IFeedGridItem) => {
           flex: 1,
         }}
       />
+      {post.images && (
+        <MaterialIcons
+          name="collections"
+          color={colors.white}
+          size={16}
+          style={styles.icon}
+        />
+      )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  icon: {position: 'absolute', right: 5, top: 5},
+});
 
 export default FeedGridItem;
