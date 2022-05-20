@@ -32,8 +32,20 @@ const ProfileScreen = () => {
         <Text style={{color: colors.black}}>{user.bio}</Text>
       </View>
       <View style={{flexDirection: 'row'}}>
-        <Button title="a" color="red" s />
-        <Button title="a" color="red" />
+        <Button
+          title="edit profile"
+          onPress={() => console.log('a')}
+          buttonStyle={styles.button}
+          titleStyle={styles.buttonTitle}
+          containerStyle={{flex: 1}}
+        />
+        <Button
+          title="other button"
+          onPress={() => console.log('a')}
+          buttonStyle={styles.button}
+          titleStyle={styles.buttonTitle}
+          containerStyle={{flex: 1}}
+        />
       </View>
     </View>
   );

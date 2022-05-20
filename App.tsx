@@ -7,6 +7,7 @@ import {
   ViewabilityConfig,
   ViewToken,
 } from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Post from '@components/Post';
 import posts from '@assets/posts.json';
 import {useRef, useState} from 'react';
@@ -63,8 +64,9 @@ const App = () => {
   );
 
   return (
-    <View style={styles.container}>
-      {/* <FlatList
+    <SafeAreaProvider>
+      <View style={styles.container}>
+        {/* <FlatList
         data={posts}
         renderItem={({item}) => (
           <Post post={item} isVisible={currentItem === item.id} />
@@ -74,9 +76,10 @@ const App = () => {
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
       /> */}
-      {/* <CommentsScreen /> */}
-      <ProfileScreen />
-    </View>
+        {/* <CommentsScreen /> */}
+        <ProfileScreen />
+      </View>
+    </SafeAreaProvider>
   );
 };
 

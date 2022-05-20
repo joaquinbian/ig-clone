@@ -20,4 +20,12 @@ export const styles = StyleSheet.create({
   dataContainer: {alignItems: 'center'},
   data: {color: colors.black, fontWeight: weight.bold},
   dataTitle: {color: colors.gray},
+  button: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: colors.lightgray,
+    marginHorizontal: 5,
+    borderRadius: 5,
+  },
+  buttonTitle: {color: colors.black},
 });

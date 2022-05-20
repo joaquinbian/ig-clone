@@ -1,8 +1,13 @@
 import React from 'react';
-import {Button as ButtonRN, ButtonProps} from 'react-native';
 
-const Button = (props: ButtonProps) => {
-  return <ButtonRN {...props} />;
+import {Button as ButtonRNE, ButtonProps} from '@rneui/base';
+
+interface ICustomButton extends ButtonProps {
+  title: string;
+  onPress?: () => void;
+}
+const Button = ({title, onPress, ...rest}: ICustomButton) => {
+  return <ButtonRNE title={title} onPress={onPress} {...rest} />;
 };
 
 export default Button;
