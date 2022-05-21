@@ -16,6 +16,7 @@ import {useRef, useState} from 'react';
 import CommentsScreen from '@screens/CommentsScreen';
 import ProfileScreen from '@screens/ProfileScreen';
 import EditProfile from '@screens/EditProfileScreen';
+import UploadPostScreen from '@screens/UploadPostScreen';
 const post = {
   id: '1',
   createdAt: '19 December 2021',
@@ -81,7 +82,8 @@ const App = () => {
       /> */}
         {/* <CommentsScreen /> */}
         {/* <ProfileScreen /> */}
-        <EditProfile />
+        {/* <EditProfile /> */}
+        <UploadPostScreen />
       </View>
     </SafeAreaProvider>
   );
