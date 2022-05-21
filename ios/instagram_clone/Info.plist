@@ -37,6 +37,10 @@
 	</dict>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need access to media library to change avatar's pic</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow $(PRODUCT_NAME) to use the camera</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allow $(PRODUCT_NAME) to use the microphone</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>UILaunchStoryboardName</key>
