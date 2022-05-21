@@ -4,9 +4,9 @@ import React, {useState} from 'react';
 import {View, Image, ScrollView} from 'react-native';
 import user from '@assets/user.json';
 import Button from '@components/Button';
-import {colors} from '@theme/colors';
-import EditProfileInput from './EditProfileInput';
 import {useForm} from 'react-hook-form';
+import {Asset, launchImageLibrary} from 'react-native-image-picker';
+import EditProfileInput from './EditProfileInput';
 import {IEditableUser} from './types';
 const URL_REGEX =
   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
@@ -15,6 +15,7 @@ const EditProfile = () => {
   const [username, setUsername] = useState<string>(user.username);
   const [website, setWebsite] = useState<string>('');
   const [bio, setBio] = useState<string>(user.bio);
+  const [imageSelected, setImageSelected] = useState<Asset | undefined>();
 
   const {control, handleSubmit} = useForm<IEditableUser>({
     defaultValues: {
@@ -25,13 +26,24 @@ const EditProfile = () => {
     },
   });
 
+  const onChangePhoto = async () => {
+    const {didCancel, assets, errorCode} = await launchImageLibrary({
+      mediaType: 'photo',
+    });
+
+    if (!didCancel && !errorCode && assets) {
+      console.log({assets});
+      setImageSelected(assets[0]);
+    }
+  };
+
   const onSubmit = (data: IEditableUser) => {
     console.log({data});
   };
   return (
     <ScrollView style={{flex: 1}}>
       <Image
-        source={{uri: user.image}}
+        source={{uri: imageSelected?.uri || user.image}}
         style={{
           alignSelf: 'center',
           width: 100,
@@ -40,19 +52,8 @@ const EditProfile = () => {
           marginTop: 20,
         }}
       />
-      <Button
-        title="edit profile photo"
-        onPress={() => console.log('hola')}
-        buttonStyle={{
-          alignSelf: 'center',
-          marginVertical: 20,
-          backgroundColor: 'transparent',
-          borderRadius: 5,
-        }}
-        containerStyle={{borderRadius: 10}}
-        titleStyle={{color: colors.primary}}
-        activeOpacity={0}
-      />
+
+      <Button title="edit profile photo" onPress={onChangePhoto} />
       <View style={{paddingHorizontal: 10}}>
         <EditProfileInput
           rules={{
