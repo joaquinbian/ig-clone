@@ -8,14 +8,22 @@ import {colors} from '@theme/colors';
 import EditProfileInput from './EditProfileInput';
 import {useForm} from 'react-hook-form';
 import {IEditableUser} from './types';
-
+const URL_REGEX =
+  /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 const EditProfile = () => {
   const [name, setName] = useState<string>(user.name);
   const [username, setUsername] = useState<string>(user.username);
   const [website, setWebsite] = useState<string>('');
   const [bio, setBio] = useState<string>(user.bio);
 
-  const {control, handleSubmit} = useForm<IEditableUser>();
+  const {control, handleSubmit} = useForm<IEditableUser>({
+    defaultValues: {
+      bio: user.bio,
+      name: user.name,
+      username: user.username,
+      website: '',
+    },
+  });
 
   const onSubmit = (data: IEditableUser) => {
     console.log({data});
@@ -33,7 +41,7 @@ const EditProfile = () => {
         }}
       />
       <Button
-        title="edit profile"
+        title="edit profile photo"
         onPress={() => console.log('hola')}
         buttonStyle={{
           alignSelf: 'center',
@@ -77,7 +85,10 @@ const EditProfile = () => {
           control={control}
         />
         <EditProfileInput
-          rules={{required: 'website is required'}}
+          rules={{
+            // required: 'website is required',
+            pattern: {value: URL_REGEX, message: 'invalid url'},
+          }}
           onChangeText={setWebsite}
           placeholder="website"
           value={website}

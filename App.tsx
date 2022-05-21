@@ -15,7 +15,7 @@ import posts from '@assets/posts.json';
 import {useRef, useState} from 'react';
 import CommentsScreen from '@screens/CommentsScreen';
 import ProfileScreen from '@screens/ProfileScreen';
-import EditProfile from '@components/EditProfile';
+import EditProfile from '@screens/EditProfileScreen';
 const post = {
   id: '1',
   createdAt: '19 December 2021',

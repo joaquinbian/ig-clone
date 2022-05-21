@@ -12,7 +12,7 @@ interface IInput {
   multiline?: boolean;
   control: Control<IEditableUser>;
   name: IEditableUserFields;
-  rules: RegisterOptions;
+  rules?: RegisterOptions;
 }
 const EditProfileInput = ({
   placeholder,
