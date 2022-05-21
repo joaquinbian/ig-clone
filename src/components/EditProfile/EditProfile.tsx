@@ -1,19 +1,27 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
-import {View, Text, Image, TextInput} from 'react-native';
+import {View, Image, ScrollView} from 'react-native';
 import user from '@assets/user.json';
-import {weight} from '../../theme/fonts';
 import Button from '@components/Button';
 import {colors} from '@theme/colors';
-import {styles} from './styles';
 import EditProfileInput from './EditProfileInput';
+import {useForm} from 'react-hook-form';
+import {IEditableUser} from './types';
 
 const EditProfile = () => {
   const [name, setName] = useState<string>(user.name);
   const [username, setUsername] = useState<string>(user.username);
   const [website, setWebsite] = useState<string>('');
   const [bio, setBio] = useState<string>(user.bio);
+
+  const {control, handleSubmit} = useForm<IEditableUser>();
+
+  const onSubmit = (data: IEditableUser) => {
+    console.log({data});
+  };
   return (
-    <View>
+    <ScrollView style={{flex: 1}}>
       <Image
         source={{uri: user.image}}
         style={{
@@ -33,37 +41,69 @@ const EditProfile = () => {
           backgroundColor: 'transparent',
           borderRadius: 5,
         }}
+        containerStyle={{borderRadius: 10}}
         titleStyle={{color: colors.primary}}
         activeOpacity={0}
       />
       <View style={{paddingHorizontal: 10}}>
         <EditProfileInput
+          rules={{
+            required: 'name is required',
+            minLength: {
+              value: 3,
+              message: 'name must have at least 3 characters',
+            },
+          }}
           onChangeText={setName}
           placeholder="name..."
           value={name}
           label="Name"
+          name="name"
+          control={control}
         />
         <EditProfileInput
+          rules={{
+            required: 'username is required',
+            minLength: {
+              value: 3,
+              message: 'name must have at least 3 characters',
+            },
+          }}
           onChangeText={setUsername}
           placeholder="username..."
           value={username}
           label="Username"
+          name="username"
+          control={control}
         />
         <EditProfileInput
+          rules={{required: 'website is required'}}
           onChangeText={setWebsite}
           placeholder="website"
           value={website}
           label="Website"
+          name="website"
+          control={control}
         />
         <EditProfileInput
+          rules={{
+            required: 'bio is required',
+            maxLength: {
+              value: 200,
+              message: 'bio must have less than 200 characters',
+            },
+          }}
           onChangeText={setBio}
           placeholder="bio..."
           value={bio}
           label="Bio"
           multiline
+          name="bio"
+          control={control}
         />
+        <Button title="submit" onPress={handleSubmit(onSubmit)} />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

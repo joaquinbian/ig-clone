@@ -3,16 +3,16 @@ import {colors} from '@theme/colors';
 
 export const styles = StyleSheet.create({
   input: {
-    flex: 1,
-    marginHorizontal: 5,
+    borderBottomWidth: 1,
+    borderColor: colors.lightgray,
   },
   rowDataContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    // marginVertical: 5,
+    marginVertical: 2,
   },
   dataTitle: {
     color: colors.gray,
-    width: '20%',
+    width: '22%',
   },
 });

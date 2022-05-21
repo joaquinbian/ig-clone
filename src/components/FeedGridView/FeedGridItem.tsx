@@ -1,5 +1,6 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {View, Text, Image, useWindowDimensions, StyleSheet} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import {IPost} from '@interfaces/Post';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {colors} from '@theme/colors';
@@ -8,15 +9,12 @@ interface IFeedGridItem {
   post: IPost;
 }
 const FeedGridItem = ({post}: IFeedGridItem) => {
-  const {width} = useWindowDimensions();
-
   return (
     <View
       style={{
         flex: 1,
         aspectRatio: 1,
         padding: 1,
-        //check 33.33%
         maxWidth: '33.33%',
       }}>
       <Image
