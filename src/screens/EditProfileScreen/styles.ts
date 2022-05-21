@@ -15,4 +15,9 @@ export const styles = StyleSheet.create({
     color: colors.gray,
     width: '22%',
   },
+  editProfileButton: {
+    backgroundColor: 'transparent',
+    alignSelf: 'center',
+    padding: 10,
+  },
 });

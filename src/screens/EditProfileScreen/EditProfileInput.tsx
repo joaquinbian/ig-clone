@@ -5,8 +5,6 @@ import {styles} from './styles';
 import {IEditableUser, IEditableUserFields} from './types';
 import {colors} from '@theme/colors';
 interface IInput {
-  onChangeText?: ((text: string) => void) | undefined;
-  value?: string | undefined;
   placeholder?: string | undefined;
   label: string;
   multiline?: boolean;

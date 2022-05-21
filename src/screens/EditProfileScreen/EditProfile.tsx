@@ -8,13 +8,11 @@ import {useForm} from 'react-hook-form';
 import {Asset, launchImageLibrary} from 'react-native-image-picker';
 import EditProfileInput from './EditProfileInput';
 import {IEditableUser} from './types';
+import {colors} from '@theme/colors';
+import {styles} from './styles';
 const URL_REGEX =
   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 const EditProfile = () => {
-  const [name, setName] = useState<string>(user.name);
-  const [username, setUsername] = useState<string>(user.username);
-  const [website, setWebsite] = useState<string>('');
-  const [bio, setBio] = useState<string>(user.bio);
   const [imageSelected, setImageSelected] = useState<Asset | undefined>();
 
   const {control, handleSubmit} = useForm<IEditableUser>({
@@ -53,7 +51,12 @@ const EditProfile = () => {
         }}
       />
 
-      <Button title="edit profile photo" onPress={onChangePhoto} />
+      <Button
+        title="edit profile photo"
+        onPress={onChangePhoto}
+        style={styles.editProfileButton}
+        titleStyle={{color: colors.primary}}
+      />
       <View style={{paddingHorizontal: 10}}>
         <EditProfileInput
           rules={{
@@ -63,9 +66,7 @@ const EditProfile = () => {
               message: 'name must have at least 3 characters',
             },
           }}
-          onChangeText={setName}
           placeholder="name..."
-          value={name}
           label="Name"
           name="name"
           control={control}
@@ -78,9 +79,7 @@ const EditProfile = () => {
               message: 'name must have at least 3 characters',
             },
           }}
-          onChangeText={setUsername}
           placeholder="username..."
-          value={username}
           label="Username"
           name="username"
           control={control}
@@ -90,9 +89,7 @@ const EditProfile = () => {
             // required: 'website is required',
             pattern: {value: URL_REGEX, message: 'invalid url'},
           }}
-          onChangeText={setWebsite}
           placeholder="website"
-          value={website}
           label="Website"
           name="website"
           control={control}
@@ -105,9 +102,7 @@ const EditProfile = () => {
               message: 'bio must have less than 200 characters',
             },
           }}
-          onChangeText={setBio}
           placeholder="bio..."
-          value={bio}
           label="Bio"
           multiline
           name="bio"
