@@ -89,8 +89,14 @@ const UploadPostScreen = () => {
     if (!isRecording && camera.current && isCameraReady) {
       setIsRecording(true);
       //cuando paremos el video o la max quality o el max size se alcance, obtenemos el video
-      const video = await camera.current.recordAsync(videoOptions);
-      console.log({video});
+      //terminar de ver esto y ponerlo adentro de un try catch
+      try {
+        await camera.current.recordAsync(videoOptions);
+      } catch (error) {
+        setIsRecording(false);
+      }
+
+      // console.log({video});
     }
   };
 

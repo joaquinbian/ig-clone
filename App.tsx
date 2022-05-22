@@ -13,6 +13,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Post from '@components/Post';
 import posts from '@assets/posts.json';
 import {useRef, useState} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
 import CommentsScreen from '@screens/CommentsScreen';
 import ProfileScreen from '@screens/ProfileScreen';
 import EditProfile from '@screens/EditProfileScreen';
@@ -69,8 +70,9 @@ const App = () => {
 
   return (
     <SafeAreaProvider>
-      <View style={styles.container}>
-        {/* <FlatList
+      <NavigationContainer>
+        <View style={styles.container}>
+          {/* <FlatList
         data={posts}
         renderItem={({item}) => (
           <Post post={item} isVisible={currentItem === item.id} />
@@ -80,11 +82,13 @@ const App = () => {
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
       /> */}
-        {/* <CommentsScreen /> */}
-        {/* <ProfileScreen /> */}
-        {/* <EditProfile /> */}
-        <UploadPostScreen />
-      </View>
+          {/* <CommentsScreen /> */}
+          {/* <ProfileScreen /> */}
+          {/* <EditProfile /> */}
+
+          <UploadPostScreen />
+        </View>
+      </NavigationContainer>
     </SafeAreaProvider>
   );
 };
