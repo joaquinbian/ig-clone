@@ -33,6 +33,7 @@ module.exports = {
           '@screens': './src/screens',
           '@assets': './src/assets',
           '@interfaces': './src/interfaces',
+          '@navigation': './src/navigation',
         },
       },
     ],

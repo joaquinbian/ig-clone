@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from './styles';
 import {colors} from '@theme/colors';
@@ -13,20 +13,22 @@ import Comment from '@components/Comment';
 import Pressable from '@components/Pressable';
 import Carousel from '@components/Carousel';
 import VideoPlayer from '@components/VideoPlayer';
+import {useNavigation} from '@react-navigation/native';
 
 interface Props {
   post: IPost;
   isVisible?: boolean;
 }
 const Post = ({post, isVisible}: Props) => {
-  console.log('post executed');
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const [viewMore, setViewMore] = useState<boolean>(false);
+  const navigation = useNavigation();
 
-  console.log({isVisible, id: post.id});
-
-  const isTooLong = useMemo(() => post.description.length >= 20, []);
+  const isTooLong = useMemo(
+    () => post.description.length >= 20,
+    [post.description.length],
+  );
 
   const likePost = useCallback(() => {
     setIsLiked(true);
@@ -44,12 +46,15 @@ const Post = ({post, isVisible}: Props) => {
   };
 
   //ver si puedo implementar el custom component Pressable con el onDoublePress
-
+  const navigateToProfile = () => {
+    navigation.navigate('UserProfile');
+    //navigation.popToTop() nos lleva al primer screen en el stack
+  };
   return (
     <View style={styles.post}>
       {/* POST HEADER */}
       <View style={styles.postHeader}>
-        <View style={styles.userInfo}>
+        <Pressable onPress={navigateToProfile} style={styles.userInfo}>
           <Image
             source={{
               uri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg',
@@ -58,7 +63,7 @@ const Post = ({post, isVisible}: Props) => {
             style={styles.avatar}
           />
           <BoldText style={{color: colors.black}}>joaquinbianchi</BoldText>
-        </View>
+        </Pressable>
         <SimpleLineIcons name="options-vertical" size={16} color="black" />
       </View>
 

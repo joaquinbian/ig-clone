@@ -11,13 +11,13 @@ import {
 } from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Post from '@components/Post';
-import posts from '@assets/posts.json';
 import {useRef, useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
 import CommentsScreen from '@screens/CommentsScreen';
 import ProfileScreen from '@screens/ProfileScreen';
 import EditProfile from '@screens/EditProfileScreen';
 import UploadPostScreen from '@screens/UploadPostScreen';
+import Navigation from '@navigation/index';
+import {NavigationContainer} from '@react-navigation/native';
 const post = {
   id: '1',
   createdAt: '19 December 2021',
@@ -59,14 +59,6 @@ const viewabilityConfig: ViewabilityConfig = {
 };
 const App = () => {
   console.log(JSON.stringify(post));
-  const [currentItem, setCurrentItem] = useState<null | string>(null);
-  const onViewableItemsChanged = useRef(
-    ({viewableItems, changed}: IOnViewableItemsChanged) => {
-      console.log('Visible items are', viewableItems);
-      // console.log('Changed in this iteration', changed);
-      setCurrentItem(viewableItems[0].item.id);
-    },
-  );
 
   return (
     <SafeAreaProvider>
@@ -85,8 +77,8 @@ const App = () => {
           {/* <CommentsScreen /> */}
           {/* <ProfileScreen /> */}
           {/* <EditProfile /> */}
-
-          <UploadPostScreen />
+          {/* <UploadPostScreen /> */}
+          <Navigation />
         </View>
       </NavigationContainer>
     </SafeAreaProvider>

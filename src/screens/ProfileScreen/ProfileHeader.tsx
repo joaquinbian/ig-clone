@@ -34,16 +34,14 @@ const ProfileHeader = () => {
         <Button
           title="edit profile"
           onPress={() => console.log('a')}
-          buttonStyle={styles.button}
+          style={styles.button}
           titleStyle={styles.buttonTitle}
-          containerStyle={{flex: 1}}
         />
         <Button
           title="other button"
           onPress={() => console.log('a')}
-          buttonStyle={styles.button}
+          style={styles.button}
           titleStyle={styles.buttonTitle}
-          containerStyle={{flex: 1}}
         />
       </View>
     </View>
