@@ -4,8 +4,14 @@ import {View, Text, Image} from 'react-native';
 import {styles} from './styles';
 import {colors} from '@theme/colors';
 import user from '@assets/user.json';
+import {useNavigation} from '@react-navigation/native';
+import {ProfileNavigatorProps} from '@navigation/types';
 
 const ProfileHeader = () => {
+  const navigation = useNavigation<ProfileNavigatorProps>();
+  const navigateToEditProfile = () => {
+    navigation.navigate('EditProfile');
+  };
   return (
     <View style={{padding: 10}}>
       <View style={styles.firstRow}>
@@ -33,7 +39,7 @@ const ProfileHeader = () => {
       <View style={{flexDirection: 'row', marginVertical: 5}}>
         <Button
           title="edit profile"
-          onPress={() => console.log('a')}
+          onPress={navigateToEditProfile}
           style={styles.button}
           titleStyle={styles.buttonTitle}
         />

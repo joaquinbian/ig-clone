@@ -16,8 +16,8 @@ import CommentsScreen from '@screens/CommentsScreen';
 import ProfileScreen from '@screens/ProfileScreen';
 import EditProfile from '@screens/EditProfileScreen';
 import UploadPostScreen from '@screens/UploadPostScreen';
-import Navigation from '@navigation/index';
 import {NavigationContainer} from '@react-navigation/native';
+import Navigation from '@navigation';
 const post = {
   id: '1',
   createdAt: '19 December 2021',
@@ -78,6 +78,7 @@ const App = () => {
           {/* <ProfileScreen /> */}
           {/* <EditProfile /> */}
           {/* <UploadPostScreen /> */}
+          {/* <Navigation /> */}
           <Navigation />
         </View>
       </NavigationContainer>

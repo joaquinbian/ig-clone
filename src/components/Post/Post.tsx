@@ -14,6 +14,7 @@ import Pressable from '@components/Pressable';
 import Carousel from '@components/Carousel';
 import VideoPlayer from '@components/VideoPlayer';
 import {useNavigation} from '@react-navigation/native';
+import {FeedNavigatorProps} from '@navigation/types';
 
 interface Props {
   post: IPost;
@@ -23,7 +24,7 @@ const Post = ({post, isVisible}: Props) => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const [viewMore, setViewMore] = useState<boolean>(false);
-  const navigation = useNavigation();
+  const navigation = useNavigation<FeedNavigatorProps>();
 
   const isTooLong = useMemo(
     () => post.description.length >= 20,
@@ -45,9 +46,11 @@ const Post = ({post, isVisible}: Props) => {
     setViewMore(viewMore => !viewMore);
   };
 
-  //ver si puedo implementar el custom component Pressable con el onDoublePress
+  const navigateToComments = () => {
+    navigation.navigate('Comments', {postId: post.id});
+  };
   const navigateToProfile = () => {
-    navigation.navigate('UserProfile');
+    navigation.navigate('UserProfile', {userId: post.user?.id});
     //navigation.popToTop() nos lleva al primer screen en el stack
   };
   return (
@@ -149,9 +152,11 @@ const Post = ({post, isVisible}: Props) => {
             view more
           </Text>
         )}
-        <Text style={{color: colors.lightgray, marginHorizontal: 5}}>
-          view all {post.nofComments} comments
-        </Text>
+        <Pressable onPress={navigateToComments}>
+          <Text style={{color: colors.lightgray, marginHorizontal: 5}}>
+            view all {post.nofComments} comments
+          </Text>
+        </Pressable>
         {/* comments */}
         {post.comments.map(comment => (
           <Comment
