@@ -62,9 +62,8 @@ const App = () => {
 
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <View style={styles.container}>
-          {/* <FlatList
+      <View style={styles.container}>
+        {/* <FlatList
         data={posts}
         renderItem={({item}) => (
           <Post post={item} isVisible={currentItem === item.id} />
@@ -74,14 +73,13 @@ const App = () => {
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
       /> */}
-          {/* <CommentsScreen /> */}
-          {/* <ProfileScreen /> */}
-          {/* <EditProfile /> */}
-          {/* <UploadPostScreen /> */}
-          {/* <Navigation /> */}
-          <Navigation />
-        </View>
-      </NavigationContainer>
+        {/* <CommentsScreen /> */}
+        {/* <ProfileScreen /> */}
+        {/* <EditProfile /> */}
+        {/* <UploadPostScreen /> */}
+        {/* <Navigation /> */}
+        <Navigation />
+      </View>
     </SafeAreaProvider>
   );
 };
