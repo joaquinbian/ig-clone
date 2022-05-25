@@ -17,6 +17,9 @@ const ProfileScreen = () => {
   const navigation = useNavigation<
     BottomNavigatorParamList | UserProfileNavigatorProps
   >();
+
+  console.warn('userid: ', route.params?.userId);
+
   return <FeedGridView data={user.posts} ListHeaderComponent={ProfileHeader} />;
 };
 

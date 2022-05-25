@@ -8,14 +8,32 @@ import {LinkingOptions, NavigationContainer} from '@react-navigation/native';
 const Stack = createNativeStackNavigator<RootNavigatorParamList>();
 
 const linking: LinkingOptions<RootNavigatorParamList> = {
-  //especificamos los urischemes que queremos manejar
-  prefixes: [],
-  config: {},
+  //especificamos los uri schemes de las url que queremos manejar
+  //si queremos manejar universal links, deberiamos agregar nuestro website tmb
+  prefixes: ['instajoaquin://'],
+  config: {
+    initialRouteName: 'BottomTabs',
+    screens: {
+      Comments: 'comments',
+      BottomTabs: {
+        screens: {
+          HomeStack: {
+            initialRouteName: 'Feed',
+            screens: {
+              //la variable de id que le pongamos aca tiene que matchear
+              //con la de los params
+              UserProfile: 'user/:userId',
+            },
+          },
+        },
+      },
+    },
+  },
 };
 
 const Navigation = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <Stack.Navigator>
         <Stack.Screen
           name="BottomTabs"
