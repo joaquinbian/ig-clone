@@ -5,6 +5,7 @@ import CommentsScreen from '@screens/CommentsScreen';
 import BottomTabNavigator from './BottomTabNavigator';
 import {RootNavigatorParamList} from './types';
 import {LinkingOptions, NavigationContainer} from '@react-navigation/native';
+import AuthStackNavigator from './AuthStackNavigator';
 const Stack = createNativeStackNavigator<RootNavigatorParamList>();
 
 const linking: LinkingOptions<RootNavigatorParamList> = {
@@ -35,6 +36,7 @@ const Navigation = () => {
   return (
     <NavigationContainer linking={linking}>
       <Stack.Navigator>
+        <Stack.Screen name="Auth" component={AuthStackNavigator} />
         <Stack.Screen
           name="BottomTabs"
           component={BottomTabNavigator}
