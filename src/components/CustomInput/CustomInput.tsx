@@ -1,38 +1,36 @@
 import React from 'react';
-import {Controller, Control, RegisterOptions} from 'react-hook-form';
+import {
+  Controller,
+  Control,
+  RegisterOptions,
+  Path,
+  FieldValues,
+} from 'react-hook-form';
 import {View, Text, TextInput} from 'react-native';
 import {styles} from './styles';
-import {IEditableUser, IEditableUserFields} from './types';
 import {colors} from '@theme/colors';
-interface ICustomInput {
-  placeholder?: string | undefined;
-  label: string;
-  multiline?: boolean;
-  control: Control<IEditableUser>;
-  name: IEditableUserFields;
+interface ICustomInput<FormType extends FieldValues> {
+  control: Control<FormType, object>;
+  name: Path<FormType>;
   rules?: RegisterOptions;
+  placeholder?: string;
   secureTextEntry?: boolean;
 }
-const EditProfileInput = ({
+function EditProfileInput<FormType extends FieldValues>({
   placeholder,
-  label,
-  multiline = false,
   name,
   control,
   rules,
   secureTextEntry = false,
-}: ICustomInput) => {
+}: ICustomInput<FormType>) {
   return (
     <Controller
       control={control}
       name={name}
       rules={rules}
       render={({field: {onBlur, onChange, value}, fieldState: {error}}) => {
-        // console.log({error});
-
         return (
           <View style={styles.rowDataContainer}>
-            <Text style={styles.dataTitle}>{label}</Text>
             <View style={{flex: 1}}>
               <TextInput
                 placeholder={placeholder}
@@ -43,7 +41,6 @@ const EditProfileInput = ({
                   styles.input,
                   error && {borderBottomColor: colors.error},
                 ]}
-                multiline={multiline}
                 secureTextEntry={secureTextEntry}
               />
               {error && (
@@ -57,6 +54,6 @@ const EditProfileInput = ({
       }}
     />
   );
-};
+}
 
 export default EditProfileInput;
