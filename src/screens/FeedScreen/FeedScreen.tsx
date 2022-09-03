@@ -11,9 +11,11 @@ const viewabilityConfig: ViewabilityConfig = {
 };
 const FeedScreen = () => {
   const [currentItem, setCurrentItem] = useState<null | string>(null);
+
+  //esta es la funcion que especifica los items que estan en pantalla
   const onViewableItemsChanged = useRef(
-    ({viewableItems, changed}: IOnViewableItemsChanged) => {
-      console.log('Visible items in feed screen are', viewableItems);
+    ({viewableItems}: IOnViewableItemsChanged) => {
+      //console.log('Visible items in feed screen are', viewableItems);
       // console.log('Changed in this iteration', changed);
       if (viewableItems.length) {
         setCurrentItem(viewableItems[0].item.id);

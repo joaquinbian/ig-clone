@@ -26,7 +26,7 @@ const EditProfileInput = ({
       name={name}
       rules={rules}
       render={({field: {onBlur, onChange, value}, fieldState: {error}}) => {
-        console.log({error});
+        // console.log({error});
 
         return (
           <View style={styles.rowDataContainer}>
