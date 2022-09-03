@@ -53,7 +53,7 @@ const signUpConfig = {
 
 const usernameAttributes = 'Username';
 
-export default withAuthenticator(App, {signUpConfig, usernameAttributes});
+export default App;
 
 const styles = StyleSheet.create({
   container: {

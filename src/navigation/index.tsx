@@ -36,7 +36,11 @@ const Navigation = () => {
   return (
     <NavigationContainer linking={linking}>
       <Stack.Navigator>
-        <Stack.Screen name="Auth" component={AuthStackNavigator} />
+        <Stack.Screen
+          name="Auth"
+          component={AuthStackNavigator}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name="BottomTabs"
           component={BottomTabNavigator}

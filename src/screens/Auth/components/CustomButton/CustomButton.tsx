@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, StyleSheet, Pressable} from 'react-native';
-import colors from '../../../../theme/colors';
+import {colors} from '@theme/colors';
 
 interface ICustomButton {
   onPress: () => void;
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
 
   text_TERTIARY: {
-    color: colors.grey,
+    color: colors.gray,
   },
 });
 
