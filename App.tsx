@@ -18,6 +18,7 @@ import EditProfile from '@screens/EditProfileScreen';
 import UploadPostScreen from '@screens/UploadPostScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import Navigation from '@navigation/index';
+
 const post = {
   id: '1',
   createdAt: '19 December 2021',
