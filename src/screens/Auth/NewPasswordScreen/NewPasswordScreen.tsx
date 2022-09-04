@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
 import FormInput from '@components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import SocialSignInButtons from '../components/SocialSignInButtons';
 import {useNavigation} from '@react-navigation/native';
 import {useForm} from 'react-hook-form';
 import {NewPasswordNavigationProp} from '@navigation/types';
+import {Auth} from 'aws-amplify';
 
 type NewPasswordType = {
   username: string;
@@ -18,9 +19,18 @@ const NewPasswordScreen = () => {
 
   const navigation = useNavigation<NewPasswordNavigationProp>();
 
-  const onSubmitPressed = (data: NewPasswordType) => {
-    console.warn(data);
-    navigation.navigate('Sign in');
+  const onSubmitPressed = async ({
+    username,
+    code,
+    password,
+  }: NewPasswordType) => {
+    try {
+      await Auth.forgotPasswordSubmit(username, code, password);
+      navigation.navigate('Sign in');
+    } catch (error) {
+      Alert.alert((error as Error).message);
+    }
+    //console.warn(data);
   };
 
   const onSignInPress = () => {

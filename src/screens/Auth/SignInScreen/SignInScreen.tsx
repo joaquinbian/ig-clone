@@ -4,14 +4,17 @@ import {
   StyleSheet,
   useWindowDimensions,
   ScrollView,
+  Alert,
 } from 'react-native';
 import Logo from '../../../assets/images/logo.png';
+import {Auth} from 'aws-amplify';
 import FormInput from '@components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import SocialSignInButtons from '../components/SocialSignInButtons';
 import {useNavigation} from '@react-navigation/native';
 import {useForm} from 'react-hook-form';
 import {SignInNavigationProp} from '@navigation/types';
+import {useState} from 'react';
 
 type SignInData = {
   username: string;
@@ -21,11 +24,27 @@ type SignInData = {
 const SignInScreen = () => {
   const {height} = useWindowDimensions();
   const navigation = useNavigation<SignInNavigationProp>();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const {control, handleSubmit} = useForm<SignInData>();
+  const {control, handleSubmit, reset} = useForm<SignInData>();
 
-  const onSignInPressed = (data: SignInData) => {
-    console.log(data);
+  const onSignInPressed = async (data: SignInData) => {
+    setIsLoading(true);
+    try {
+      const res = await Auth.signIn(data.username, data.password);
+      console.log({res});
+    } catch (error) {
+      //if user is not confirmated, we go to the confirm screen
+      if ((error as Error).name === 'UserNotConfirmedException') {
+        navigation.navigate('Confirm email', {username: data.username});
+      } else {
+        Alert.alert((error as Error).message);
+      }
+      console.log({error});
+    } finally {
+      reset();
+      setIsLoading(false);
+    }
     // validate user
     // navigation.navigate('Home');
   };
@@ -68,7 +87,11 @@ const SignInScreen = () => {
           }}
         />
 
-        <CustomButton text="Sign In" onPress={handleSubmit(onSignInPressed)} />
+        <CustomButton
+          text="Sign In"
+          isLoading={isLoading}
+          onPress={handleSubmit(onSignInPressed)}
+        />
 
         <CustomButton
           text="Forgot password?"

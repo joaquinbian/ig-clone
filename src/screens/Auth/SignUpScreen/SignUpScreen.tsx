@@ -6,6 +6,7 @@ import {useNavigation} from '@react-navigation/core';
 import {useForm} from 'react-hook-form';
 import {SignUpNavigationProp} from '@navigation/types';
 import {colors} from '@theme/colors';
+import {Auth} from 'aws-amplify';
 
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -25,8 +26,23 @@ const SignUpScreen = () => {
   const pwd = watch('password');
   const navigation = useNavigation<SignUpNavigationProp>();
 
-  const onRegisterPressed = ({name, email, username, password}: SignUpData) => {
-    navigation.navigate('Confirm email', {username});
+  const onRegisterPressed = async ({
+    name,
+    email,
+    username,
+    password,
+  }: SignUpData) => {
+    try {
+      const res = await Auth.signUp({
+        username,
+        password,
+        attributes: {name, email},
+      });
+      navigation.navigate('Confirm email', {username});
+      console.log({res});
+    } catch (error) {
+      console.log({error});
+    }
   };
 
   const onSignInPress = () => {

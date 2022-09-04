@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
 import FormInput from '@components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import SocialSignInButtons from '../components/SocialSignInButtons';
 import {useNavigation} from '@react-navigation/core';
 import {useForm} from 'react-hook-form';
 import {ForgotPasswordNavigationProp} from '@navigation/types';
+import {Auth} from 'aws-amplify';
 
 type ForgotPasswordData = {
   username: string;
@@ -14,10 +15,23 @@ type ForgotPasswordData = {
 const ForgotPasswordScreen = () => {
   const {control, handleSubmit} = useForm<ForgotPasswordData>();
   const navigation = useNavigation<ForgotPasswordNavigationProp>();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onSendPressed = (data: ForgotPasswordData) => {
+  const onSendPressed = async (data: ForgotPasswordData) => {
+    setIsLoading(true);
+    try {
+      const response = await Auth.forgotPassword(data.username);
+      Alert.alert(
+        'Check your email',
+        `the code has been sent to ${response.CodeDeliveryDetails.Destination}`,
+        [{onPress: () => navigation.navigate('New password')}],
+      );
+    } catch (error) {
+      Alert.alert((error as Error).message);
+    } finally {
+      setIsLoading(false);
+    }
     console.warn(data);
-    navigation.navigate('New password');
   };
 
   const onSignInPress = () => {
@@ -38,7 +52,11 @@ const ForgotPasswordScreen = () => {
           }}
         />
 
-        <CustomButton text="Send" onPress={handleSubmit(onSendPressed)} />
+        <CustomButton
+          text="Send"
+          isLoading={isLoading}
+          onPress={handleSubmit(onSendPressed)}
+        />
 
         <CustomButton
           text="Back to Sign in"

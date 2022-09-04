@@ -10,6 +10,7 @@ import {
   ConfirmEmailRouteProp,
 } from '@navigation/types';
 import {useRoute} from '@react-navigation/native';
+import {Auth} from 'aws-amplify';
 
 type ConfirmEmailData = {
   username: string;
@@ -18,22 +19,38 @@ type ConfirmEmailData = {
 
 const ConfirmEmailScreen = () => {
   const route = useRoute<ConfirmEmailRouteProp>();
-  const {control, handleSubmit} = useForm<ConfirmEmailData>({
+  const {control, handleSubmit, watch} = useForm<ConfirmEmailData>({
     defaultValues: {username: route.params.username},
   });
 
   const navigation = useNavigation<ConfirmEmailNavigationProp>();
 
-  const onConfirmPressed = (data: ConfirmEmailData) => {
+  const user = watch('username');
+
+  const onConfirmPressed = async (data: ConfirmEmailData) => {
+    try {
+      const res = await Auth.confirmSignUp(data.username, data.code);
+      console.log({res});
+      //navigation.navigate('Sign in');
+    } catch (error) {
+      console.log({error});
+    }
     console.warn(data);
-    navigation.navigate('Sign in');
   };
 
   const onSignInPress = () => {
     navigation.navigate('Sign in');
   };
 
-  const onResendPress = () => {
+  const onResendPress = async () => {
+    console.log('onresend pressed');
+
+    try {
+      await Auth.resendSignUp(user);
+      console.log('code resent successfully');
+    } catch (err) {
+      console.log('error resending code: ', err);
+    }
     console.warn('onResendPress');
   };
 

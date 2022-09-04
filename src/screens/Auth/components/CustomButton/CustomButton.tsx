@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, StyleSheet, Pressable} from 'react-native';
+import {Text, StyleSheet, Pressable, ActivityIndicator} from 'react-native';
 import {colors} from '@theme/colors';
 
 interface ICustomButton {
@@ -8,6 +8,7 @@ interface ICustomButton {
   type?: 'PRIMARY' | 'SECONDARY' | 'TERTIARY';
   bgColor?: string;
   fgColor?: string;
+  isLoading?: boolean;
 }
 
 const CustomButton = ({
@@ -16,23 +17,29 @@ const CustomButton = ({
   type = 'PRIMARY',
   bgColor,
   fgColor,
+  isLoading = false,
 }: ICustomButton) => {
   return (
     <Pressable
       onPress={onPress}
+      disabled={isLoading}
       style={[
         styles.container,
         styles[`container_${type}`],
         bgColor ? {backgroundColor: bgColor} : {},
       ]}>
-      <Text
-        style={[
-          styles.text,
-          styles[`text_${type}`],
-          fgColor ? {color: fgColor} : {},
-        ]}>
-        {text}
-      </Text>
+      {isLoading ? (
+        <ActivityIndicator />
+      ) : (
+        <Text
+          style={[
+            styles.text,
+            styles[`text_${type}`],
+            fgColor ? {color: fgColor} : {},
+          ]}>
+          {text}
+        </Text>
+      )}
     </Pressable>
   );
 };
