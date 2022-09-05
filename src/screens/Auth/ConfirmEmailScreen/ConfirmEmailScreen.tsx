@@ -13,25 +13,28 @@ import {useRoute} from '@react-navigation/native';
 import {Auth} from 'aws-amplify';
 
 type ConfirmEmailData = {
-  username: string;
+  email: string;
   code: string;
 };
+
+const EMAIL_REGEX =
+  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const ConfirmEmailScreen = () => {
   const route = useRoute<ConfirmEmailRouteProp>();
   const {control, handleSubmit, watch} = useForm<ConfirmEmailData>({
-    defaultValues: {username: route.params.username},
+    defaultValues: {email: route.params.email},
   });
 
   const navigation = useNavigation<ConfirmEmailNavigationProp>();
 
-  const user = watch('username');
+  const email = watch('email');
 
   const onConfirmPressed = async (data: ConfirmEmailData) => {
     try {
-      const res = await Auth.confirmSignUp(data.username, data.code);
+      const res = await Auth.confirmSignUp(data.email, data.code);
       console.log({res});
-      //navigation.navigate('Sign in');
+      navigation.navigate('Sign in');
     } catch (error) {
       console.log({error});
     }
@@ -46,7 +49,7 @@ const ConfirmEmailScreen = () => {
     console.log('onresend pressed');
 
     try {
-      await Auth.resendSignUp(user);
+      await Auth.resendSignUp(email);
       console.log('code resent successfully');
     } catch (err) {
       console.log('error resending code: ', err);
@@ -60,11 +63,15 @@ const ConfirmEmailScreen = () => {
         <Text style={styles.title}>Confirm your email</Text>
 
         <FormInput
-          name="username"
+          name="email"
           control={control}
-          placeholder="Username"
+          placeholder="Email"
           rules={{
-            required: 'Username is required',
+            required: 'Email is required',
+            pattern: {
+              value: EMAIL_REGEX,
+              message: 'invalid email',
+            },
           }}
         />
 
