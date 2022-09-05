@@ -3,7 +3,7 @@
   "cognitoConfig": {
     "identityPoolName": "testAuthIdentityPool",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "instag344a451a",
+    "resourceNameTruncated": "instag2c81612e",
     "userPoolName": "instagramclone",
     "autoVerifiedAttributes": [
       "email"
@@ -30,12 +30,15 @@
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "instag344a451a_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "instag2c81612e_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "344a451a",
+    "sharedId": "2c81612e",
     "resourceName": "instagramclone",
     "authSelections": "identityPoolAndUserPool",
     "serviceName": "Cognito",
+    "usernameAttributes": [
+      "email"
+    ],
     "useDefault": "manual",
     "userPoolGroups": false,
     "userPoolGroupList": [],
