@@ -34,6 +34,7 @@ module.exports = {
           '@assets': './src/assets',
           '@interfaces': './src/interfaces',
           '@navigation': './src/navigation',
+          '@context': './src/context',
         },
       },
     ],
