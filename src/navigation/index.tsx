@@ -1,16 +1,14 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {ActivityIndicator, View, Text} from 'react-native';
 
 import CommentsScreen from '@screens/CommentsScreen';
 import BottomTabNavigator from './BottomTabNavigator';
 import {RootNavigatorParamList} from './types';
-import {
-  LinkingOptions,
-  NavigationContainer,
-  useNavigation,
-} from '@react-navigation/native';
+import {LinkingOptions, NavigationContainer} from '@react-navigation/native';
 import AuthStackNavigator from './AuthStackNavigator';
 import {useAuthContext} from '@context/AuthContext';
+import {size, weight} from '@theme/fonts';
 
 const Stack = createNativeStackNavigator<RootNavigatorParamList>();
 
@@ -40,6 +38,17 @@ const linking: LinkingOptions<RootNavigatorParamList> = {
 
 const Navigation = () => {
   const {user} = useAuthContext();
+
+  if (user === undefined) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator />
+        <Text style={{fontSize: size.md, fontWeight: weight.semi}}>
+          Loading...
+        </Text>
+      </View>
+    );
+  }
   return (
     <NavigationContainer linking={linking}>
       <Stack.Navigator>
