@@ -1,4 +1,4 @@
-package com.instagram_clone.newarchitecture.components;
+package com.joaphotos.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "instagram_clone.app"
-               BlueprintName = "instagram_clone"
-               ReferencedContainer = "container:instagram_clone.xcodeproj">
+               BuildableName = "joaPhotos.app"
+               BlueprintName = "joaPhotos"
+               ReferencedContainer = "container:joaPhotos.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "instagram_cloneTests.xctest"
-               BlueprintName = "instagram_cloneTests"
-               ReferencedContainer = "container:instagram_clone.xcodeproj">
+               BuildableName = "joaPhotosTests.xctest"
+               BlueprintName = "joaPhotosTests"
+               ReferencedContainer = "container:joaPhotos.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "instagram_clone.app"
-            BlueprintName = "instagram_clone"
-            ReferencedContainer = "container:instagram_clone.xcodeproj">
+            BuildableName = "joaPhotos.app"
+            BlueprintName = "joaPhotos"
+            ReferencedContainer = "container:joaPhotos.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "instagram_clone.app"
-            BlueprintName = "instagram_clone"
-            ReferencedContainer = "container:instagram_clone.xcodeproj">
+            BuildableName = "joaPhotos.app"
+            BlueprintName = "joaPhotos"
+            ReferencedContainer = "container:joaPhotos.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

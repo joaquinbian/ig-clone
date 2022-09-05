@@ -1,4 +1,4 @@
-package com.instagram_clone.newarchitecture;
+package com.joaphotos.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.instagram_clone.BuildConfig;
-import com.instagram_clone.newarchitecture.components.MainComponentsRegistry;
-import com.instagram_clone.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.joaphotos.BuildConfig;
+import com.joaphotos.newarchitecture.components.MainComponentsRegistry;
+import com.joaphotos.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 
