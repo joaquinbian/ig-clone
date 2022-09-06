@@ -23,7 +23,7 @@ const linking: LinkingOptions<RootNavigatorParamList> = {
       BottomTabs: {
         screens: {
           HomeStack: {
-            initialRouteName: 'Feed',
+            initialRouteName: 'feed',
             screens: {
               //la variable de id que le pongamos aca tiene que matchear
               //con la de los params
