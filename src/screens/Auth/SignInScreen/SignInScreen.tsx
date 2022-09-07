@@ -16,9 +16,6 @@ import {useForm} from 'react-hook-form';
 import {SignInNavigationProp} from '@navigation/types';
 import {useState} from 'react';
 
-//TODO: FIX THIS
-import {useAuthContext} from '../../../context/AuthContext';
-
 type SignInData = {
   email: string;
   password: string;
@@ -28,15 +25,13 @@ const SignInScreen = () => {
   const {height} = useWindowDimensions();
   const navigation = useNavigation<SignInNavigationProp>();
   const [isLoading, setIsLoading] = useState(false);
-  const {signIn} = useAuthContext();
 
   const {control, handleSubmit, reset} = useForm<SignInData>();
 
   const onSignInPressed = async (data: SignInData) => {
     setIsLoading(true);
     try {
-      const cognitoUser = await Auth.signIn(data.email, data.password);
-      signIn(cognitoUser);
+      await Auth.signIn(data.email, data.password);
     } catch (error) {
       //if user is not confirmated, we go to the confirm screen
       if ((error as Error).name === 'UserNotConfirmedException') {

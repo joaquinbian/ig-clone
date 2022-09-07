@@ -9,8 +9,6 @@ type UserType = CognitoUser | null | undefined;
 
 interface IAuthContext {
   user: UserType;
-  logOut: () => void;
-  signIn: (user: CognitoUser) => void;
 }
 
 interface IAuthProviderProps {
@@ -22,19 +20,11 @@ const AuthContext = createContext({} as IAuthContext);
 export const AuthProvider = ({children}: IAuthProviderProps) => {
   const [user, setUser] = useState<UserType>(undefined);
 
-  const logOut = () => {
-    setUser(null);
-  };
-
-  const signIn = (user: CognitoUser) => {
-    setUser(user);
-  };
-
   const checkUser = async () => {
     try {
       //bypassCache makes sure that the user comes from the server and not locally
       const user = await Auth.currentAuthenticatedUser({bypassCache: true});
-      signIn(user);
+      setUser(user);
     } catch (error) {
       setUser(null);
     }
@@ -48,6 +38,9 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
     if (data.payload.event === 'signOut') {
       setUser(null);
     }
+    if (data.payload.event === 'signIn') {
+      checkUser();
+    }
   };
   useEffect(() => {
     Hub.listen('auth', authListener);
@@ -57,11 +50,7 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
     };
   }, []);
 
-  return (
-    <AuthContext.Provider value={{user, signIn, logOut}}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{user}}>{children}</AuthContext.Provider>;
 };
 
 export const useAuthContext = () => useContext(AuthContext);
