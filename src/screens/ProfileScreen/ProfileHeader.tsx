@@ -6,11 +6,16 @@ import {colors} from '@theme/colors';
 import user from '@assets/user.json';
 import {useNavigation} from '@react-navigation/native';
 import {ProfileNavigatorProps} from '@navigation/types';
+import {Auth} from 'aws-amplify';
 
 const ProfileHeader = () => {
   const navigation = useNavigation<ProfileNavigatorProps>();
   const navigateToEditProfile = () => {
     navigation.navigate('EditProfile');
+  };
+
+  const onLogOut = async () => {
+    await Auth.signOut({global: true});
   };
   return (
     <View style={{padding: 10}}>
@@ -44,8 +49,8 @@ const ProfileHeader = () => {
           titleStyle={styles.buttonTitle}
         />
         <Button
-          title="other button"
-          onPress={() => console.log('a')}
+          title="sgin out"
+          onPress={onLogOut}
           style={styles.button}
           titleStyle={styles.buttonTitle}
         />
