@@ -15,6 +15,7 @@ import VideoPlayer from '@components/VideoPlayer';
 import {useNavigation} from '@react-navigation/native';
 import {FeedNavigatorProps} from '@navigation/types';
 import {Post as IPost} from 'src/API';
+import {DEFAULT_USER_IMAGE} from 'src/config';
 
 interface Props {
   post: IPost;
@@ -60,7 +61,7 @@ const Post = ({post, isVisible}: Props) => {
         <Pressable onPress={navigateToProfile} style={styles.userInfo}>
           <Image
             source={{
-              uri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg',
+              uri: post.User?.image ?? DEFAULT_USER_IMAGE,
             }}
             resizeMode="cover"
             style={styles.avatar}
