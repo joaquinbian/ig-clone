@@ -143,12 +143,15 @@ const Post = ({post, isVisible}: Props) => {
           </BoldText>
         </Text>
         {/* description */}
-        <Text
-          style={{color: colors.black, marginHorizontal: 5}}
-          numberOfLines={isTooLong && !viewMore ? 2 : 0}>
-          <BoldText>{post.User?.username ?? 'el pepe'}</BoldText>{' '}
-          {post.description}
-        </Text>
+
+        {post.description && (
+          <Text
+            style={{color: colors.black, marginHorizontal: 5}}
+            numberOfLines={isTooLong && !viewMore ? 2 : 0}>
+            <BoldText>{post.User?.name ?? 'el pepe'}</BoldText>{' '}
+            {post.description}
+          </Text>
+        )}
         {isTooLong && !viewMore && (
           <Text
             style={{color: colors.lightgray, marginHorizontal: 5}}
