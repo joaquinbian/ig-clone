@@ -8,13 +8,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import BoldText from '@components/BoldText';
-import {IPost} from '@interfaces/Post';
 import Comment from '@components/Comment';
 import Pressable from '@components/Pressable';
 import Carousel from '@components/Carousel';
 import VideoPlayer from '@components/VideoPlayer';
 import {useNavigation} from '@react-navigation/native';
 import {FeedNavigatorProps} from '@navigation/types';
+import {Post as IPost} from 'src/API';
 
 interface Props {
   post: IPost;
@@ -27,8 +27,8 @@ const Post = ({post, isVisible}: Props) => {
   const navigation = useNavigation<FeedNavigatorProps>();
 
   const isTooLong = useMemo(
-    () => post.description.length >= 20,
-    [post.description.length],
+    () => post?.description?.length ?? 0 >= 20,
+    [post?.description],
   );
 
   const likePost = useCallback(() => {
@@ -50,7 +50,7 @@ const Post = ({post, isVisible}: Props) => {
     navigation.navigate('Comments', {postId: post.id});
   };
   const navigateToProfile = () => {
-    navigation.navigate('UserProfile', {userId: post.user?.id});
+    navigation.navigate('UserProfile', {userId: post.userID});
     //navigation.popToTop() nos lleva al primer screen en el stack
   };
   return (
@@ -65,7 +65,9 @@ const Post = ({post, isVisible}: Props) => {
             resizeMode="cover"
             style={styles.avatar}
           />
-          <BoldText style={{color: colors.black}}>joaquinbianchi</BoldText>
+          <BoldText style={{color: colors.black}}>
+            {post.User?.name ?? 'valeria'}
+          </BoldText>
         </Pressable>
         <SimpleLineIcons name="options-vertical" size={16} color="black" />
       </View>
@@ -135,15 +137,16 @@ const Post = ({post, isVisible}: Props) => {
           liked by <BoldText>vadim sadim</BoldText> and{' '}
           <BoldText>
             {isLiked
-              ? `${post.nofLikes + 1} others`
-              : `${post.nofLikes} others`}
+              ? `${post.numberOfLikes + 1} others`
+              : `${post.numberOfLikes} others`}
           </BoldText>
         </Text>
         {/* description */}
         <Text
           style={{color: colors.black, marginHorizontal: 5}}
           numberOfLines={isTooLong && !viewMore ? 2 : 0}>
-          <BoldText>{post.user.username}</BoldText> {post.description}
+          <BoldText>{post.User?.username ?? 'el pepe'}</BoldText>{' '}
+          {post.description}
         </Text>
         {isTooLong && !viewMore && (
           <Text
@@ -154,17 +157,13 @@ const Post = ({post, isVisible}: Props) => {
         )}
         <Pressable onPress={navigateToComments}>
           <Text style={{color: colors.lightgray, marginHorizontal: 5}}>
-            view all {post.nofComments} comments
+            view all {post.numberOfComments} comments
           </Text>
         </Pressable>
         {/* comments */}
-        {post.comments.map(comment => (
-          <Comment
-            key={comment.id}
-            user={comment.user}
-            comment={comment.comment}
-          />
-        ))}
+        {post.Comments?.items.map(
+          comment => comment && <Comment comment={comment} />,
+        )}
       </View>
     </View>
   );

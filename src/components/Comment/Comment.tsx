@@ -1,17 +1,17 @@
 import React, {useState} from 'react';
 import {Image, Text, View} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {Comment as IComment} from 'src/API';
 import BoldText from '@components/BoldText';
 import {IUser} from '@interfaces/Post';
 import {colors} from '@theme/colors';
 import {styles} from './styles';
 import Pressable from '@components/Pressable';
+
 interface Props {
-  user: IUser;
-  comment: string;
-  image?: string;
+  comment: IComment;
 }
-const Comment = ({user, comment, image}: Props) => {
+const Comment = ({comment}: Props) => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
 
   const toggleLike = () => {
@@ -25,10 +25,13 @@ const Comment = ({user, comment, image}: Props) => {
         marginHorizontal: 5,
         // flex: 1,
       }}>
-      {image && <Image source={{uri: image}} style={[styles.userImage]} />}
+      {comment.User?.image && (
+        <Image source={{uri: comment.User?.image}} style={[styles.userImage]} />
+      )}
       <View style={{flex: 1}}>
         <Text style={{color: colors.black}}>
-          <BoldText>{user.username}</BoldText> {comment}
+          <BoldText>{comment.User?.username ?? 'rober'}</BoldText>{' '}
+          {comment.comment}
         </Text>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text style={{color: colors.lightgray, marginHorizontal: 5}}>5d</Text>
