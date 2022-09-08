@@ -2,6 +2,8 @@ import React, {useRef, useState} from 'react';
 import {ViewToken, ViewabilityConfig, FlatList, View} from 'react-native';
 import posts from '@assets/posts.json';
 import Post from '@components/Post';
+import {API, graphqlOperation} from 'aws-amplify';
+
 interface IOnViewableItemsChanged {
   viewableItems: ViewToken[];
   changed: ViewToken[];
@@ -9,6 +11,7 @@ interface IOnViewableItemsChanged {
 const viewabilityConfig: ViewabilityConfig = {
   itemVisiblePercentThreshold: 50,
 };
+
 const FeedScreen = () => {
   const [currentItem, setCurrentItem] = useState<null | string>(null);
 

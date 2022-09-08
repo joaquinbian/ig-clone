@@ -2,6 +2,8 @@ type Like @model @auth(rules: [{allow: public}]) {
   id: ID!
   userID: ID! @index(name: "byUser")
   postID: ID! @index(name: "byPost")
+  User: User @belongsTo(fields: ["userID"])
+  Post: Post @belongsTo(fields: ["postID"])
 }
 
 type Comment @model @auth(rules: [{allow: public}]) {
@@ -9,18 +11,21 @@ type Comment @model @auth(rules: [{allow: public}]) {
   comment: String!
   userID: ID! @index(name: "byUser")
   postID: ID! @index(name: "byPost")
+  User: User @belongsTo(fields: ["userID"])
+  Post: Post @belongsTo(fields: ["postID"])
 }
 
 type Post @model @auth(rules: [{allow: public}]) {
   id: ID!
   description: String
   image: String
-  images: [String!]!
+  images: [String!]
   video: String
   numberOfComments: Int!
   numberOfLikes: Int!
   userID: ID! @index(name: "byUser")
   untitledfield: String
+  User: User @belongsTo(fields: ["userID"])
   Likes: [Like] @hasMany(indexName: "byPost", fields: ["id"])
   Comments: [Comment] @hasMany(indexName: "byPost", fields: ["id"])
 }

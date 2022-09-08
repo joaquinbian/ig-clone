@@ -8,7 +8,7 @@ type LikeMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-type CommentMetaData = {
+type UserMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
@@ -16,47 +16,18 @@ type PostMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-type UserMetaData = {
+type CommentMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
 export declare class Like {
   readonly id: string;
-  readonly userID: string;
-  readonly postID: string;
+  readonly User?: User | null;
+  readonly Post?: Post | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Like, LikeMetaData>);
   static copyOf(source: Like, mutator: (draft: MutableModel<Like, LikeMetaData>) => MutableModel<Like, LikeMetaData> | void): Like;
-}
-
-export declare class Comment {
-  readonly id: string;
-  readonly comment: string;
-  readonly userID: string;
-  readonly postID: string;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-  constructor(init: ModelInit<Comment, CommentMetaData>);
-  static copyOf(source: Comment, mutator: (draft: MutableModel<Comment, CommentMetaData>) => MutableModel<Comment, CommentMetaData> | void): Comment;
-}
-
-export declare class Post {
-  readonly id: string;
-  readonly description?: string | null;
-  readonly image?: string | null;
-  readonly images: string[];
-  readonly video?: string | null;
-  readonly numberOfComments: number;
-  readonly numberOfLikes: number;
-  readonly userID: string;
-  readonly untitledfield?: string | null;
-  readonly Likes?: (Like | null)[] | null;
-  readonly Comments?: (Comment | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-  constructor(init: ModelInit<Post, PostMetaData>);
-  static copyOf(source: Post, mutator: (draft: MutableModel<Post, PostMetaData>) => MutableModel<Post, PostMetaData> | void): Post;
 }
 
 export declare class User {
@@ -77,4 +48,33 @@ export declare class User {
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<User, UserMetaData>);
   static copyOf(source: User, mutator: (draft: MutableModel<User, UserMetaData>) => MutableModel<User, UserMetaData> | void): User;
+}
+
+export declare class Post {
+  readonly id: string;
+  readonly description?: string | null;
+  readonly image?: string | null;
+  readonly images?: string[] | null;
+  readonly video?: string | null;
+  readonly numberOfComments: number;
+  readonly numberOfLikes: number;
+  readonly untitledfield?: string | null;
+  readonly User?: User | null;
+  readonly Likes?: (Like | null)[] | null;
+  readonly Comments?: (Comment | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  constructor(init: ModelInit<Post, PostMetaData>);
+  static copyOf(source: Post, mutator: (draft: MutableModel<Post, PostMetaData>) => MutableModel<Post, PostMetaData> | void): Post;
+}
+
+export declare class Comment {
+  readonly id: string;
+  readonly comment: string;
+  readonly User?: User | null;
+  readonly Post?: Post | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  constructor(init: ModelInit<Comment, CommentMetaData>);
+  static copyOf(source: Comment, mutator: (draft: MutableModel<Comment, CommentMetaData>) => MutableModel<Comment, CommentMetaData> | void): Comment;
 }
