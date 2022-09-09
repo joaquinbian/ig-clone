@@ -166,7 +166,7 @@ const Post = ({post, isVisible}: Props) => {
         </Pressable>
         {/* comments */}
         {post.Comments?.items.map(
-          comment => comment && <Comment comment={comment} />,
+          comment => comment && <Comment comment={comment} key={comment.id} />,
         )}
       </View>
     </View>
