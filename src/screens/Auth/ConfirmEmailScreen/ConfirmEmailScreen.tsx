@@ -25,18 +25,22 @@ const ConfirmEmailScreen = () => {
   const {control, handleSubmit, watch} = useForm<ConfirmEmailData>({
     defaultValues: {email: route.params.email},
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigation = useNavigation<ConfirmEmailNavigationProp>();
 
   const email = watch('email');
 
   const onConfirmPressed = async (data: ConfirmEmailData) => {
+    setIsLoading(true);
     try {
       const res = await Auth.confirmSignUp(data.email, data.code);
       console.log({res});
       navigation.navigate('Sign in');
     } catch (error) {
       console.log({error});
+    } finally {
+      setIsLoading(false);
     }
     console.warn(data);
   };
@@ -84,7 +88,11 @@ const ConfirmEmailScreen = () => {
           }}
         />
 
-        <CustomButton text="Confirm" onPress={handleSubmit(onConfirmPressed)} />
+        <CustomButton
+          text="Confirm"
+          onPress={handleSubmit(onConfirmPressed)}
+          isLoading={isLoading}
+        />
 
         <CustomButton
           text="Resend code"

@@ -64,22 +64,25 @@ exports.handler = async (event, context) => {
   console.log({event});
 
   //here there is the user data
-  if (!event.request.userAtributes) {
+  if (!event.request.userAttributes) {
     return;
   }
 
-  const {sub: id, name, email} = event.request.userAtributes;
+  const {sub, name, email} = event.request.userAttributes;
   //userAtributes = sub(id), name, email
 
   //if user does not exist in db, save itn
   const newUser = {
-    id,
+    id: sub,
     name,
     email,
   };
 
-  if (!(await userExist(id))) {
+  if (!(await userExist(newUser.id))) {
     await saveUser(newUser);
+    console.log('user has been saved', newUser);
+  } else {
+    console.log('user already exist', newUser);
   }
   return event;
 };
