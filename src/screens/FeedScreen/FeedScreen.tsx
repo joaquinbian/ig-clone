@@ -12,7 +12,8 @@ import {API, graphqlOperation} from 'aws-amplify';
 import {ListPostsQuery, ListPostsQueryVariables, Post as IPost} from 'src/API';
 import {gql, useQuery} from '@apollo/client';
 import {listPosts} from './queries';
-import Loading from '@components/Loading/Loading';
+import Loading from '@components/Loading';
+import ApiErrorMessage from '@components/ApiErrorMessage';
 
 interface IOnViewableItemsChanged {
   viewableItems: ViewToken[];
@@ -50,6 +51,15 @@ const FeedScreen = () => {
     fetchPosts();
   }, []);
  */
+
+  if (error) {
+    return (
+      <ApiErrorMessage
+        title="Error fetching posts..."
+        message={error.message}
+      />
+    );
+  }
 
   if (loading) {
     return <Loading text="loading posts..." />;

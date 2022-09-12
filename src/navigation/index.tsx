@@ -8,8 +8,7 @@ import {RootNavigatorParamList} from './types';
 import {LinkingOptions, NavigationContainer} from '@react-navigation/native';
 import AuthStackNavigator from './AuthStackNavigator';
 import {useAuthContext} from '@context/AuthContext';
-import {size, weight} from '@theme/fonts';
-import Loading from '@components/Loading/Loading';
+import Loading from '@components/Loading';
 
 const Stack = createNativeStackNavigator<RootNavigatorParamList>();
 
