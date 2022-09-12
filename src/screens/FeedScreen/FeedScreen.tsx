@@ -1,9 +1,18 @@
-import React, {useEffect, useInsertionEffect, useRef, useState} from 'react';
-import {ViewToken, ViewabilityConfig, FlatList, View} from 'react-native';
-import posts from '@assets/posts.json';
+import React, {useRef, useState} from 'react';
+import {
+  ViewToken,
+  ViewabilityConfig,
+  FlatList,
+  View,
+  ActivityIndicator,
+  Text,
+} from 'react-native';
 import Post from '@components/Post';
 import {API, graphqlOperation} from 'aws-amplify';
-import {Post as IPost} from 'src/API';
+import {ListPostsQuery, ListPostsQueryVariables, Post as IPost} from 'src/API';
+import {gql, useQuery} from '@apollo/client';
+import {listPosts} from './queries';
+import Loading from '@components/Loading/Loading';
 
 interface IOnViewableItemsChanged {
   viewableItems: ViewToken[];
@@ -13,52 +22,12 @@ const viewabilityConfig: ViewabilityConfig = {
   itemVisiblePercentThreshold: 50,
 };
 
-export const listPosts = /* GraphQL */ `
-  query ListPosts(
-    $filter: ModelPostFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        description
-        video
-        image
-        images
-        numberOfComments
-        numberOfLikes
-        userID
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        User {
-          id
-          name
-          username
-          image
-        }
-        Comments {
-          items {
-            id
-            comment
-            User {
-              username
-            }
-          }
-        }
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-
 const FeedScreen = () => {
   const [currentItem, setCurrentItem] = useState<null | string>(null);
-  const [remotePosts, setRemotePosts] = useState<IPost[] | null>(null);
+  const {data, loading, error} = useQuery<
+    ListPostsQuery,
+    ListPostsQueryVariables
+  >(listPosts, {});
 
   //esta es la funcion que especifica los items que estan en pantalla
   const onViewableItemsChanged = useRef(
@@ -70,10 +39,9 @@ const FeedScreen = () => {
       }
     },
   );
-
+  /* 
   const fetchPosts = async () => {
     const response = await API.graphql(graphqlOperation(listPosts));
-    console.log(response.data.listPosts.items);
 
     setRemotePosts(response.data.listPosts.items);
   };
@@ -81,16 +49,20 @@ const FeedScreen = () => {
   useEffect(() => {
     fetchPosts();
   }, []);
+ */
+
+  if (loading) {
+    return <Loading text="loading posts..." />;
+  }
 
   return (
     <FlatList
-      data={remotePosts}
-      renderItem={({item}) => (
-        <Post post={item} isVisible={currentItem === item.id} />
-      )}
+      data={data?.listPosts?.items}
+      renderItem={({item}) =>
+        item && <Post post={item} isVisible={currentItem === item.id} />
+      }
       viewabilityConfig={viewabilityConfig}
       onViewableItemsChanged={onViewableItemsChanged.current}
-      keyExtractor={item => item.id}
       showsVerticalScrollIndicator={false}
     />
   );

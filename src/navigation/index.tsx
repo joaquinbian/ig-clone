@@ -9,6 +9,7 @@ import {LinkingOptions, NavigationContainer} from '@react-navigation/native';
 import AuthStackNavigator from './AuthStackNavigator';
 import {useAuthContext} from '@context/AuthContext';
 import {size, weight} from '@theme/fonts';
+import Loading from '@components/Loading/Loading';
 
 const Stack = createNativeStackNavigator<RootNavigatorParamList>();
 
@@ -40,14 +41,7 @@ const Navigation = () => {
   const {user} = useAuthContext();
 
   if (user === undefined) {
-    return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator />
-        <Text style={{fontSize: size.md, fontWeight: weight.semi}}>
-          Loading...
-        </Text>
-      </View>
-    );
+    return <Loading />;
   }
   return (
     <NavigationContainer linking={linking}>
