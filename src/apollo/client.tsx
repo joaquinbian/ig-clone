@@ -10,7 +10,7 @@ const client = new ApolloClient({
 });
 
 const Client = ({children}: IApolloClientProps) => {
-  return <ApolloProvider>{children}</ApolloProvider>;
+  return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };
 
 export default Client;
