@@ -1,12 +1,12 @@
 /* eslint-disable eslint-comments/no-unlimited-disable */
 /* eslint-disable */
 import {Linking, StyleSheet, View} from 'react-native';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Amplify from 'aws-amplify';
 import config from 'src/aws-exports';
 import Navigation from '@navigation/index';
 import {AuthProvider} from '@context/AuthContext';
 import InAppBrowser from 'react-native-inappbrowser-reborn';
+import Client from 'src/apollo/client';
 
 async function urlOpener(url: string, redirectUrl: string) {
   await InAppBrowser.isAvailable();
@@ -29,7 +29,9 @@ Amplify.configure(newConfig);
 const App = () => {
   return (
     <AuthProvider>
-      <Navigation />
+      <Client>
+        <Navigation />
+      </Client>
     </AuthProvider>
   );
 };
