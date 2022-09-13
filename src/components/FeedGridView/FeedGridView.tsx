@@ -1,10 +1,10 @@
 import React from 'react';
 import {FlatList} from 'react-native';
-import {IPost} from '@interfaces/Post';
 import FeedGridItem from './FeedGridItem';
+import {Post} from 'src/API';
 
 interface IFeedGridView {
-  data: IPost[];
+  data: Post[] | never[];
   ListHeaderComponent?:
     | React.ComponentType<any>
     | React.ReactElement
@@ -15,7 +15,7 @@ interface IFeedGridView {
 const FeedGridView = ({data, ListHeaderComponent}: IFeedGridView) => {
   return (
     <FlatList
-      data={data}
+      data={data ?? []}
       renderItem={({item}) => <FeedGridItem post={item} />}
       ListHeaderComponent={ListHeaderComponent}
       numColumns={3}

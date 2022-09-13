@@ -1,12 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
-import {IPost} from '@interfaces/Post';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {colors} from '@theme/colors';
+import {Post} from 'src/API';
 
 interface IFeedGridItem {
-  post: IPost;
+  post: Post;
 }
 const FeedGridItem = ({post}: IFeedGridItem) => {
   return (

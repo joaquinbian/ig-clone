@@ -40,7 +40,7 @@ export type FeedNavigatorProps = NativeStackNavigationProp<
 >;
 
 export type ProfileStackNavigator = {
-  Profile: undefined;
+  Profile: {id?: string};
   EditProfile: undefined;
 };
 

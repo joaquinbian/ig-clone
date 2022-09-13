@@ -7,8 +7,24 @@ import user from '@assets/user.json';
 import {useNavigation} from '@react-navigation/native';
 import {ProfileNavigatorProps} from '@navigation/types';
 import {Auth} from 'aws-amplify';
+import {User} from 'src/API';
 
-const ProfileHeader = () => {
+type ProfileHeaderProps = Pick<
+  User,
+  | 'numberOfFollowers'
+  | 'numberOfPosts'
+  | 'numberOfFollowings'
+  | 'username'
+  | 'bio'
+>;
+
+const ProfileHeader = ({
+  numberOfFollowers,
+  numberOfPosts,
+  username,
+  bio,
+  numberOfFollowings,
+}: ProfileHeaderProps) => {
   const navigation = useNavigation<ProfileNavigatorProps>();
   const navigateToEditProfile = () => {
     navigation.navigate('EditProfile');
@@ -24,22 +40,22 @@ const ProfileHeader = () => {
 
         <View style={styles.dataRowContainer}>
           <View style={styles.dataContainer}>
-            <Text style={styles.data}>566</Text>
+            <Text style={styles.data}>{numberOfPosts}</Text>
             <Text style={styles.dataTitle}>post</Text>
           </View>
           <View style={{alignItems: 'center'}}>
-            <Text style={styles.data}>566</Text>
+            <Text style={styles.data}>{numberOfFollowers}</Text>
             <Text style={styles.dataTitle}>followers</Text>
           </View>
           <View style={{alignItems: 'center'}}>
-            <Text style={styles.data}>345</Text>
+            <Text style={styles.data}>{numberOfFollowings}</Text>
             <Text style={styles.dataTitle}>following</Text>
           </View>
         </View>
       </View>
       <View style={{marginTop: 5}}>
-        <Text style={styles.data}>{user.username}</Text>
-        <Text style={{color: colors.black}}>{user.bio}</Text>
+        <Text style={styles.data}>{username}</Text>
+        <Text style={{color: colors.black}}>{bio}</Text>
       </View>
       <View style={{flexDirection: 'row', marginVertical: 5}}>
         <Button
