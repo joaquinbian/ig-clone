@@ -4,7 +4,7 @@ import FeedGridItem from './FeedGridItem';
 import {Post} from 'src/API';
 
 interface IFeedGridView {
-  data: Post[] | never[];
+  data: (Post | null)[];
   ListHeaderComponent?:
     | React.ComponentType<any>
     | React.ReactElement
@@ -16,7 +16,7 @@ const FeedGridView = ({data, ListHeaderComponent}: IFeedGridView) => {
   return (
     <FlatList
       data={data ?? []}
-      renderItem={({item}) => <FeedGridItem post={item} />}
+      renderItem={({item}) => item && <FeedGridItem post={item} />}
       ListHeaderComponent={ListHeaderComponent}
       numColumns={3}
       keyExtractor={(item, index) => `${item}-${index}`}

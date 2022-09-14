@@ -392,6 +392,21 @@ export type CreateLikeMutation = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -409,6 +424,34 @@ export type CreateLikeMutation = {
       numberOfLikes: number;
       userID: string;
       untitledfield?: string | null;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -446,6 +489,21 @@ export type UpdateLikeMutation = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -463,6 +521,34 @@ export type UpdateLikeMutation = {
       numberOfLikes: number;
       userID: string;
       untitledfield?: string | null;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -500,6 +586,21 @@ export type DeleteLikeMutation = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -517,6 +618,34 @@ export type DeleteLikeMutation = {
       numberOfLikes: number;
       userID: string;
       untitledfield?: string | null;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -555,6 +684,21 @@ export type CreateCommentMutation = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -572,6 +716,34 @@ export type CreateCommentMutation = {
       numberOfLikes: number;
       userID: string;
       untitledfield?: string | null;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -610,6 +782,21 @@ export type UpdateCommentMutation = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -627,6 +814,34 @@ export type UpdateCommentMutation = {
       numberOfLikes: number;
       userID: string;
       untitledfield?: string | null;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -665,6 +880,21 @@ export type DeleteCommentMutation = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -682,6 +912,34 @@ export type DeleteCommentMutation = {
       numberOfLikes: number;
       userID: string;
       untitledfield?: string | null;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -725,6 +983,21 @@ export type CreatePostMutation = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -733,11 +1006,34 @@ export type CreatePostMutation = {
     } | null;
     Likes?: {
       __typename: 'ModelLikeConnection';
+      items: Array<{
+        __typename: 'Like';
+        id: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Comments?: {
       __typename: 'ModelCommentConnection';
+      items: Array<{
+        __typename: 'Comment';
+        id: string;
+        comment: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
@@ -778,6 +1074,21 @@ export type UpdatePostMutation = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -786,11 +1097,34 @@ export type UpdatePostMutation = {
     } | null;
     Likes?: {
       __typename: 'ModelLikeConnection';
+      items: Array<{
+        __typename: 'Like';
+        id: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Comments?: {
       __typename: 'ModelCommentConnection';
+      items: Array<{
+        __typename: 'Comment';
+        id: string;
+        comment: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
@@ -831,6 +1165,21 @@ export type DeletePostMutation = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -839,11 +1188,34 @@ export type DeletePostMutation = {
     } | null;
     Likes?: {
       __typename: 'ModelLikeConnection';
+      items: Array<{
+        __typename: 'Like';
+        id: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Comments?: {
       __typename: 'ModelCommentConnection';
+      items: Array<{
+        __typename: 'Comment';
+        id: string;
+        comment: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
@@ -875,16 +1247,56 @@ export type CreateUserMutation = {
     numberOfFollowings: number;
     Posts?: {
       __typename: 'ModelPostConnection';
+      items: Array<{
+        __typename: 'Post';
+        id: string;
+        description?: string | null;
+        image?: string | null;
+        images?: Array<string> | null;
+        video?: string | null;
+        numberOfComments: number;
+        numberOfLikes: number;
+        userID: string;
+        untitledfield?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Likes?: {
       __typename: 'ModelLikeConnection';
+      items: Array<{
+        __typename: 'Like';
+        id: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Comments?: {
       __typename: 'ModelCommentConnection';
+      items: Array<{
+        __typename: 'Comment';
+        id: string;
+        comment: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
@@ -916,16 +1328,56 @@ export type UpdateUserMutation = {
     numberOfFollowings: number;
     Posts?: {
       __typename: 'ModelPostConnection';
+      items: Array<{
+        __typename: 'Post';
+        id: string;
+        description?: string | null;
+        image?: string | null;
+        images?: Array<string> | null;
+        video?: string | null;
+        numberOfComments: number;
+        numberOfLikes: number;
+        userID: string;
+        untitledfield?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Likes?: {
       __typename: 'ModelLikeConnection';
+      items: Array<{
+        __typename: 'Like';
+        id: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Comments?: {
       __typename: 'ModelCommentConnection';
+      items: Array<{
+        __typename: 'Comment';
+        id: string;
+        comment: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
@@ -957,16 +1409,56 @@ export type DeleteUserMutation = {
     numberOfFollowings: number;
     Posts?: {
       __typename: 'ModelPostConnection';
+      items: Array<{
+        __typename: 'Post';
+        id: string;
+        description?: string | null;
+        image?: string | null;
+        images?: Array<string> | null;
+        video?: string | null;
+        numberOfComments: number;
+        numberOfLikes: number;
+        userID: string;
+        untitledfield?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Likes?: {
       __typename: 'ModelLikeConnection';
+      items: Array<{
+        __typename: 'Like';
+        id: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Comments?: {
       __typename: 'ModelCommentConnection';
+      items: Array<{
+        __typename: 'Comment';
+        id: string;
+        comment: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
@@ -1000,6 +1492,21 @@ export type GetLikeQuery = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1017,6 +1524,34 @@ export type GetLikeQuery = {
       numberOfLikes: number;
       userID: string;
       untitledfield?: string | null;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1045,6 +1580,41 @@ export type ListLikesQuery = {
       id: string;
       userID: string;
       postID: string;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Post?: {
+        __typename: 'Post';
+        id: string;
+        description?: string | null;
+        image?: string | null;
+        images?: Array<string> | null;
+        video?: string | null;
+        numberOfComments: number;
+        numberOfLikes: number;
+        userID: string;
+        untitledfield?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1071,6 +1641,41 @@ export type SyncLikesQuery = {
       id: string;
       userID: string;
       postID: string;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Post?: {
+        __typename: 'Post';
+        id: string;
+        description?: string | null;
+        image?: string | null;
+        images?: Array<string> | null;
+        video?: string | null;
+        numberOfComments: number;
+        numberOfLikes: number;
+        userID: string;
+        untitledfield?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1105,6 +1710,21 @@ export type GetCommentQuery = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1122,6 +1742,34 @@ export type GetCommentQuery = {
       numberOfLikes: number;
       userID: string;
       untitledfield?: string | null;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1151,6 +1799,41 @@ export type ListCommentsQuery = {
       comment: string;
       userID: string;
       postID: string;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Post?: {
+        __typename: 'Post';
+        id: string;
+        description?: string | null;
+        image?: string | null;
+        images?: Array<string> | null;
+        video?: string | null;
+        numberOfComments: number;
+        numberOfLikes: number;
+        userID: string;
+        untitledfield?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1178,6 +1861,41 @@ export type SyncCommentsQuery = {
       comment: string;
       userID: string;
       postID: string;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Post?: {
+        __typename: 'Post';
+        id: string;
+        description?: string | null;
+        image?: string | null;
+        images?: Array<string> | null;
+        video?: string | null;
+        numberOfComments: number;
+        numberOfLikes: number;
+        userID: string;
+        untitledfield?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1217,6 +1935,21 @@ export type GetPostQuery = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1225,11 +1958,34 @@ export type GetPostQuery = {
     } | null;
     Likes?: {
       __typename: 'ModelLikeConnection';
+      items: Array<{
+        __typename: 'Like';
+        id: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Comments?: {
       __typename: 'ModelCommentConnection';
+      items: Array<{
+        __typename: 'Comment';
+        id: string;
+        comment: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
@@ -1261,6 +2017,34 @@ export type ListPostsQuery = {
       numberOfLikes: number;
       userID: string;
       untitledfield?: string | null;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1293,6 +2077,34 @@ export type SyncPostsQuery = {
       numberOfLikes: number;
       userID: string;
       untitledfield?: string | null;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1323,16 +2135,56 @@ export type GetUserQuery = {
     numberOfFollowings: number;
     Posts?: {
       __typename: 'ModelPostConnection';
+      items: Array<{
+        __typename: 'Post';
+        id: string;
+        description?: string | null;
+        image?: string | null;
+        images?: Array<string> | null;
+        video?: string | null;
+        numberOfComments: number;
+        numberOfLikes: number;
+        userID: string;
+        untitledfield?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Likes?: {
       __typename: 'ModelLikeConnection';
+      items: Array<{
+        __typename: 'Like';
+        id: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Comments?: {
       __typename: 'ModelCommentConnection';
+      items: Array<{
+        __typename: 'Comment';
+        id: string;
+        comment: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
@@ -1365,6 +2217,21 @@ export type ListUsersQuery = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1398,6 +2265,21 @@ export type SyncUsersQuery = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1427,6 +2309,21 @@ export type OnCreateLikeSubscription = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1444,6 +2341,34 @@ export type OnCreateLikeSubscription = {
       numberOfLikes: number;
       userID: string;
       untitledfield?: string | null;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1476,6 +2401,21 @@ export type OnUpdateLikeSubscription = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1493,6 +2433,34 @@ export type OnUpdateLikeSubscription = {
       numberOfLikes: number;
       userID: string;
       untitledfield?: string | null;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1525,6 +2493,21 @@ export type OnDeleteLikeSubscription = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1542,6 +2525,34 @@ export type OnDeleteLikeSubscription = {
       numberOfLikes: number;
       userID: string;
       untitledfield?: string | null;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1575,6 +2586,21 @@ export type OnCreateCommentSubscription = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1592,6 +2618,34 @@ export type OnCreateCommentSubscription = {
       numberOfLikes: number;
       userID: string;
       untitledfield?: string | null;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1625,6 +2679,21 @@ export type OnUpdateCommentSubscription = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1642,6 +2711,34 @@ export type OnUpdateCommentSubscription = {
       numberOfLikes: number;
       userID: string;
       untitledfield?: string | null;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1675,6 +2772,21 @@ export type OnDeleteCommentSubscription = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1692,6 +2804,34 @@ export type OnDeleteCommentSubscription = {
       numberOfLikes: number;
       userID: string;
       untitledfield?: string | null;
+      User?: {
+        __typename: 'User';
+        id: string;
+        name: string;
+        image?: string | null;
+        bio?: string | null;
+        username?: string | null;
+        website?: string | null;
+        email: string;
+        numberOfPosts: number;
+        numberOfFollowers: number;
+        numberOfFollowings: number;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1730,6 +2870,21 @@ export type OnCreatePostSubscription = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1738,11 +2893,34 @@ export type OnCreatePostSubscription = {
     } | null;
     Likes?: {
       __typename: 'ModelLikeConnection';
+      items: Array<{
+        __typename: 'Like';
+        id: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Comments?: {
       __typename: 'ModelCommentConnection';
+      items: Array<{
+        __typename: 'Comment';
+        id: string;
+        comment: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
@@ -1778,6 +2956,21 @@ export type OnUpdatePostSubscription = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1786,11 +2979,34 @@ export type OnUpdatePostSubscription = {
     } | null;
     Likes?: {
       __typename: 'ModelLikeConnection';
+      items: Array<{
+        __typename: 'Like';
+        id: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Comments?: {
       __typename: 'ModelCommentConnection';
+      items: Array<{
+        __typename: 'Comment';
+        id: string;
+        comment: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
@@ -1826,6 +3042,21 @@ export type OnDeletePostSubscription = {
       numberOfPosts: number;
       numberOfFollowers: number;
       numberOfFollowings: number;
+      Posts?: {
+        __typename: 'ModelPostConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Likes?: {
+        __typename: 'ModelLikeConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      Comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
       createdAt: string;
       updatedAt: string;
       _version: number;
@@ -1834,11 +3065,34 @@ export type OnDeletePostSubscription = {
     } | null;
     Likes?: {
       __typename: 'ModelLikeConnection';
+      items: Array<{
+        __typename: 'Like';
+        id: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Comments?: {
       __typename: 'ModelCommentConnection';
+      items: Array<{
+        __typename: 'Comment';
+        id: string;
+        comment: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
@@ -1865,16 +3119,56 @@ export type OnCreateUserSubscription = {
     numberOfFollowings: number;
     Posts?: {
       __typename: 'ModelPostConnection';
+      items: Array<{
+        __typename: 'Post';
+        id: string;
+        description?: string | null;
+        image?: string | null;
+        images?: Array<string> | null;
+        video?: string | null;
+        numberOfComments: number;
+        numberOfLikes: number;
+        userID: string;
+        untitledfield?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Likes?: {
       __typename: 'ModelLikeConnection';
+      items: Array<{
+        __typename: 'Like';
+        id: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Comments?: {
       __typename: 'ModelCommentConnection';
+      items: Array<{
+        __typename: 'Comment';
+        id: string;
+        comment: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
@@ -1901,16 +3195,56 @@ export type OnUpdateUserSubscription = {
     numberOfFollowings: number;
     Posts?: {
       __typename: 'ModelPostConnection';
+      items: Array<{
+        __typename: 'Post';
+        id: string;
+        description?: string | null;
+        image?: string | null;
+        images?: Array<string> | null;
+        video?: string | null;
+        numberOfComments: number;
+        numberOfLikes: number;
+        userID: string;
+        untitledfield?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Likes?: {
       __typename: 'ModelLikeConnection';
+      items: Array<{
+        __typename: 'Like';
+        id: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Comments?: {
       __typename: 'ModelCommentConnection';
+      items: Array<{
+        __typename: 'Comment';
+        id: string;
+        comment: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
@@ -1937,16 +3271,56 @@ export type OnDeleteUserSubscription = {
     numberOfFollowings: number;
     Posts?: {
       __typename: 'ModelPostConnection';
+      items: Array<{
+        __typename: 'Post';
+        id: string;
+        description?: string | null;
+        image?: string | null;
+        images?: Array<string> | null;
+        video?: string | null;
+        numberOfComments: number;
+        numberOfLikes: number;
+        userID: string;
+        untitledfield?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Likes?: {
       __typename: 'ModelLikeConnection';
+      items: Array<{
+        __typename: 'Like';
+        id: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;
     Comments?: {
       __typename: 'ModelCommentConnection';
+      items: Array<{
+        __typename: 'Comment';
+        id: string;
+        comment: string;
+        userID: string;
+        postID: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
     } | null;

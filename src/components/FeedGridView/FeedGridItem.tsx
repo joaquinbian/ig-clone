@@ -4,6 +4,7 @@ import {Image, StyleSheet, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {colors} from '@theme/colors';
 import {Post} from 'src/API';
+import {DEFAULT_USER_IMAGE} from 'src/config';
 
 interface IFeedGridItem {
   post: Post;
@@ -18,7 +19,10 @@ const FeedGridItem = ({post}: IFeedGridItem) => {
         maxWidth: '33.33%',
       }}>
       <Image
-        source={{uri: post.images ? post.images[0] : post.image}}
+        source={{
+          uri:
+            (post.images ? post.images[0] : post.image) ?? DEFAULT_USER_IMAGE,
+        }}
         style={{
           flex: 1,
         }}

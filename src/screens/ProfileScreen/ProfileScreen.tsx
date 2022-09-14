@@ -16,10 +16,10 @@ import ApiErrorMessage from '@components/ApiErrorMessage';
 
 const ProfileScreen = () => {
   const route = useRoute<ProfileBottomRouteProp | UserProfileRouteProp>();
-  const {data, error, loading} = useQuery<
-    GetUserQueryById,
-    GetUserQueryVariables
-  >(getUserById, {variables: {id: route.params?.userId!}});
+  const {data, error, loading} = useQuery<GetUserQuery, GetUserQueryVariables>(
+    getUserById,
+    {variables: {id: route.params?.userId!}},
+  );
 
   //dependiendo de como entremos tinee un tipado u otro
   const navigation = useNavigation<
