@@ -8,6 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 import {ProfileNavigatorProps} from '@navigation/types';
 import {Auth} from 'aws-amplify';
 import {User} from 'src/API';
+import {DEFAULT_USER_IMAGE} from 'src/config';
 
 type ProfileHeaderProps = Pick<
   User,
@@ -36,7 +37,10 @@ const ProfileHeader = ({
   return (
     <View style={{padding: 10}}>
       <View style={styles.firstRow}>
-        <Image source={{uri: user.image}} style={styles.avatar} />
+        <Image
+          source={{uri: user.image ?? DEFAULT_USER_IMAGE}}
+          style={styles.avatar}
+        />
 
         <View style={styles.dataRowContainer}>
           <View style={styles.dataContainer}>

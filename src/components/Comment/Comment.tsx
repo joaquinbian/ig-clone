@@ -3,7 +3,6 @@ import {Image, Text, View} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Comment as IComment} from 'src/API';
 import BoldText from '@components/BoldText';
-import {IUser} from '@interfaces/Post';
 import {colors} from '@theme/colors';
 import {styles} from './styles';
 import Pressable from '@components/Pressable';
