@@ -57,6 +57,8 @@ const ProfileScreen = () => {
           numberOfPosts={data?.getUser?.numberOfPosts ?? 0}
           bio={data?.getUser?.bio}
           username={data?.getUser?.username}
+          id={data?.getUser?.id ?? ''}
+          image={data?.getUser?.image}
         />
       )}
     />

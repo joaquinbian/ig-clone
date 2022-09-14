@@ -36,7 +36,7 @@ const EditProfileInput = ({
             <View style={{flex: 1}}>
               <TextInput
                 placeholder={placeholder}
-                value={value}
+                value={value ?? ''}
                 onChangeText={onChange}
                 onBlur={onBlur}
                 style={[

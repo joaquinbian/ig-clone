@@ -29,4 +29,12 @@ export const styles = StyleSheet.create({
     borderRadius: 5,
   },
   buttonTitle: {color: colors.black},
+  buttonFollow: {
+    backgroundColor: colors.primary,
+    borderWidth: 1,
+    borderColor: 'transparent',
+  },
+  buttonSignOut: {
+    backgroundColor: colors.error,
+  },
 });

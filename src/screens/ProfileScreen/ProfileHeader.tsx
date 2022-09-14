@@ -3,12 +3,18 @@ import React from 'react';
 import {View, Text, Image} from 'react-native';
 import {styles} from './styles';
 import {colors} from '@theme/colors';
-import user from '@assets/user.json';
-import {useNavigation} from '@react-navigation/native';
-import {ProfileNavigatorProps} from '@navigation/types';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  ProfileBottomRouteProp,
+  ProfileNavigatorProps,
+  ProfileRouteProps,
+  UserProfileRouteProp,
+} from '@navigation/types';
 import {Auth} from 'aws-amplify';
 import {User} from 'src/API';
 import {DEFAULT_USER_IMAGE} from 'src/config';
+import {LoneSchemaDefinition} from 'graphql/validation/rules/LoneSchemaDefinition';
+import {useAuthContext} from '@context/AuthContext';
 
 type ProfileHeaderProps = Pick<
   User,
@@ -17,6 +23,8 @@ type ProfileHeaderProps = Pick<
   | 'numberOfFollowings'
   | 'username'
   | 'bio'
+  | 'id'
+  | 'image'
 >;
 
 const ProfileHeader = ({
@@ -25,8 +33,13 @@ const ProfileHeader = ({
   username,
   bio,
   numberOfFollowings,
+  id,
+  image,
 }: ProfileHeaderProps) => {
   const navigation = useNavigation<ProfileNavigatorProps>();
+
+  const {user} = useAuthContext();
+
   const navigateToEditProfile = () => {
     navigation.navigate('EditProfile');
   };
@@ -38,7 +51,7 @@ const ProfileHeader = ({
     <View style={{padding: 10}}>
       <View style={styles.firstRow}>
         <Image
-          source={{uri: user.image ?? DEFAULT_USER_IMAGE}}
+          source={{uri: image ?? DEFAULT_USER_IMAGE}}
           style={styles.avatar}
         />
 
@@ -62,18 +75,37 @@ const ProfileHeader = ({
         <Text style={{color: colors.black}}>{bio}</Text>
       </View>
       <View style={{flexDirection: 'row', marginVertical: 5}}>
-        <Button
-          title="edit profile"
-          onPress={navigateToEditProfile}
-          style={styles.button}
-          titleStyle={styles.buttonTitle}
-        />
-        <Button
-          title="sgin out"
-          onPress={onLogOut}
-          style={styles.button}
-          titleStyle={styles.buttonTitle}
-        />
+        {user.attributes.sub === id ? (
+          <>
+            <Button
+              title="edit profile"
+              onPress={navigateToEditProfile}
+              style={styles.button}
+              titleStyle={styles.buttonTitle}
+            />
+            <Button
+              title="sign out"
+              onPress={onLogOut}
+              style={[styles.button, styles.buttonSignOut]}
+              titleStyle={{color: colors.white}}
+            />
+          </>
+        ) : (
+          <>
+            <Button
+              title="follow"
+              onPress={navigateToEditProfile}
+              style={[styles.button, styles.buttonFollow]}
+              titleStyle={{color: colors.white}}
+            />
+            <Button
+              title="message"
+              onPress={onLogOut}
+              style={styles.button}
+              titleStyle={styles.buttonTitle}
+            />
+          </>
+        )}
       </View>
     </View>
   );

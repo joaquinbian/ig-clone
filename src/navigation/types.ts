@@ -48,6 +48,9 @@ export type ProfileNavigatorProps = NativeStackNavigationProp<
   ProfileStackNavigator,
   'Profile'
 >;
+
+export type ProfileRouteProps = RouteProp<ProfileStackNavigator, 'Profile'>;
+
 // Auth Stack Navigator
 export type AuthStackNavigatorParamList = {
   'Sign in': undefined;
