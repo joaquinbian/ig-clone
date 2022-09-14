@@ -76,6 +76,9 @@ exports.handler = async (event, context) => {
     id: sub,
     name,
     email,
+    numberOfPosts: 0,
+    numberOfFollowers: 0,
+    numberOfFollowings: 0,
   };
 
   if (!(await userExist(newUser.id))) {
