@@ -17,7 +17,6 @@ const ProfileStackNavigator = () => {
         name="Profile"
         component={ProfileScreen}
         options={{title: 'Profile'}}
-        // initialParams={{id}}
       />
       <Stack.Screen
         name="EditProfile"

@@ -13,12 +13,21 @@ import {getUserById, GetUserQueryById} from './queries';
 import {GetUserQuery, GetUserQueryVariables} from 'src/API';
 import Loading from '@components/Loading';
 import ApiErrorMessage from '@components/ApiErrorMessage';
+import {useAuthContext} from '@context/AuthContext';
 
 const ProfileScreen = () => {
   const route = useRoute<ProfileBottomRouteProp | UserProfileRouteProp>();
+  const {user} = useAuthContext();
   const {data, error, loading} = useQuery<GetUserQuery, GetUserQueryVariables>(
     getUserById,
-    {variables: {id: route.params?.userId!}},
+    {
+      variables: {
+        id:
+          route.name === 'UserProfile'
+            ? route.params?.userId!
+            : user?.attributes.sub,
+      },
+    },
   );
 
   //dependiendo de como entremos tinee un tipado u otro
