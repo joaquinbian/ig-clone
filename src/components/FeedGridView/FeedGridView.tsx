@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, RefreshControl} from 'react-native';
 import FeedGridItem from './FeedGridItem';
 import {Post} from 'src/API';
 
@@ -10,12 +10,22 @@ interface IFeedGridView {
     | React.ReactElement
     | null
     | undefined;
+  onRefresh?: () => void;
+  refreshing?: boolean;
 }
 
-const FeedGridView = ({data, ListHeaderComponent}: IFeedGridView) => {
+const FeedGridView = ({
+  data,
+  ListHeaderComponent,
+  onRefresh,
+  refreshing,
+}: IFeedGridView) => {
   return (
     <FlatList
       data={data ?? []}
+      refreshControl={
+        <RefreshControl refreshing={!!refreshing} onRefresh={onRefresh} />
+      }
       renderItem={({item}) => item && <FeedGridItem post={item} />}
       ListHeaderComponent={ListHeaderComponent}
       numColumns={3}

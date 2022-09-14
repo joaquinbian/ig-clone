@@ -18,17 +18,17 @@ import {useAuthContext} from '@context/AuthContext';
 const ProfileScreen = () => {
   const route = useRoute<ProfileBottomRouteProp | UserProfileRouteProp>();
   const {user} = useAuthContext();
-  const {data, error, loading} = useQuery<GetUserQuery, GetUserQueryVariables>(
-    getUserById,
-    {
-      variables: {
-        id:
-          route.name === 'UserProfile'
-            ? route.params?.userId!
-            : user?.attributes.sub,
-      },
+  const {data, error, loading, refetch} = useQuery<
+    GetUserQuery,
+    GetUserQueryVariables
+  >(getUserById, {
+    variables: {
+      id:
+        route.name === 'UserProfile'
+          ? route.params?.userId!
+          : user?.attributes.sub,
     },
-  );
+  });
 
   //dependiendo de como entremos tinee un tipado u otro
   const navigation = useNavigation<
@@ -43,7 +43,11 @@ const ProfileScreen = () => {
 
   if (error) {
     return (
-      <ApiErrorMessage title="error fetching user" message={error.message} />
+      <ApiErrorMessage
+        onRetry={refetch}
+        title="error fetching user"
+        message={error.message}
+      />
     );
   }
 
@@ -61,6 +65,8 @@ const ProfileScreen = () => {
           image={data?.getUser?.image}
         />
       )}
+      refreshing={loading}
+      onRefresh={refetch}
     />
   );
 };

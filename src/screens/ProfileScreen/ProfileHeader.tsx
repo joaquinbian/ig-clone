@@ -4,12 +4,7 @@ import {View, Text, Image} from 'react-native';
 import {styles} from './styles';
 import {colors} from '@theme/colors';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {
-  ProfileBottomRouteProp,
-  ProfileNavigatorProps,
-  ProfileRouteProps,
-  UserProfileRouteProp,
-} from '@navigation/types';
+import {ProfileNavigatorProps} from '@navigation/types';
 import {Auth} from 'aws-amplify';
 import {User} from 'src/API';
 import {DEFAULT_USER_IMAGE} from 'src/config';
