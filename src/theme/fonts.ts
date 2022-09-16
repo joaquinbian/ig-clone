@@ -9,10 +9,11 @@ export const size = {
   xxlg: 30,
 };
 
-interface FontWeight {
-  [key: string]: TextStyle['fontWeight'];
-}
-export const weight: FontWeight = {
+type FontWeightKeys = 'bold' | 'normal' | 'thin' | 'semi' | 'full';
+
+type FontWeightValues = TextStyle['fontWeight'];
+
+export const weight: Record<FontWeightKeys, FontWeightValues> = {
   bold: 'bold',
   normal: 'normal',
   thin: '400',
