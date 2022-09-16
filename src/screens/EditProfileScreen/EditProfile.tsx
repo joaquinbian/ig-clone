@@ -25,6 +25,7 @@ const EditProfile = () => {
   const {user} = useAuthContext();
 
   const {sub} = user?.attributes;
+  const {control, handleSubmit, setValue} = useForm<IEditableUser>();
 
   const {data, error, loading, refetch} = useQuery<
     GetUserQuery,
@@ -33,14 +34,14 @@ const EditProfile = () => {
     variables: {
       id: sub,
     },
-  });
+    onCompleted(data) {
+      //USAMOS setValue PQ COMO NO TENEMOS LOS DATOS DEL USUARIO
+      //APENAS ENTRAMOS, LOS ACTUALIZAMOS ASI
 
-  const {control, handleSubmit} = useForm<IEditableUser>({
-    defaultValues: {
-      bio: data?.getUser?.bio,
-      name: data?.getUser?.name,
-      username: data?.getUser?.username,
-      website: data?.getUser?.website,
+      setValue('bio', data.getUser?.bio ?? '');
+      setValue('name', data.getUser?.name ?? '');
+      setValue('username', data.getUser?.username ?? '');
+      setValue('website', data.getUser?.website ?? '');
     },
   });
 
