@@ -10,17 +10,37 @@ import EditProfileInput from './EditProfileInput';
 import {IEditableUser} from './types';
 import {colors} from '@theme/colors';
 import {styles} from './styles';
+import {useAuthContext} from '@context/AuthContext';
+import {useQuery} from '@apollo/client';
+import {GetUserQuery, GetUserQueryVariables} from 'src/API';
+import {getUserById} from '@screens/ProfileScreen/queries';
+import {DEFAULT_USER_IMAGE} from 'src/config';
+import ApiErrorMessage from '@components/ApiErrorMessage';
+import Loading from '@components/Loading';
+import {getUserToEditById} from './queries';
 const URL_REGEX =
   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 const EditProfile = () => {
   const [imageSelected, setImageSelected] = useState<Asset | undefined>();
+  const {user} = useAuthContext();
+
+  const {sub} = user?.attributes;
+
+  const {data, error, loading, refetch} = useQuery<
+    GetUserQuery,
+    GetUserQueryVariables
+  >(getUserToEditById, {
+    variables: {
+      id: sub,
+    },
+  });
 
   const {control, handleSubmit} = useForm<IEditableUser>({
     defaultValues: {
-      bio: user.bio,
-      name: user.name,
-      username: user.username,
-      website: '',
+      bio: data?.getUser?.bio,
+      name: data?.getUser?.name,
+      username: data?.getUser?.username,
+      website: data?.getUser?.website,
     },
   });
 
@@ -38,10 +58,28 @@ const EditProfile = () => {
   const onSubmit = (data: IEditableUser) => {
     console.log({data});
   };
+
+  if (error) {
+    return (
+      <ApiErrorMessage
+        title="error fetchihng user"
+        message={error.message}
+        onRetry={refetch}
+      />
+    );
+  }
+
+  if (loading) {
+    return <Loading text="loading user..." />;
+  }
+
   return (
     <ScrollView style={{flex: 1}}>
       <Image
-        source={{uri: imageSelected?.uri || user.image}}
+        source={{
+          uri:
+            imageSelected?.uri || (data?.getUser?.image ?? DEFAULT_USER_IMAGE),
+        }}
         style={{
           alignSelf: 'center',
           width: 100,
