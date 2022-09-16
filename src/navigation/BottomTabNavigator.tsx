@@ -10,6 +10,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import UploadPostScreen from '@screens/UploadPostScreen';
 import ProfileStackNavigator from './ProfileStackNavigator';
 import {BottomNavigatorParamList} from './types';
+import SearchUserScreen from '@screens/SearchUserScreen';
 
 const BottomTab = createBottomTabNavigator<BottomNavigatorParamList>();
 
@@ -33,7 +34,7 @@ const BottomTabNavigator = () => {
       />
       <BottomTab.Screen
         name="Search"
-        component={ProfileScreen}
+        component={SearchUserScreen}
         options={{
           tabBarIcon: ({color, size}) => (
             <MaterialIcons name="search" size={size} color={color} />
