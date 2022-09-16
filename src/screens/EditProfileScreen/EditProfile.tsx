@@ -11,18 +11,26 @@ import {IEditableUser} from './types';
 import {colors} from '@theme/colors';
 import {styles} from './styles';
 import {useAuthContext} from '@context/AuthContext';
-import {useQuery} from '@apollo/client';
-import {GetUserQuery, GetUserQueryVariables} from 'src/API';
+import {useMutation, useQuery} from '@apollo/client';
+import {
+  GetUserQuery,
+  GetUserQueryVariables,
+  UpdateUserMutation,
+  UpdateUserMutationVariables,
+} from 'src/API';
 import {getUserById} from '@screens/ProfileScreen/queries';
 import {DEFAULT_USER_IMAGE} from 'src/config';
 import ApiErrorMessage from '@components/ApiErrorMessage';
 import Loading from '@components/Loading';
-import {getUserToEditById} from './queries';
+import {editUser, getUserToEditById} from './queries';
+import {useNavigation} from '@react-navigation/native';
 const URL_REGEX =
   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 const EditProfile = () => {
   const [imageSelected, setImageSelected] = useState<Asset | undefined>();
   const {user} = useAuthContext();
+
+  const navigation = useNavigation();
 
   const {sub} = user?.attributes;
   const {control, handleSubmit, setValue} = useForm<IEditableUser>();
@@ -40,10 +48,13 @@ const EditProfile = () => {
 
       setValue('bio', data.getUser?.bio ?? '');
       setValue('name', data.getUser?.name ?? '');
-      setValue('username', data.getUser?.username ?? '');
-      setValue('website', data.getUser?.website ?? '');
+      setValue('username', data.getUser?.username);
+      setValue('website', data.getUser?.website);
     },
   });
+
+  const [updateUser, {error: editError, loading: editLoading, data: editData}] =
+    useMutation<UpdateUserMutation, UpdateUserMutationVariables>(editUser);
 
   const onChangePhoto = async () => {
     const {didCancel, assets, errorCode} = await launchImageLibrary({
@@ -56,15 +67,30 @@ const EditProfile = () => {
     }
   };
 
-  const onSubmit = (data: IEditableUser) => {
-    console.log({data});
+  const onSubmit = async (formData: IEditableUser) => {
+    console.log({formData});
+    const {bio, username, name, website} = formData;
+    await updateUser({
+      variables: {
+        input: {
+          bio,
+          username,
+          name,
+          website,
+          id: sub,
+          _version: data?.getUser?._version,
+        },
+      },
+    });
+
+    navigation.goBack();
   };
 
-  if (error) {
+  if (error || editError) {
     return (
       <ApiErrorMessage
-        title="error fetchihng user"
-        message={error.message}
+        title={error ? 'error fetchihng user' : 'error updating user'}
+        message={error?.message || editError?.message}
         onRetry={refetch}
       />
     );
@@ -147,7 +173,11 @@ const EditProfile = () => {
           name="bio"
           control={control}
         />
-        <Button title="submit" onPress={handleSubmit(onSubmit)} />
+        <Button
+          title="submit"
+          onPress={handleSubmit(onSubmit)}
+          isLoading={editLoading}
+        />
       </View>
     </ScrollView>
   );

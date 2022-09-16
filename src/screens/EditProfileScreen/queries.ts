@@ -17,3 +17,28 @@ export const getUserToEditById = /* GraphQL */ gql`
     }
   }
 `;
+export const editUser = /* GraphQL */ gql`
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    updateUser(input: $input, condition: $condition) {
+      id
+      name
+      image
+      bio
+      username
+      website
+      email
+      numberOfPosts
+      numberOfFollowers
+      numberOfFollowings
+
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
