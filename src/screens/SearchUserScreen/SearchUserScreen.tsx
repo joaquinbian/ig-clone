@@ -16,6 +16,8 @@ const SearchUserScreen = () => {
     ListUsersQueryVariables
   >(listSearchUsers);
 
+  const users = data?.listUsers?.items.filter(user => !user?._deleted);
+
   if (error) {
     return (
       <ApiErrorMessage
@@ -33,7 +35,7 @@ const SearchUserScreen = () => {
   return (
     <View>
       <FlatList
-        data={data?.listUsers?.items}
+        data={users}
         ItemSeparatorComponent={() => <View style={{padding: 5}} />}
         renderItem={({item}) => (
           <UserItem

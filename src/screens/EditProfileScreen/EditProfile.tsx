@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
-import {View, Image, ScrollView} from 'react-native';
+import {View, Image, ScrollView, Alert} from 'react-native';
 import user from '@assets/user.json';
 import Button from '@components/Button';
 import {useForm} from 'react-hook-form';
@@ -17,13 +17,16 @@ import {
   GetUserQueryVariables,
   UpdateUserMutation,
   UpdateUserMutationVariables,
+  DeleteUserMutation,
+  DeleteUserMutationVariables,
 } from 'src/API';
 import {getUserById} from '@screens/ProfileScreen/queries';
 import {DEFAULT_USER_IMAGE} from 'src/config';
 import ApiErrorMessage from '@components/ApiErrorMessage';
 import Loading from '@components/Loading';
-import {editUser, getUserToEditById} from './queries';
+import {editUser, getUserToEditById, deleteUser} from './queries';
 import {useNavigation} from '@react-navigation/native';
+import {Auth} from 'aws-amplify';
 const URL_REGEX =
   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 const EditProfile = () => {
@@ -56,6 +59,11 @@ const EditProfile = () => {
   const [updateUser, {error: editError, loading: editLoading, data: editData}] =
     useMutation<UpdateUserMutation, UpdateUserMutationVariables>(editUser);
 
+  const [
+    deleteUserMutation,
+    {error: deleteUserError, loading: loadingDeleteUser},
+  ] = useMutation<DeleteUserMutation, DeleteUserMutationVariables>(deleteUser);
+
   const onChangePhoto = async () => {
     const {didCancel, assets, errorCode} = await launchImageLibrary({
       mediaType: 'photo',
@@ -86,11 +94,46 @@ const EditProfile = () => {
     navigation.goBack();
   };
 
-  if (error || editError) {
+  const onConfirmDelete = () => {
+    Alert.alert(
+      'Are you sure you want to delete your account ?',
+      'Deleting your user profile is permanent',
+      [
+        {
+          style: 'cancel',
+          text: 'Cancel',
+        },
+        {
+          text: 'Delete',
+          onPress: onDeleteUser,
+          style: 'destructive',
+        },
+      ],
+    );
+  };
+
+  const onDeleteUser = async () => {
+    //delete on db
+    await deleteUserMutation({
+      variables: {input: {id: sub, _version: data?.getUser?._version}},
+    });
+
+    //delete on cognito
+    user?.deleteUser(error => {
+      if (error) {
+        console.log(error);
+      }
+      Auth.signOut();
+    });
+  };
+
+  if (error || editError || deleteUserError) {
     return (
       <ApiErrorMessage
         title={error ? 'error fetchihng user' : 'error updating user'}
-        message={error?.message || editError?.message}
+        message={
+          error?.message || editError?.message || deleteUserError?.message
+        }
         onRetry={refetch}
       />
     );
@@ -177,6 +220,19 @@ const EditProfile = () => {
           title="submit"
           onPress={handleSubmit(onSubmit)}
           isLoading={editLoading}
+          style={{backgroundColor: 'transparent', marginVertical: 10}}
+          titleStyle={{color: colors.primary}}
+        />
+        <Button
+          title="Delete account"
+          onPress={onConfirmDelete}
+          //isLoading={editLoading}
+          style={{
+            backgroundColor: 'transparent',
+            marginVertical: 10,
+          }}
+          titleStyle={{color: colors.error}}
+          isLoading={loadingDeleteUser}
         />
       </View>
     </ScrollView>

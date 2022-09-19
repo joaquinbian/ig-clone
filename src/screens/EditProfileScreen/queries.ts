@@ -42,3 +42,17 @@ export const editUser = /* GraphQL */ gql`
     }
   }
 `;
+export const deleteUser = /* GraphQL */ gql`
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    deleteUser(input: $input, condition: $condition) {
+      id
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
