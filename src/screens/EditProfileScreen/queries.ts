@@ -56,3 +56,22 @@ export const deleteUser = /* GraphQL */ gql`
     }
   }
 `;
+
+export const getUserByUsername = /* GraphQL */ gql`
+  query UsersByUsername($username: String!) {
+    usersByUsername(username: $username) {
+      items {
+        id
+        name
+        username
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;

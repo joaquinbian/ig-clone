@@ -2,7 +2,6 @@
 /* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
 import {View, Image, ScrollView, Alert} from 'react-native';
-import user from '@assets/user.json';
 import Button from '@components/Button';
 import {useForm} from 'react-hook-form';
 import {Asset, launchImageLibrary} from 'react-native-image-picker';
@@ -11,7 +10,7 @@ import {IEditableUser} from './types';
 import {colors} from '@theme/colors';
 import {styles} from './styles';
 import {useAuthContext} from '@context/AuthContext';
-import {useMutation, useQuery} from '@apollo/client';
+import {useLazyQuery, useMutation, useQuery} from '@apollo/client';
 import {
   GetUserQuery,
   GetUserQueryVariables,
@@ -19,12 +18,19 @@ import {
   UpdateUserMutationVariables,
   DeleteUserMutation,
   DeleteUserMutationVariables,
+  UsersByUsernameQueryVariables,
+  UsersByUsernameQuery,
 } from 'src/API';
 import {getUserById} from '@screens/ProfileScreen/queries';
 import {DEFAULT_USER_IMAGE} from 'src/config';
 import ApiErrorMessage from '@components/ApiErrorMessage';
 import Loading from '@components/Loading';
-import {editUser, getUserToEditById, deleteUser} from './queries';
+import {
+  editUser,
+  getUserToEditById,
+  deleteUser,
+  getUserByUsername,
+} from './queries';
 import {useNavigation} from '@react-navigation/native';
 import {Auth} from 'aws-amplify';
 const URL_REGEX =
@@ -36,7 +42,7 @@ const EditProfile = () => {
   const navigation = useNavigation();
 
   const {sub} = user?.attributes;
-  const {control, handleSubmit, setValue} = useForm<IEditableUser>();
+  const {control, handleSubmit, setValue, setError} = useForm<IEditableUser>();
 
   const {data, error, loading, refetch} = useQuery<
     GetUserQuery,
@@ -59,6 +65,12 @@ const EditProfile = () => {
   const [updateUser, {error: editError, loading: editLoading, data: editData}] =
     useMutation<UpdateUserMutation, UpdateUserMutationVariables>(editUser);
 
+  const [getUser, {data: userData, error: userError, loading: userLoading}] =
+    useLazyQuery<UsersByUsernameQuery, UsersByUsernameQueryVariables>(
+      getUserByUsername,
+      {variables: {username: data?.getUser?.username!}},
+    );
+
   const [
     deleteUserMutation,
     {error: deleteUserError, loading: loadingDeleteUser},
@@ -76,22 +88,32 @@ const EditProfile = () => {
   };
 
   const onSubmit = async (formData: IEditableUser) => {
-    console.log({formData});
-    const {bio, username, name, website} = formData;
-    await updateUser({
-      variables: {
-        input: {
-          bio,
-          username,
-          name,
-          website,
-          id: sub,
-          _version: data?.getUser?._version,
-        },
-      },
-    });
+    //console.log({formData});
+    const response = await getUser();
 
-    navigation.goBack();
+    if (response.data?.usersByUsername?.items.length ?? 0 >= 1) {
+      setError('username', {message: 'username must be unique'});
+    } else {
+      const {bio, username, name, website} = formData;
+      await updateUser({
+        variables: {
+          input: {
+            bio,
+            username,
+            name,
+            website,
+            id: sub,
+            _version: data?.getUser?._version,
+          },
+        },
+      });
+
+      navigation.goBack();
+    }
+  };
+
+  const checkUsername = () => {
+    return 'username must be unique';
   };
 
   const onConfirmDelete = () => {
@@ -186,6 +208,7 @@ const EditProfile = () => {
               value: 3,
               message: 'name must have at least 3 characters',
             },
+            //validate: checkUsername,
           }}
           placeholder="username..."
           label="Username"
