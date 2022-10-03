@@ -116,6 +116,7 @@ const EditProfile = () => {
   const checkUsername = async (username: string) => {
     try {
       const response = await getUser({variables: {username}});
+
       const users = response.data?.usersByUsername?.items;
 
       //si el usuario que contiene el username, que edite el usuario igual
@@ -123,12 +124,12 @@ const EditProfile = () => {
 
       if ((users?.length ?? 0) >= 1 && !isMyUser) {
         return 'username must be unique';
-      } else {
-        return true;
       }
     } catch (error) {
       Alert.alert('error fetching user by username');
     }
+    //devolvemos true para que pase la validacion
+    return true;
   };
 
   const onConfirmDelete = () => {

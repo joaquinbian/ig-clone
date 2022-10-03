@@ -1,6 +1,5 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {ActivityIndicator, View, Text} from 'react-native';
 
 import CommentsScreen from '@screens/CommentsScreen';
 import BottomTabNavigator from './BottomTabNavigator';
@@ -9,6 +8,10 @@ import {LinkingOptions, NavigationContainer} from '@react-navigation/native';
 import AuthStackNavigator from './AuthStackNavigator';
 import {useAuthContext} from '@context/AuthContext';
 import Loading from '@components/Loading';
+import {getUser, GetUserQuery} from './queries';
+import {useQuery} from '@apollo/client';
+import {GetUserQueryVariables} from 'src/API';
+import EditProfile from '@screens/EditProfileScreen';
 
 const Stack = createNativeStackNavigator<RootNavigatorParamList>();
 
@@ -37,37 +40,58 @@ const linking: LinkingOptions<RootNavigatorParamList> = {
 };
 
 const Navigation = () => {
-  const {user} = useAuthContext();
+  const {user, userId} = useAuthContext();
+  /*  const {sub} = user?.attributes;
+  console.log({sub}); */
+
+  const {data} = useQuery<GetUserQuery, GetUserQueryVariables>(getUser, {
+    variables: {id: userId},
+  });
 
   if (user === undefined) {
     return <Loading />;
   }
+
+  let screens = null;
+  if (!user) {
+    screens = (
+      <Stack.Screen
+        name="Auth"
+        component={AuthStackNavigator}
+        options={{headerShown: false}}
+      />
+    );
+  } else if (data?.getUser?.username === null) {
+    screens = (
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfile}
+        options={{title: 'Edit Profile'}}
+      />
+    );
+  } else {
+    screens = (
+      <>
+        <Stack.Screen
+          name="BottomTabs"
+          component={BottomTabNavigator}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Comments"
+          component={CommentsScreen}
+          options={{title: 'comments'}}
+        />
+      </>
+    );
+  }
+  //if(user && user.username)
+
   return (
     <NavigationContainer linking={linking}>
-      <Stack.Navigator>
-        {user ? (
-          <>
-            <Stack.Screen
-              name="BottomTabs"
-              component={BottomTabNavigator}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="Comments"
-              component={CommentsScreen}
-              options={{title: 'comments'}}
-            />
-          </>
-        ) : (
-          <Stack.Screen
-            name="Auth"
-            component={AuthStackNavigator}
-            options={{headerShown: false}}
-          />
-        )}
-      </Stack.Navigator>
+      <Stack.Navigator>{screens}</Stack.Navigator>
     </NavigationContainer>
   );
 };

@@ -5,6 +5,7 @@ export type RootNavigatorParamList = {
   Auth: undefined;
   BottomTabs: undefined;
   Comments: {postId: string};
+  EditProfile: undefined;
 };
 
 export type BottomNavigatorParamList = {

@@ -9,6 +9,7 @@ type UserType = CognitoUser | null | undefined;
 
 interface IAuthContext {
   user: UserType;
+  userId?: any;
 }
 
 interface IAuthProviderProps {
@@ -19,12 +20,14 @@ const AuthContext = createContext({} as IAuthContext);
 
 export const AuthProvider = ({children}: IAuthProviderProps) => {
   const [user, setUser] = useState<UserType>(undefined);
+  const [userId, setUserId] = useState(null);
 
   const checkUser = async () => {
     try {
       //bypassCache makes sure that the user comes from the server and not locally
       const user = await Auth.currentAuthenticatedUser({bypassCache: true});
       setUser(user);
+      setUserId(user.attributes.sub);
     } catch (error) {
       setUser(null);
     }
@@ -50,7 +53,11 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
     };
   }, []);
 
-  return <AuthContext.Provider value={{user}}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{user, userId}}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuthContext = () => useContext(AuthContext);
