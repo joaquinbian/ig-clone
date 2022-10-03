@@ -33,8 +33,10 @@ import {
 } from './queries';
 import {useNavigation} from '@react-navigation/native';
 import {Auth} from 'aws-amplify';
+
 const URL_REGEX =
   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+
 const EditProfile = () => {
   const [imageSelected, setImageSelected] = useState<Asset | undefined>();
   const {user} = useAuthContext();
@@ -68,7 +70,6 @@ const EditProfile = () => {
   const [getUser, {data: userData, error: userError, loading: userLoading}] =
     useLazyQuery<UsersByUsernameQuery, UsersByUsernameQueryVariables>(
       getUserByUsername,
-      {variables: {username: data?.getUser?.username!}},
     );
 
   const [
@@ -89,31 +90,45 @@ const EditProfile = () => {
 
   const onSubmit = async (formData: IEditableUser) => {
     //console.log({formData});
-    const response = await getUser();
+    //const response = await getUser();
 
-    if (response.data?.usersByUsername?.items.length ?? 0 >= 1) {
-      setError('username', {message: 'username must be unique'});
-    } else {
-      const {bio, username, name, website} = formData;
-      await updateUser({
-        variables: {
-          input: {
-            bio,
-            username,
-            name,
-            website,
-            id: sub,
-            _version: data?.getUser?._version,
-          },
+    // if (response.data?.usersByUsername?.items.length ?? 0 >= 1) {
+    //   setError('username', {message: 'username must be unique'});
+    // } else {
+    const {bio, username, name, website} = formData;
+    await updateUser({
+      variables: {
+        input: {
+          bio,
+          username,
+          name,
+          website,
+          id: sub,
+          _version: data?.getUser?._version,
         },
-      });
+      },
+    });
 
-      navigation.goBack();
-    }
+    navigation.goBack();
+    //}
   };
 
-  const checkUsername = () => {
-    return 'username must be unique';
+  const checkUsername = async (username: string) => {
+    try {
+      const response = await getUser({variables: {username}});
+      const users = response.data?.usersByUsername?.items;
+
+      //si el usuario que contiene el username, que edite el usuario igual
+      const isMyUser = !!users?.find(user => user?.id === sub);
+
+      if ((users?.length ?? 0) >= 1 && !isMyUser) {
+        return 'username must be unique';
+      } else {
+        return true;
+      }
+    } catch (error) {
+      Alert.alert('error fetching user by username');
+    }
   };
 
   const onConfirmDelete = () => {
@@ -208,7 +223,7 @@ const EditProfile = () => {
               value: 3,
               message: 'name must have at least 3 characters',
             },
-            //validate: checkUsername,
+            validate: checkUsername,
           }}
           placeholder="username..."
           label="Username"
