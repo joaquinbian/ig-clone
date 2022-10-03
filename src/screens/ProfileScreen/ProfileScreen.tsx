@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ProfileHeader from './ProfileHeader';
 import FeedGridView from '@components/FeedGridView';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -7,6 +7,7 @@ import {
   UserProfileNavigatorProps,
   ProfileBottomRouteProp,
   UserProfileRouteProp,
+  ProfileBottomNavigatorProp,
 } from '@navigation/types';
 import {useQuery} from '@apollo/client';
 import {getUserById, GetUserQueryById} from './queries';
@@ -32,8 +33,13 @@ const ProfileScreen = () => {
 
   //dependiendo de como entremos tinee un tipado u otro
   const navigation = useNavigation<
-    BottomNavigatorParamList | UserProfileNavigatorProps
+    ProfileBottomNavigatorProp | UserProfileNavigatorProps
   >();
+
+  //TODO:
+  //ver como ponerlo dentro de un useeffect o cambiarlo para que cuando naveguemos
+  //enviemos el username de una
+  navigation.setOptions({title: data?.getUser?.username ?? 'profile'});
 
   //console.warn('userid: ', route.params?.userId);
 
