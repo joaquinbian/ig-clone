@@ -51,7 +51,10 @@ const Post = ({post, isVisible}: Props) => {
     navigation.navigate('Comments', {postId: post.id});
   };
   const navigateToProfile = () => {
-    navigation.navigate('UserProfile', {userId: post.userID});
+    navigation.navigate('UserProfile', {
+      userId: post.userID,
+      username: post.User?.username ?? undefined,
+    });
     //navigation.popToTop() nos lleva al primer screen en el stack
   };
   return (

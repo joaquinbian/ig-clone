@@ -15,6 +15,7 @@ import {GetUserQuery, GetUserQueryVariables} from 'src/API';
 import Loading from '@components/Loading';
 import ApiErrorMessage from '@components/ApiErrorMessage';
 import {useAuthContext} from '@context/AuthContext';
+import {LoneSchemaDefinition} from 'graphql/validation/rules/LoneSchemaDefinition';
 
 const ProfileScreen = () => {
   const route = useRoute<ProfileBottomRouteProp | UserProfileRouteProp>();
@@ -37,9 +38,15 @@ const ProfileScreen = () => {
   >();
 
   //TODO:
-  //ver como ponerlo dentro de un useeffect o cambiarlo para que cuando naveguemos
-  //enviemos el username de una
-  navigation.setOptions({title: data?.getUser?.username ?? 'profile'});
+  //MEJORAR PARA EL PROFILE DEL USER LOGUEADO
+  useEffect(() => {
+    navigation.setOptions({
+      title:
+        route.name === 'UserProfile'
+          ? route.params.username
+          : data?.getUser?.username ?? 'Profile',
+    });
+  }, []);
 
   //console.warn('userid: ', route.params?.userId);
 

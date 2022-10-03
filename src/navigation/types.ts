@@ -26,7 +26,7 @@ export type ProfileBottomRouteProp = RouteProp<
 
 export type HomeStackNavigator = {
   Feed: undefined;
-  UserProfile: {userId: string};
+  UserProfile: {userId: string; username?: string};
 };
 
 export type UserProfileNavigatorProps = NativeStackNavigationProp<
