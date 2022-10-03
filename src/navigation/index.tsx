@@ -66,7 +66,7 @@ const Navigation = () => {
       <Stack.Screen
         name="EditProfile"
         component={EditProfile}
-        options={{title: 'Edit Profile'}}
+        options={{title: 'Set up Profile'}}
       />
     );
   } else {

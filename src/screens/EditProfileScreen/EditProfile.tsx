@@ -109,7 +109,9 @@ const EditProfile = () => {
       },
     });
 
-    navigation.goBack();
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    }
     //}
   };
 
