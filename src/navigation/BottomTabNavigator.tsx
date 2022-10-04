@@ -11,6 +11,7 @@ import CameraScreen from '@screens/CameraScreen';
 import ProfileStackNavigator from './ProfileStackNavigator';
 import {BottomNavigatorParamList} from './types';
 import SearchUserScreen from '@screens/SearchUserScreen';
+import UploadPostStackNavigator from './UploadPostStackNavigator';
 
 const BottomTab = createBottomTabNavigator<BottomNavigatorParamList>();
 
@@ -43,7 +44,7 @@ const BottomTabNavigator = () => {
       />
       <BottomTab.Screen
         name="UploadPost"
-        component={CameraScreen}
+        component={UploadPostStackNavigator}
         options={{
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons

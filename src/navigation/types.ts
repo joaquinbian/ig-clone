@@ -89,3 +89,9 @@ export type NewPasswordNavigationProp = NativeStackNavigationProp<
   AuthStackNavigatorParamList,
   'New password'
 >;
+
+//--------- UploadPostStackNavigator ----------
+export type UploadStackNavigatorParamList = {
+  Camera: undefined;
+  CreatePost: undefined;
+};
