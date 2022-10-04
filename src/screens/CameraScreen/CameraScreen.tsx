@@ -37,7 +37,7 @@ const videoOptions: CameraRecordingOptions = {
   maxDuration: 60,
   maxFileSize: 10 * 1024 * 1024,
 };
-const UploadPostScreen = () => {
+const CameraScreen = () => {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [type, setType] = useState<CameraType>(CameraType.back);
   const camera = useRef<Camera | null>();
@@ -187,4 +187,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UploadPostScreen;
+export default CameraScreen;

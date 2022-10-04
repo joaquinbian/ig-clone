@@ -7,7 +7,7 @@ import {colors} from '@theme/colors';
 import ProfileScreen from '@screens/ProfileScreen';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import UploadPostScreen from '@screens/UploadPostScreen';
+import CameraScreen from '@screens/CameraScreen';
 import ProfileStackNavigator from './ProfileStackNavigator';
 import {BottomNavigatorParamList} from './types';
 import SearchUserScreen from '@screens/SearchUserScreen';
@@ -43,7 +43,7 @@ const BottomTabNavigator = () => {
       />
       <BottomTab.Screen
         name="UploadPost"
-        component={UploadPostScreen}
+        component={CameraScreen}
         options={{
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons
