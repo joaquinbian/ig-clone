@@ -1,12 +1,16 @@
 import {Route, RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+
+//-------- RootNavigator ---------
 export type RootNavigatorParamList = {
   Auth: undefined;
   BottomTabs: undefined;
   Comments: {postId: string};
   EditProfile: undefined;
 };
+
+//-------- BottomNavigator ---------
 
 export type BottomNavigatorParamList = {
   HomeStack: undefined;
@@ -93,5 +97,19 @@ export type NewPasswordNavigationProp = NativeStackNavigationProp<
 //--------- UploadPostStackNavigator ----------
 export type UploadStackNavigatorParamList = {
   Camera: undefined;
-  CreatePost: undefined;
+  CreatePost: {
+    image?: string;
+    images?: string[];
+    video?: string;
+  };
 };
+
+export type CameraScreenNaviationProp = NativeStackNavigationProp<
+  UploadStackNavigatorParamList,
+  'Camera'
+>;
+
+export type CreatePostRouteProp = RouteProp<
+  UploadStackNavigatorParamList,
+  'CreatePost'
+>;

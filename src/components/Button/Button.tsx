@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {styles} from './styles';
+
 interface ICustomButton extends TouchableOpacityProps {
   title: string;
   onPress?: () => void;
@@ -25,12 +26,14 @@ const Button = ({
   ...rest
 }: ICustomButton) => {
   // return <ButtonRN title={title} onPress={onPress} {...rest} />;
+  console.log(title);
+
   return (
     <TouchableOpacity
       onPress={onPress}
-      {...rest}
       activeOpacity={rest.activeOpacity || 0.9}
-      style={[styles.buttonStyles, style]}>
+      style={[styles.buttonStyles, style]}
+      {...rest}>
       {isLoading ? (
         <ActivityIndicator />
       ) : (

@@ -10,6 +10,8 @@ import {
   VideoQuality,
 } from 'expo-camera';
 import {colors} from '@theme/colors';
+import {useNavigation} from '@react-navigation/native';
+import {CameraScreenNaviationProp} from '@navigation/types';
 
 const flashModes: FlashMode[] = [
   FlashMode.auto,
@@ -48,6 +50,8 @@ const CameraScreen = () => {
   const [isCameraReady, setIsCameraReady] = useState<boolean>(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
 
+  const navigation = useNavigation<CameraScreenNaviationProp>();
+
   useEffect(() => {
     (async () => {
       const {status} = await Camera.requestCameraPermissionsAsync();
@@ -63,8 +67,12 @@ const CameraScreen = () => {
     if (camera.current && isCameraReady) {
       const data = await camera.current.takePictureAsync(cameraOptions);
       console.log(data.uri);
-
       setImage(data?.uri);
+      navigation.navigate('CreatePost', {
+        image:
+          data.uri ??
+          'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/3.jpg',
+      });
     }
   };
 
