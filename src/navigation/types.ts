@@ -1,4 +1,8 @@
-import {Route, RouteProp} from '@react-navigation/native';
+import {
+  CompositeNavigationProp,
+  Route,
+  RouteProp,
+} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 
@@ -112,4 +116,9 @@ export type CameraScreenNaviationProp = NativeStackNavigationProp<
 export type CreatePostRouteProp = RouteProp<
   UploadStackNavigatorParamList,
   'CreatePost'
+>;
+
+export type CreatePostNavigationProp = CompositeNavigationProp<
+  NativeStackNavigationProp<UploadStackNavigatorParamList, 'CreatePost'>,
+  BottomTabNavigationProp<BottomNavigatorParamList>
 >;

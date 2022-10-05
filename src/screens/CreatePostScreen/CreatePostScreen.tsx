@@ -1,16 +1,16 @@
 import {StyleSheet, Text, View, Image, Alert} from 'react-native';
 import React from 'react';
-import {useRoute} from '@react-navigation/native';
-import {CreatePostRouteProp} from '@navigation/types';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {CreatePostNavigationProp, CreatePostRouteProp} from '@navigation/types';
 import CustomInput from '@components/CustomInput';
 import {useForm} from 'react-hook-form';
 import {ApolloError, useMutation} from '@apollo/client';
-import Button from '@components/Button';
-import {colors} from '@theme/colors';
 import CustomButton from '@screens/Auth/components/CustomButton';
 import {createPost} from './queries';
 import {CreatePostMutation, CreatePostMutationVariables} from 'src/API';
 import {useAuthContext} from '@context/AuthContext';
+import Carousel from '@components/Carousel';
+import VideoPlayer from '@components/VideoPlayer';
 
 interface ICreatePost {
   description: string | null;
@@ -18,7 +18,9 @@ interface ICreatePost {
 
 export default function CreatePostScreen() {
   const route = useRoute<CreatePostRouteProp>();
-  const {image} = route.params;
+
+  const navigation = useNavigation<CreatePostNavigationProp>();
+  const {image, video, images} = route.params;
   const {userId} = useAuthContext();
   const {control, handleSubmit} = useForm<ICreatePost>({
     defaultValues: {description: null},
@@ -37,6 +39,8 @@ export default function CreatePostScreen() {
           input: {
             description: description ?? null,
             image,
+            images,
+            video,
             numberOfComments: 0,
             numberOfLikes: 0,
             userID: userId,
@@ -44,41 +48,67 @@ export default function CreatePostScreen() {
         },
       });
       //console.log({response});
+      //para que no quede la segunda pantalla en el historial
+      navigation.popToTop();
+
+      navigation.navigate('HomeStack');
     } catch (error) {
       Alert.alert('error fetching posts', (error as Error).message);
     }
   };
 
+  //checking if the post is a soloimage, a carousel or a video
+
+  let content;
+  if (image) {
+    content = (
+      <Image
+        source={{
+          uri: image,
+        }}
+        style={styles.postImage}
+        resizeMode="cover"
+      />
+    );
+  } else if (images) {
+    content = <Carousel images={images} />;
+  } else if (video) {
+    content = <VideoPlayer source={video} />;
+  }
+
   return (
-    <View style={{alignItems: 'center', padding: 10}}>
-      <Image source={{uri: image}} style={styles.image} />
-      <View style={{marginVertical: 10, alignSelf: 'stretch'}}>
-        <CustomInput
-          control={control}
-          name="description"
-          placeholder="insert a description here..."
-          rules={{
-            maxLength: {
-              value: 500,
-              message: 'description can not exceed 500 characters',
-            },
-          }}
-          multiline
-        />
-        <CustomButton
-          type="PRIMARY"
-          text="Submit"
-          onPress={handleSubmit(createPostHandler)}
-          isLoading={loading}
-        />
+    <>
+      <View style={styles.contentContainer}>{content}</View>
+      <View style={{alignItems: 'center', margin: 10}}>
+        <View style={{marginVertical: 10, alignSelf: 'stretch'}}>
+          <CustomInput
+            control={control}
+            name="description"
+            placeholder="insert a description here..."
+            rules={{
+              maxLength: {
+                value: 500,
+                message: 'description can not exceed 500 characters',
+              },
+            }}
+            multiline
+          />
+          <CustomButton
+            type="PRIMARY"
+            text="Submit"
+            onPress={handleSubmit(createPostHandler)}
+            isLoading={loading}
+          />
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  image: {
-    width: 150,
+  contentContainer: {
+    width: '100%',
     aspectRatio: 1,
   },
+  postImage: {width: '100%', aspectRatio: 1},
 });

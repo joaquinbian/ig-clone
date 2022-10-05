@@ -64,15 +64,19 @@ const CameraScreen = () => {
   }, []);
 
   const takePicture = async () => {
-    if (camera.current && isCameraReady) {
-      const data = await camera.current.takePictureAsync(cameraOptions);
-      console.log(data.uri);
-      setImage(data?.uri);
-      navigation.navigate('CreatePost', {
-        image:
-          data.uri ??
-          'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/3.jpg',
-      });
+    try {
+      if (camera.current && isCameraReady) {
+        const data = await camera.current.takePictureAsync(cameraOptions);
+        console.log(data.uri);
+        setImage(data?.uri);
+        navigation.navigate('CreatePost', {
+          images: new Array(3).fill(
+            'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/1.jpg',
+          ),
+        });
+      }
+    } catch (error) {
+      console.log((error as Error).message);
     }
   };
 

@@ -9,7 +9,7 @@ import Pressable from '@components/Pressable';
 interface IProps {
   source: string;
   isVisible?: boolean;
-  onLikePost: () => void;
+  onLikePost?: () => void;
 }
 const VideoPlayer = ({source: uri, isVisible, onLikePost}: IProps) => {
   const player = useRef<Video | null>();

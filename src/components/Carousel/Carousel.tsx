@@ -26,9 +26,9 @@ const Carousel = ({images, onLikePost}: ICarouselProps) => {
 
   const onViewableItemsChanged = useRef(
     ({viewableItems, changed}: IOnViewableItemsChanged) => {
-      // console.log('Visible items are', viewableItems);
+      console.log('Visible items are', viewableItems);
       // console.log('Changed in this iteration', changed);
-      setCurrentIndex(viewableItems[0].index!);
+      setCurrentIndex(viewableItems[0]?.index!);
     },
   );
 
