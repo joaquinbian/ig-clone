@@ -7,6 +7,7 @@ import {useForm} from 'react-hook-form';
 import {ApolloError} from '@apollo/client';
 import Button from '@components/Button';
 import {colors} from '@theme/colors';
+import CustomButton from '@screens/Auth/components/CustomButton';
 
 interface ICreatePost {
   description: string;
@@ -28,24 +29,25 @@ export default function CreatePostScreen() {
   return (
     <View style={{alignItems: 'center', padding: 10}}>
       <Image source={{uri: image}} style={styles.image} />
-      <CustomInput
-        control={control}
-        name="description"
-        placeholder="insert a description here..."
-        rules={{
-          maxLength: {
-            value: 2,
-            message: 'description can not exceed 100 characters',
-          },
-        }}
-      />
-      <Button
-        title="on submit"
-        style={{padding: 20, backgroundColor: 'black'}}
-        onPress={handleSubmit(createPost)}
-        titleStyle={{color: 'white'}}
-        isLoading={false}
-      />
+      <View style={{marginVertical: 10, alignSelf: 'stretch'}}>
+        <CustomInput
+          control={control}
+          name="description"
+          placeholder="insert a description here..."
+          rules={{
+            maxLength: {
+              value: 2,
+              message: 'description can not exceed 100 characters',
+            },
+          }}
+          multiline
+        />
+        <CustomButton
+          type="PRIMARY"
+          text="Submit"
+          onPress={handleSubmit(createPost)}
+        />
+      </View>
     </View>
   );
 }

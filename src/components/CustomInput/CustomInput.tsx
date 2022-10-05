@@ -15,6 +15,7 @@ interface ICustomInput<FormType extends FieldValues> {
   rules?: RegisterOptions;
   placeholder?: string;
   secureTextEntry?: boolean;
+  multiline?: boolean;
 }
 function EditProfileInput<FormType extends FieldValues>({
   placeholder,
@@ -22,6 +23,7 @@ function EditProfileInput<FormType extends FieldValues>({
   control,
   rules,
   secureTextEntry = false,
+  multiline = false,
 }: ICustomInput<FormType>) {
   return (
     <Controller
@@ -42,6 +44,7 @@ function EditProfileInput<FormType extends FieldValues>({
                   error && {borderBottomColor: colors.error},
                 ]}
                 secureTextEntry={secureTextEntry}
+                multiline={multiline}
               />
               {error && (
                 <Text style={{color: colors.error}}>
