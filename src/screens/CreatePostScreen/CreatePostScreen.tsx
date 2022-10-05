@@ -1,29 +1,52 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, Alert} from 'react-native';
 import React from 'react';
 import {useRoute} from '@react-navigation/native';
 import {CreatePostRouteProp} from '@navigation/types';
 import CustomInput from '@components/CustomInput';
 import {useForm} from 'react-hook-form';
-import {ApolloError} from '@apollo/client';
+import {ApolloError, useMutation} from '@apollo/client';
 import Button from '@components/Button';
 import {colors} from '@theme/colors';
 import CustomButton from '@screens/Auth/components/CustomButton';
+import {createPost} from './queries';
+import {CreatePostMutation, CreatePostMutationVariables} from 'src/API';
+import {useAuthContext} from '@context/AuthContext';
 
 interface ICreatePost {
-  description: string;
+  description: string | null;
 }
 
 export default function CreatePostScreen() {
   const route = useRoute<CreatePostRouteProp>();
+  const {image} = route.params;
+  const {userId} = useAuthContext();
   const {control, handleSubmit} = useForm<ICreatePost>({
-    defaultValues: {description: ''},
+    defaultValues: {description: null},
     mode: 'all',
   });
+  const [onCreatePost, {loading, error}] = useMutation<
+    CreatePostMutation,
+    CreatePostMutationVariables
+  >(createPost);
 
-  const {image} = route.params;
-
-  const createPost = (data: ICreatePost) => {
-    console.log({data});
+  const createPostHandler = async ({description}: ICreatePost) => {
+    //   console.log({description});
+    try {
+      const response = await onCreatePost({
+        variables: {
+          input: {
+            description: description ?? null,
+            image,
+            numberOfComments: 0,
+            numberOfLikes: 0,
+            userID: userId,
+          },
+        },
+      });
+      //console.log({response});
+    } catch (error) {
+      Alert.alert('error fetching posts', (error as Error).message);
+    }
   };
 
   return (
@@ -36,8 +59,8 @@ export default function CreatePostScreen() {
           placeholder="insert a description here..."
           rules={{
             maxLength: {
-              value: 2,
-              message: 'description can not exceed 100 characters',
+              value: 500,
+              message: 'description can not exceed 500 characters',
             },
           }}
           multiline
@@ -45,7 +68,8 @@ export default function CreatePostScreen() {
         <CustomButton
           type="PRIMARY"
           text="Submit"
-          onPress={handleSubmit(createPost)}
+          onPress={handleSubmit(createPostHandler)}
+          isLoading={loading}
         />
       </View>
     </View>

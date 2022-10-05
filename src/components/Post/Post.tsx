@@ -57,6 +57,9 @@ const Post = ({post, isVisible}: Props) => {
     });
     //navigation.popToTop() nos lleva al primer screen en el stack
   };
+
+  console.log(post.description, post.image);
+
   return (
     <View style={styles.post}>
       {/* POST HEADER */}
@@ -145,14 +148,15 @@ const Post = ({post, isVisible}: Props) => {
               : `${post.numberOfLikes} others`}
           </BoldText>
         </Text>
-        {/* description */}
+        {/* description 
 
-        {post.description && (
+*/}
+        {post.description?.length && (
           <Text
             style={{color: colors.black, marginHorizontal: 5}}
             numberOfLines={isTooLong && !viewMore ? 2 : 0}>
             <BoldText>{post.User?.name ?? 'el pepe'}</BoldText>{' '}
-            {post.description}
+            {post.description ?? 'description'}
           </Text>
         )}
         {isTooLong && !viewMore && (
