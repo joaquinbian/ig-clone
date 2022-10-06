@@ -18,6 +18,8 @@ import {size, weight} from '@theme/fonts';
 import {colors} from '@theme/colors';
 import {useMutation} from '@apollo/client';
 import {deletePost} from '../queries';
+import {FeedNavigatorProps} from '@navigation/types';
+import {useNavigation} from '@react-navigation/native';
 
 interface IPostOptions {
   post: IPost;
@@ -25,6 +27,8 @@ interface IPostOptions {
 
 export default function PostOptions({post}: IPostOptions) {
   const {userId} = useAuthContext();
+  const navigation = useNavigation<FeedNavigatorProps>();
+
   const [onDeletePost] = useMutation<
     DeletePostMutation,
     DeletePostMutationVariables
@@ -53,6 +57,10 @@ export default function PostOptions({post}: IPostOptions) {
     );
   };
 
+  const onEditPressed = () => {
+    navigation.navigate('EditPostScreen', {postID: post.id});
+  };
+
   return (
     <Menu renderer={renderers.SlideInMenu}>
       <MenuTrigger>
@@ -70,7 +78,7 @@ export default function PostOptions({post}: IPostOptions) {
             <MenuOption onSelect={onDeletePressed}>
               <Text style={[styles.optionText, {color: 'red'}]}>Delete</Text>
             </MenuOption>
-            <MenuOption onSelect={() => Alert.alert(`edit`)}>
+            <MenuOption onSelect={onEditPressed}>
               <Text style={styles.optionText}>Edit</Text>
             </MenuOption>
           </>

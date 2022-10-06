@@ -35,12 +35,14 @@ export type ProfileBottomRouteProp = RouteProp<
 export type HomeStackNavigator = {
   Feed: undefined;
   UserProfile: {userId: string; username?: string};
+  EditPostScreen: {postID: string};
 };
 
 export type UserProfileNavigatorProps = NativeStackNavigationProp<
   HomeStackNavigator,
   'UserProfile'
 >;
+export type EditPostRouteProp = RouteProp<HomeStackNavigator, 'EditPostScreen'>;
 
 export type UserProfileRouteProp = RouteProp<HomeStackNavigator, 'UserProfile'>;
 export type FeedNavigatorProps = NativeStackNavigationProp<

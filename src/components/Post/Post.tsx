@@ -62,7 +62,7 @@ const Post = ({post, isVisible}: Props) => {
     //navigation.popToTop() nos lleva al primer screen en el stack
   };
 
-  console.log(post.description, post.image);
+  //console.log(post.description, post.image);
 
   return (
     <View style={styles.post}>
