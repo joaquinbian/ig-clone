@@ -1,4 +1,11 @@
-import {StyleSheet, Text, View, Image, Alert} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Alert,
+  useWindowDimensions,
+} from 'react-native';
 import React from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {CreatePostNavigationProp, CreatePostRouteProp} from '@navigation/types';
@@ -21,6 +28,7 @@ export default function CreatePostScreen() {
 
   const navigation = useNavigation<CreatePostNavigationProp>();
   const {image, video, images} = route.params;
+  const {width} = useWindowDimensions();
   const {userId} = useAuthContext();
   const {control, handleSubmit} = useForm<ICreatePost>({
     defaultValues: {description: null},
@@ -71,15 +79,15 @@ export default function CreatePostScreen() {
       />
     );
   } else if (images) {
-    content = <Carousel images={images} />;
+    content = <Carousel images={images} imageWidth={width - 20} />;
   } else if (video) {
     content = <VideoPlayer source={video} />;
   }
 
   return (
     <>
-      <View style={styles.contentContainer}>{content}</View>
       <View style={{alignItems: 'center', margin: 10}}>
+        <View style={styles.contentContainer}>{content}</View>
         <View style={{marginVertical: 10, alignSelf: 'stretch'}}>
           <CustomInput
             control={control}

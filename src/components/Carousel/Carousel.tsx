@@ -13,6 +13,7 @@ import {
 interface ICarouselProps {
   images: string[];
   onLikePost?: () => void;
+  imageWidth?: number;
 }
 
 interface IOnViewableItemsChanged {
@@ -20,7 +21,11 @@ interface IOnViewableItemsChanged {
   changed: ViewToken[];
 }
 
-const Carousel = ({images, onLikePost}: ICarouselProps) => {
+const Carousel = ({
+  images,
+  onLikePost,
+  imageWidth = undefined,
+}: ICarouselProps) => {
   const {width} = useWindowDimensions();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
@@ -38,7 +43,10 @@ const Carousel = ({images, onLikePost}: ICarouselProps) => {
 
   const renderItem = ({item}: {item: string}) => (
     <Pressable onDoublePress={onLikePost}>
-      <Image source={{uri: item}} style={{width, aspectRatio: 1}} />
+      <Image
+        source={{uri: item}}
+        style={{width: imageWidth ?? width, aspectRatio: 1}}
+      />
     </Pressable>
   );
   return (
