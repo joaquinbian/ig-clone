@@ -64,6 +64,8 @@ const ProfileScreen = () => {
     );
   }
 
+  //console.log(data?.getUser?.numberOfPosts);
+
   return (
     <FeedGridView
       data={data?.getUser?.Posts?.items ?? []}

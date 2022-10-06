@@ -55,6 +55,7 @@ export default function CreatePostScreen() {
           },
         },
       });
+
       //console.log({response});
       //para que no quede la segunda pantalla en el historial
       navigation.popToTop();
