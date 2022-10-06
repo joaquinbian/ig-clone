@@ -53,12 +53,15 @@ export default function EditPostScreen() {
   const createPostHandler = async ({description}: IEditPost) => {
     try {
       const response = await onUpdatePost({
-        /*  variables: {
+        variables: {
           input: {
-            
+            id: postID,
+            description,
+            _version: data?.getPost?._version,
           },
-        }, */
+        },
       });
+      // console.log({response});
 
       navigation.popToTop();
       navigation.navigate('HomeStack');
