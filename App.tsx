@@ -2,10 +2,11 @@
 /* eslint-disable */
 import {Linking, StyleSheet, View} from 'react-native';
 import Amplify from 'aws-amplify';
+import {MenuProvider} from 'react-native-popup-menu';
+import InAppBrowser from 'react-native-inappbrowser-reborn';
 import config from 'src/aws-exports';
 import Navigation from '@navigation/index';
 import {AuthProvider} from '@context/AuthContext';
-import InAppBrowser from 'react-native-inappbrowser-reborn';
 import Client from 'src/apollo/client';
 
 async function urlOpener(url: string, redirectUrl: string) {
@@ -28,11 +29,13 @@ Amplify.configure(newConfig);
 
 const App = () => {
   return (
-    <AuthProvider>
-      <Client>
-        <Navigation />
-      </Client>
-    </AuthProvider>
+    <MenuProvider>
+      <AuthProvider>
+        <Client>
+          <Navigation />
+        </Client>
+      </AuthProvider>
+    </MenuProvider>
   );
 };
 
