@@ -8,10 +8,16 @@ import {
   renderers,
 } from 'react-native-popup-menu';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import {Post as IPost} from 'src/API';
+import {
+  DeletePostMutation,
+  DeletePostMutationVariables,
+  Post as IPost,
+} from 'src/API';
 import {useAuthContext} from '@context/AuthContext';
 import {size, weight} from '@theme/fonts';
 import {colors} from '@theme/colors';
+import {useMutation} from '@apollo/client';
+import {deletePost} from '../queries';
 
 interface IPostOptions {
   post: IPost;
@@ -19,6 +25,34 @@ interface IPostOptions {
 
 export default function PostOptions({post}: IPostOptions) {
   const {userId} = useAuthContext();
+  const [onDeletePost] = useMutation<
+    DeletePostMutation,
+    DeletePostMutationVariables
+  >(deletePost, {variables: {input: {id: post.id, _version: post._version}}});
+
+  const startDeletingPost = async () => {
+    const response = await onDeletePost();
+    console.log({response}, 'delete post');
+  };
+
+  const onDeletePressed = () => {
+    Alert.alert(
+      'Are you sure you want to delete the post?',
+      'Deleting posts is destructive',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: startDeletingPost,
+        },
+      ],
+    );
+  };
+
   return (
     <Menu renderer={renderers.SlideInMenu}>
       <MenuTrigger>
@@ -33,7 +67,7 @@ export default function PostOptions({post}: IPostOptions) {
         </MenuOption>
         {post.userID === userId && (
           <>
-            <MenuOption onSelect={() => Alert.alert(`Delete`)}>
+            <MenuOption onSelect={onDeletePressed}>
               <Text style={[styles.optionText, {color: 'red'}]}>Delete</Text>
             </MenuOption>
             <MenuOption onSelect={() => Alert.alert(`edit`)}>
