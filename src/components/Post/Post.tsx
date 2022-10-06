@@ -1,8 +1,8 @@
 import React, {useCallback, useMemo, useState} from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, Image, TouchableOpacity, Alert} from 'react-native';
 import {styles} from './styles';
 import {colors} from '@theme/colors';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
@@ -17,6 +17,9 @@ import {FeedNavigatorProps} from '@navigation/types';
 import {Post as IPost} from 'src/API';
 import {DEFAULT_USER_IMAGE} from 'src/config';
 
+import {useAuthContext} from '@context/AuthContext';
+import PostOptions from './components/PostOptions';
+
 interface Props {
   post: IPost;
   isVisible?: boolean;
@@ -26,6 +29,7 @@ const Post = ({post, isVisible}: Props) => {
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const [viewMore, setViewMore] = useState<boolean>(false);
   const navigation = useNavigation<FeedNavigatorProps>();
+  const {userId} = useAuthContext();
 
   const isTooLong = useMemo(
     () => post?.description?.length ?? 0 >= 20,
@@ -76,7 +80,7 @@ const Post = ({post, isVisible}: Props) => {
             {post.User?.name ?? 'valeria'}
           </BoldText>
         </Pressable>
-        <SimpleLineIcons name="options-vertical" size={16} color="black" />
+        <PostOptions post={post} />
       </View>
 
       {/* POST IMAGE */}
