@@ -53,9 +53,11 @@ const FeedScreen = () => {
     return <Loading text="loading posts..." />;
   }
 
+  const posts = (data?.listPosts?.items ?? []).filter(post => !post?._deleted);
+
   return (
     <FlatList
-      data={data?.listPosts?.items}
+      data={posts}
       renderItem={({item}) =>
         item && <Post post={item} isVisible={currentItem === item.id} />
       }
