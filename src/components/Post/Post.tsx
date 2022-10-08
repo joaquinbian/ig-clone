@@ -20,13 +20,15 @@ import {
   LikeForPostByUserIdQueryVariables,
   Post as IPost,
   Like as ILike,
+  DeleteLikeMutation,
+  DeleteLikeMutationVariables,
 } from 'src/API';
 import {DEFAULT_USER_IMAGE} from 'src/config';
 
 import {useAuthContext} from '@context/AuthContext';
 import PostOptions from './components/PostOptions';
 import {useMutation, useQuery} from '@apollo/client';
-import {createLike, likeForPostByUserId} from './queries';
+import {createLike, deleteLike, likeForPostByUserId} from './queries';
 
 interface Props {
   post: IPost;
@@ -47,13 +49,19 @@ const Post = ({post, isVisible}: Props) => {
     refetchQueries: ['LikeForPostByUserId'],
   });
 
+  const [onDeleteLike] = useMutation<
+    DeleteLikeMutation,
+    DeleteLikeMutationVariables
+  >(deleteLike);
+
   const {data, loading, error} = useQuery<
     LikeForPostByUserIdQuery,
     LikeForPostByUserIdQueryVariables
   >(likeForPostByUserId, {
     variables: {postID: post.id, userID: {eq: userId}},
     onCompleted(data) {
-      if (data.likeForPostByUserId?.items[0]) {
+      const like = data.likeForPostByUserId?.items[0];
+      if (like && !like._deleted) {
         setIsLiked(true);
       }
     },
@@ -66,16 +74,19 @@ const Post = ({post, isVisible}: Props) => {
 
   const onLikePost = useCallback(async () => {
     //setIsLiked(true);
-    if (!isLiked) {
+    if (!like) {
       await likePost();
     }
   }, []);
   const toggleLike = async () => {
     console.log('me ejecuto toggle like');
 
-    if (isLiked) {
+    if (like) {
       //delete like
-      // setIsLiked(false)
+      setIsLiked(false);
+      await onDeleteLike({
+        variables: {input: {id: like?.id, _version: like?._version}},
+      });
       console.log({like});
     } else {
       setIsLiked(true);
@@ -104,7 +115,10 @@ const Post = ({post, isVisible}: Props) => {
   };
 
   //revisar de nuevo si sirve si se puede poner afuera del componente
-  const like = data?.likeForPostByUserId?.items[0];
+  //ver bien si no puedo manejarlo en un estado
+  const like = data?.likeForPostByUserId?.items.filter(
+    likes => !likes?._deleted,
+  )[0];
 
   return (
     <View style={styles.post}>
@@ -158,10 +172,10 @@ const Post = ({post, isVisible}: Props) => {
           }}>
           <TouchableOpacity onPress={toggleLike} activeOpacity={0.9}>
             <AntDesign
-              name={isLiked ? 'heart' : 'hearto'}
+              name={!!like ? 'heart' : 'hearto'}
               size={24}
               style={styles.icon}
-              color={isLiked ? 'red' : colors.black}
+              color={!!like ? 'red' : colors.black}
             />
           </TouchableOpacity>
           <Ionicons
@@ -189,7 +203,7 @@ const Post = ({post, isVisible}: Props) => {
         <Text style={styles.postInfo}>
           liked by <BoldText>vadim sadim</BoldText> and{' '}
           <BoldText>
-            {isLiked
+            {like
               ? `${post.numberOfLikes + 1} others`
               : `${post.numberOfLikes} others`}
           </BoldText>

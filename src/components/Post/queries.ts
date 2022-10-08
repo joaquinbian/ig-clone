@@ -65,3 +65,19 @@ export const likeForPostByUserId = /* GraphQL */ gql`
     }
   }
 `;
+
+export const deleteLike = /* GraphQL */ gql`
+  mutation DeleteLike(
+    $input: DeleteLikeInput!
+    $condition: ModelLikeConditionInput
+  ) {
+    deleteLike(input: $input, condition: $condition) {
+      id
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
