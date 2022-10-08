@@ -51,6 +51,11 @@ const Post = ({post, isVisible}: Props) => {
     LikeForPostByUserIdQueryVariables
   >(likeForPostByUserId, {
     variables: {postID: post.id, userID: {eq: userId}},
+    onCompleted(data) {
+      if (data.likeForPostByUserId?.items[0]) {
+        setIsLiked(true);
+      }
+    },
   });
   console.log({data}, post.description);
 
@@ -63,6 +68,9 @@ const Post = ({post, isVisible}: Props) => {
     setIsLiked(true);
   }, []);
   const toggleLike = async () => {
+    if (!isLiked) {
+      //delete like
+    }
     setIsLiked(isLiked => !isLiked);
     const res = await likePost();
   };
@@ -87,7 +95,7 @@ const Post = ({post, isVisible}: Props) => {
     //navigation.popToTop();
   };
 
-  const userLike = !!data?.likeForPostByUserId?.items[0];
+  //const userLike = !!data?.likeForPostByUserId?.items[0];
 
   return (
     <View style={styles.post}>
@@ -141,10 +149,10 @@ const Post = ({post, isVisible}: Props) => {
           }}>
           <TouchableOpacity onPress={toggleLike} activeOpacity={0.9}>
             <AntDesign
-              name={userLike ? 'heart' : 'hearto'}
+              name={isLiked ? 'heart' : 'hearto'}
               size={24}
               style={styles.icon}
-              color={userLike ? 'red' : colors.black}
+              color={isLiked ? 'red' : colors.black}
             />
           </TouchableOpacity>
           <Ionicons
