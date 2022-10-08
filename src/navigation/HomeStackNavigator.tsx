@@ -6,6 +6,7 @@ import {Image} from 'react-native';
 import logo from '@assets/images/logo.png';
 import {HomeStackNavigator} from './types';
 import EditPostScreen from '@screens/EditPostScreen/EditPostScreen';
+import PostLikesScreen from '@screens/PostLikesScreen';
 
 const Stack = createNativeStackNavigator<HomeStackNavigator>();
 
@@ -27,6 +28,7 @@ const Navigation = () => {
         options={{title: 'profile'}}
       />
       <Stack.Screen name="EditPostScreen" component={EditPostScreen} />
+      <Stack.Screen name="PostLikesScreen" component={PostLikesScreen} />
     </Stack.Navigator>
   );
 };

@@ -114,6 +114,10 @@ const Post = ({post, isVisible}: Props) => {
     //navigation.popToTop();
   };
 
+  const navigateToPostLikes = () => {
+    navigation.navigate('PostLikesScreen', {postID: post.id});
+  };
+
   //revisar de nuevo si sirve si se puede poner afuera del componente
   //ver bien si no puedo manejarlo en un estado
   const like = data?.likeForPostByUserId?.items.filter(
@@ -202,11 +206,13 @@ const Post = ({post, isVisible}: Props) => {
         {/* likes */}
         <Text style={styles.postInfo}>
           liked by <BoldText>vadim sadim</BoldText> and{' '}
-          <BoldText>
-            {like
-              ? `${post.numberOfLikes + 1} others`
-              : `${post.numberOfLikes} others`}
-          </BoldText>
+          <TouchableOpacity activeOpacity={0.8} onPress={navigateToPostLikes}>
+            <BoldText>
+              {like
+                ? `${post.numberOfLikes + 1} others`
+                : `${post.numberOfLikes} others`}
+            </BoldText>
+          </TouchableOpacity>
         </Text>
         {/* description 
 

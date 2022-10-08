@@ -36,6 +36,7 @@ export type HomeStackNavigator = {
   Feed: undefined;
   UserProfile: {userId: string; username?: string};
   EditPostScreen: {postID: string};
+  PostLikesScreen: {postID: string};
 };
 
 export type UserProfileNavigatorProps = NativeStackNavigationProp<
@@ -48,6 +49,10 @@ export type UserProfileRouteProp = RouteProp<HomeStackNavigator, 'UserProfile'>;
 export type FeedNavigatorProps = NativeStackNavigationProp<
   HomeStackNavigator,
   'Feed'
+>;
+export type PostLikesRouteProp = RouteProp<
+  HomeStackNavigator,
+  'PostLikesScreen'
 >;
 
 export type ProfileStackNavigator = {
