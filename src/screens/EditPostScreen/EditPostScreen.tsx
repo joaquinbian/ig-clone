@@ -32,6 +32,8 @@ export default function EditPostScreen() {
     UpdatePostMutationVariables
   >(updatePost);
 
+  //VER COMO HACER PARA PONER EL VALOR DEL POST FETCHEADO EN EL USEFORM
+  //PARA QEU QUEDE PRE-FILLEADO
   const {control, handleSubmit, resetField} = useForm<IEditPost>({
     mode: 'all',
     defaultValues: {description: null},
@@ -44,11 +46,11 @@ export default function EditPostScreen() {
   } = useQuery<GetPostQuery, GetPostQueryVariables>(getPost, {
     variables: {id: postID},
     onCompleted(data) {
-      console.log({data});
+      //  console.log({data});
       resetField('description', {defaultValue: data.getPost?.description});
     },
   });
-  console.log({data, loadingPost});
+  //console.log({data, loadingPost});
 
   const createPostHandler = async ({description}: IEditPost) => {
     try {

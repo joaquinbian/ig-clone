@@ -14,11 +14,19 @@ import Carousel from '@components/Carousel';
 import VideoPlayer from '@components/VideoPlayer';
 import {useNavigation} from '@react-navigation/native';
 import {FeedNavigatorProps} from '@navigation/types';
-import {Post as IPost} from 'src/API';
+import {
+  CreateLikeMutation,
+  CreateLikeMutationVariables,
+  LikeForPostByUserIdQuery,
+  LikeForPostByUserIdQueryVariables,
+  Post as IPost,
+} from 'src/API';
 import {DEFAULT_USER_IMAGE} from 'src/config';
 
 import {useAuthContext} from '@context/AuthContext';
 import PostOptions from './components/PostOptions';
+import {useMutation, useQuery} from '@apollo/client';
+import {createLike, likeForPostByUserId} from './queries';
 
 interface Props {
   post: IPost;
@@ -30,17 +38,36 @@ const Post = ({post, isVisible}: Props) => {
   const [viewMore, setViewMore] = useState<boolean>(false);
   const navigation = useNavigation<FeedNavigatorProps>();
   const {userId} = useAuthContext();
+  const [likePost] = useMutation<
+    CreateLikeMutation,
+    CreateLikeMutationVariables
+  >(createLike, {variables: {input: {postID: post.id, userID: userId}}});
+
+  const {data, loading, error} = useQuery<
+    LikeForPostByUserIdQuery,
+    LikeForPostByUserIdQueryVariables
+  >(likeForPostByUserId, {
+    variables: {postID: post.id, userID: {eq: userId}},
+    /* onCompleted(data) {
+      if (data.likeForPostByUserId?.items[0]) {
+        setIsLiked(true);
+      }
+    }, */
+  });
+  console.log({data}, post.description);
 
   const isTooLong = useMemo(
     () => post?.description?.length ?? 0 >= 20,
     [post?.description],
   );
 
-  const likePost = useCallback(() => {
+  const onLikePost = useCallback(() => {
     setIsLiked(true);
   }, []);
-  const toggleLike = () => {
+  const toggleLike = async () => {
     setIsLiked(isLiked => !isLiked);
+    const res = await likePost();
+    console.log({res});
   };
 
   const toggleSave = () => {
@@ -64,6 +91,8 @@ const Post = ({post, isVisible}: Props) => {
 
   //console.log(post.description, post.image);
 
+  const userLike = !!data?.likeForPostByUserId?.items[0];
+
   return (
     <View style={styles.post}>
       {/* POST HEADER */}
@@ -86,7 +115,7 @@ const Post = ({post, isVisible}: Props) => {
       {/* POST IMAGE */}
 
       {post.image && (
-        <Pressable onDoublePress={likePost}>
+        <Pressable onDoublePress={onLikePost}>
           <Image
             source={{
               uri: post.image,
@@ -96,12 +125,12 @@ const Post = ({post, isVisible}: Props) => {
           />
         </Pressable>
       )}
-      {post.images && <Carousel images={post.images} onLikePost={likePost} />}
+      {post.images && <Carousel images={post.images} onLikePost={onLikePost} />}
       {post.video && (
         <VideoPlayer
           source={post.video}
           isVisible={isVisible}
-          onLikePost={likePost}
+          onLikePost={onLikePost}
         />
       )}
 
@@ -116,10 +145,10 @@ const Post = ({post, isVisible}: Props) => {
           }}>
           <TouchableOpacity onPress={toggleLike} activeOpacity={0.9}>
             <AntDesign
-              name={isLiked ? 'heart' : 'hearto'}
+              name={userLike ? 'heart' : 'hearto'}
               size={24}
               style={styles.icon}
-              color={isLiked ? 'red' : colors.black}
+              color={userLike ? 'red' : colors.black}
             />
           </TouchableOpacity>
           <Ionicons
