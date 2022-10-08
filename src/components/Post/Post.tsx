@@ -41,18 +41,16 @@ const Post = ({post, isVisible}: Props) => {
   const [likePost] = useMutation<
     CreateLikeMutation,
     CreateLikeMutationVariables
-  >(createLike, {variables: {input: {postID: post.id, userID: userId}}});
+  >(createLike, {
+    variables: {input: {postID: post.id, userID: userId}},
+    refetchQueries: ['LikeForPostByUserId'],
+  });
 
   const {data, loading, error} = useQuery<
     LikeForPostByUserIdQuery,
     LikeForPostByUserIdQueryVariables
   >(likeForPostByUserId, {
     variables: {postID: post.id, userID: {eq: userId}},
-    /* onCompleted(data) {
-      if (data.likeForPostByUserId?.items[0]) {
-        setIsLiked(true);
-      }
-    }, */
   });
   console.log({data}, post.description);
 
@@ -67,7 +65,6 @@ const Post = ({post, isVisible}: Props) => {
   const toggleLike = async () => {
     setIsLiked(isLiked => !isLiked);
     const res = await likePost();
-    console.log({res});
   };
 
   const toggleSave = () => {
@@ -86,10 +83,9 @@ const Post = ({post, isVisible}: Props) => {
       userId: post.userID,
       username: post.User?.username ?? undefined,
     });
-    //navigation.popToTop() nos lleva al primer screen en el stack
+    //nos lleva al primer screen en el stack
+    //navigation.popToTop();
   };
-
-  //console.log(post.description, post.image);
 
   const userLike = !!data?.likeForPostByUserId?.items[0];
 
