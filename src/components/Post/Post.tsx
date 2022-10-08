@@ -2,7 +2,6 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {View, Text, Image, TouchableOpacity, Alert} from 'react-native';
 import {styles} from './styles';
 import {colors} from '@theme/colors';
-
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
@@ -20,6 +19,7 @@ import {
   LikeForPostByUserIdQuery,
   LikeForPostByUserIdQueryVariables,
   Post as IPost,
+  Like as ILike,
 } from 'src/API';
 import {DEFAULT_USER_IMAGE} from 'src/config';
 
@@ -32,13 +32,16 @@ interface Props {
   post: IPost;
   isVisible?: boolean;
 }
+
+let like: any;
+
 const Post = ({post, isVisible}: Props) => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const [viewMore, setViewMore] = useState<boolean>(false);
   const navigation = useNavigation<FeedNavigatorProps>();
   const {userId} = useAuthContext();
-  const [likePost] = useMutation<
+  const [likePost, {loading: loadingLike, error: errorLike}] = useMutation<
     CreateLikeMutation,
     CreateLikeMutationVariables
   >(createLike, {
@@ -53,26 +56,35 @@ const Post = ({post, isVisible}: Props) => {
     variables: {postID: post.id, userID: {eq: userId}},
     onCompleted(data) {
       if (data.likeForPostByUserId?.items[0]) {
+        like = data.likeForPostByUserId?.items[0];
         setIsLiked(true);
       }
     },
   });
-  console.log({data}, post.description);
 
   const isTooLong = useMemo(
     () => post?.description?.length ?? 0 >= 20,
     [post?.description],
   );
 
-  const onLikePost = useCallback(() => {
-    setIsLiked(true);
+  const onLikePost = useCallback(async () => {
+    //setIsLiked(true);
+    if (!isLiked) {
+      await likePost();
+    }
   }, []);
   const toggleLike = async () => {
-    if (!isLiked) {
+    console.log('me ejecuto toggle like');
+
+    if (isLiked) {
       //delete like
+      // setIsLiked(false)
+      console.log({like});
+    } else {
+      setIsLiked(true);
+      const response = await likePost();
+      like = response.data?.createLike ?? undefined;
     }
-    setIsLiked(isLiked => !isLiked);
-    const res = await likePost();
   };
 
   const toggleSave = () => {
