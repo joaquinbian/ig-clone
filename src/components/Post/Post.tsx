@@ -33,8 +33,6 @@ interface Props {
   isVisible?: boolean;
 }
 
-let like: any;
-
 const Post = ({post, isVisible}: Props) => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isSaved, setIsSaved] = useState<boolean>(false);
@@ -56,7 +54,6 @@ const Post = ({post, isVisible}: Props) => {
     variables: {postID: post.id, userID: {eq: userId}},
     onCompleted(data) {
       if (data.likeForPostByUserId?.items[0]) {
-        like = data.likeForPostByUserId?.items[0];
         setIsLiked(true);
       }
     },
@@ -83,7 +80,6 @@ const Post = ({post, isVisible}: Props) => {
     } else {
       setIsLiked(true);
       const response = await likePost();
-      like = response.data?.createLike ?? undefined;
     }
   };
 
@@ -107,7 +103,8 @@ const Post = ({post, isVisible}: Props) => {
     //navigation.popToTop();
   };
 
-  //const userLike = !!data?.likeForPostByUserId?.items[0];
+  //revisar de nuevo si sirve si se puede poner afuera del componente
+  const like = data?.likeForPostByUserId?.items[0];
 
   return (
     <View style={styles.post}>
