@@ -139,6 +139,9 @@ const Post = ({post, isVisible}: Props) => {
     likes => !likes?._deleted,
   )[0];
 
+  const postLikes = post.Likes?.items.filter(like => !like?._deleted) ?? [];
+  //console.log({postLikes}, post.description, post.id);
+
   const incrementLikes = async () => {
     const res = await onUpdatePost({
       variables: {
@@ -244,17 +247,24 @@ const Post = ({post, isVisible}: Props) => {
         </View>
 
         {/* likes */}
-        {post.numberOfLikes <= 0 ? (
+        {postLikes.length === 0 ? (
           <Text
             style={[styles.postInfo, {color: colors.gray, marginVertical: 3}]}>
             Be the first person on like the post!
           </Text>
         ) : (
           <Text style={styles.postInfo}>
-            liked by <BoldText>vadim sadim</BoldText> and{' '}
-            <TouchableOpacity activeOpacity={0.8} onPress={navigateToPostLikes}>
-              <BoldText>{`${post.numberOfLikes} others`}</BoldText>
-            </TouchableOpacity>
+            liked by <BoldText>{postLikes[0]?.User?.username!}</BoldText>
+            {postLikes.length > 1 && (
+              <>
+                and{' '}
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={navigateToPostLikes}>
+                  <BoldText>{`${post.numberOfLikes - 1} others`}</BoldText>
+                </TouchableOpacity>
+              </>
+            )}
           </Text>
         )}
 

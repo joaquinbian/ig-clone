@@ -90,6 +90,17 @@ export const updatePost = /* GraphQL */ gql`
     updatePost(input: $input, condition: $condition) {
       id
       numberOfLikes
+      Likes {
+        items {
+          id
+          _deleted
+          User {
+            id
+            name
+            username
+          }
+        }
+      }
       createdAt
       updatedAt
       _version

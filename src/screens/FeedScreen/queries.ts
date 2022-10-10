@@ -36,6 +36,17 @@ export const listPosts = /* GraphQL */ gql`
             }
           }
         }
+        Likes {
+          items {
+            _deleted
+            id
+            User {
+              name
+              id
+              username
+            }
+          }
+        }
       }
       nextToken
       startedAt
