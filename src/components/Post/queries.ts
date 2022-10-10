@@ -81,3 +81,20 @@ export const deleteLike = /* GraphQL */ gql`
     }
   }
 `;
+
+export const updatePost = /* GraphQL */ gql`
+  mutation UpdatePost(
+    $input: UpdatePostInput!
+    $condition: ModelPostConditionInput
+  ) {
+    updatePost(input: $input, condition: $condition) {
+      id
+      numberOfLikes
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;

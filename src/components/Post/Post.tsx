@@ -22,13 +22,21 @@ import {
   Like as ILike,
   DeleteLikeMutation,
   DeleteLikeMutationVariables,
+  UpdatePostInput,
+  UpdatePostMutation,
+  UpdatePostMutationVariables,
 } from 'src/API';
 import {DEFAULT_USER_IMAGE} from 'src/config';
 
 import {useAuthContext} from '@context/AuthContext';
 import PostOptions from './components/PostOptions';
 import {useMutation, useQuery} from '@apollo/client';
-import {createLike, deleteLike, likeForPostByUserId} from './queries';
+import {
+  createLike,
+  deleteLike,
+  likeForPostByUserId,
+  updatePost,
+} from './queries';
 
 interface Props {
   post: IPost;
@@ -53,6 +61,11 @@ const Post = ({post, isVisible}: Props) => {
     DeleteLikeMutation,
     DeleteLikeMutationVariables
   >(deleteLike);
+
+  const [onUpdatePost] = useMutation<
+    UpdatePostMutation,
+    UpdatePostMutationVariables
+  >(updatePost);
 
   const {data, loading, error} = useQuery<
     LikeForPostByUserIdQuery,
@@ -87,10 +100,12 @@ const Post = ({post, isVisible}: Props) => {
       await onDeleteLike({
         variables: {input: {id: like?.id, _version: like?._version}},
       });
+      await decrementLike();
       console.log({like});
     } else {
       setIsLiked(true);
       const response = await likePost();
+      await incrementLikes();
     }
   };
 
@@ -123,6 +138,31 @@ const Post = ({post, isVisible}: Props) => {
   const like = data?.likeForPostByUserId?.items.filter(
     likes => !likes?._deleted,
   )[0];
+
+  const incrementLikes = async () => {
+    const res = await onUpdatePost({
+      variables: {
+        input: {
+          id: post.id,
+          numberOfLikes: (post.numberOfLikes += 1),
+          _version: post._version,
+        },
+      },
+    });
+    console.log({res});
+  };
+
+  const decrementLike = async () => {
+    const res = await onUpdatePost({
+      variables: {
+        input: {
+          id: post.id,
+          numberOfLikes: (post.numberOfLikes -= 1),
+          _version: post._version,
+        },
+      },
+    });
+  };
 
   return (
     <View style={styles.post}>
@@ -208,9 +248,10 @@ const Post = ({post, isVisible}: Props) => {
           liked by <BoldText>vadim sadim</BoldText> and{' '}
           <TouchableOpacity activeOpacity={0.8} onPress={navigateToPostLikes}>
             <BoldText>
-              {like
+              {/*   {like
                 ? `${post.numberOfLikes + 1} others`
-                : `${post.numberOfLikes} others`}
+                : `${post.numberOfLikes} others`} */}
+              {`${post.numberOfLikes} others`}
             </BoldText>
           </TouchableOpacity>
         </Text>
