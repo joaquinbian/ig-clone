@@ -244,20 +244,21 @@ const Post = ({post, isVisible}: Props) => {
         </View>
 
         {/* likes */}
-        <Text style={styles.postInfo}>
-          liked by <BoldText>vadim sadim</BoldText> and{' '}
-          <TouchableOpacity activeOpacity={0.8} onPress={navigateToPostLikes}>
-            <BoldText>
-              {/*   {like
-                ? `${post.numberOfLikes + 1} others`
-                : `${post.numberOfLikes} others`} */}
-              {`${post.numberOfLikes} others`}
-            </BoldText>
-          </TouchableOpacity>
-        </Text>
-        {/* description 
+        {post.numberOfLikes <= 0 ? (
+          <Text
+            style={[styles.postInfo, {color: colors.gray, marginVertical: 3}]}>
+            Be the first person on like the post!
+          </Text>
+        ) : (
+          <Text style={styles.postInfo}>
+            liked by <BoldText>vadim sadim</BoldText> and{' '}
+            <TouchableOpacity activeOpacity={0.8} onPress={navigateToPostLikes}>
+              <BoldText>{`${post.numberOfLikes} others`}</BoldText>
+            </TouchableOpacity>
+          </Text>
+        )}
 
-*/}
+        {/* description */}
         {post.description?.length && (
           <Text
             style={{color: colors.black, marginHorizontal: 5}}
