@@ -35,6 +35,7 @@ module.exports = {
           '@interfaces': './src/interfaces',
           '@navigation': './src/navigation',
           '@context': './src/context',
+          '@hooks': './src/hooks',
         },
       },
     ],

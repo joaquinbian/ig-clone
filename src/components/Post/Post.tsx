@@ -37,6 +37,7 @@ import {
   likeForPostByUserId,
   updatePost,
 } from './queries';
+import {useLikes} from '@hooks/useLikes';
 
 interface Props {
   post: IPost;
@@ -49,23 +50,8 @@ const Post = ({post, isVisible}: Props) => {
   const [viewMore, setViewMore] = useState<boolean>(false);
   const navigation = useNavigation<FeedNavigatorProps>();
   const {userId} = useAuthContext();
-  const [likePost, {loading: loadingLike, error: errorLike}] = useMutation<
-    CreateLikeMutation,
-    CreateLikeMutationVariables
-  >(createLike, {
-    variables: {input: {postID: post.id, userID: userId}},
-    refetchQueries: ['LikeForPostByUserId'],
-  });
-
-  const [onDeleteLike] = useMutation<
-    DeleteLikeMutation,
-    DeleteLikeMutationVariables
-  >(deleteLike);
-
-  const [onUpdatePost] = useMutation<
-    UpdatePostMutation,
-    UpdatePostMutationVariables
-  >(updatePost);
+  const {incrementLikes, decrementLikes, deleteLike, likePost, like} =
+    useLikes(post);
 
   const {data, loading, error} = useQuery<
     LikeForPostByUserIdQuery,
@@ -99,11 +85,8 @@ const Post = ({post, isVisible}: Props) => {
     if (like) {
       //delete like
       setIsLiked(false);
-      await onDeleteLike({
-        variables: {input: {id: like?.id, _version: like?._version}},
-      });
-      decrementLike();
-      //console.log({like});
+      await deleteLike(like);
+      decrementLikes();
     } else {
       setIsLiked(true);
       const response = await likePost();
@@ -137,39 +120,12 @@ const Post = ({post, isVisible}: Props) => {
 
   //revisar de nuevo si sirve si se puede poner afuera del componente
   //ver bien si no puedo manejarlo en un estado
-  const like = data?.likeForPostByUserId?.items.filter(
+  /*   const like = data?.likeForPostByUserId?.items.filter(
     likes => !likes?._deleted,
-  )[0];
+  )[0]; */
 
   const postLikes = post.Likes?.items.filter(like => !like?._deleted) ?? [];
   console.log({postLikes}, post.description, post.id);
-
-  //TODO: VER COMO MANEJAR EL UNHANDLE REJECTION
-  const incrementLikes = async () => {
-    const res = await onUpdatePost({
-      variables: {
-        input: {
-          id: post.id,
-          numberOfLikes: (post.numberOfLikes += 1),
-          _version: post._version,
-        },
-      },
-    });
-    console.log({res});
-  };
-
-  const decrementLike = async () => {
-    const res = await onUpdatePost({
-      variables: {
-        input: {
-          id: post.id,
-          numberOfLikes:
-            post.numberOfLikes === 0 ? 0 : (post.numberOfLikes -= 1),
-          _version: post._version,
-        },
-      },
-    });
-  };
 
   return (
     <View style={styles.post}>
