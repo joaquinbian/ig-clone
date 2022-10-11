@@ -88,7 +88,9 @@ const Post = ({post, isVisible}: Props) => {
   const onLikePost = useCallback(async () => {
     //setIsLiked(true);
     if (!like) {
-      await likePost();
+      setIsLiked(true);
+      const response = await likePost();
+      incrementLikes();
     }
   }, []);
   const toggleLike = async () => {
@@ -100,12 +102,12 @@ const Post = ({post, isVisible}: Props) => {
       await onDeleteLike({
         variables: {input: {id: like?.id, _version: like?._version}},
       });
-      await decrementLike();
-      console.log({like});
+      decrementLike();
+      //console.log({like});
     } else {
       setIsLiked(true);
       const response = await likePost();
-      await incrementLikes();
+      incrementLikes();
     }
   };
 
@@ -140,7 +142,7 @@ const Post = ({post, isVisible}: Props) => {
   )[0];
 
   const postLikes = post.Likes?.items.filter(like => !like?._deleted) ?? [];
-  //console.log({postLikes}, post.description, post.id);
+  console.log({postLikes}, post.description, post.id);
 
   const incrementLikes = async () => {
     const res = await onUpdatePost({
@@ -160,7 +162,8 @@ const Post = ({post, isVisible}: Props) => {
       variables: {
         input: {
           id: post.id,
-          numberOfLikes: (post.numberOfLikes -= 1),
+          numberOfLikes:
+            post.numberOfLikes === 0 ? 0 : (post.numberOfLikes -= 1),
           _version: post._version,
         },
       },
@@ -256,14 +259,16 @@ const Post = ({post, isVisible}: Props) => {
           <Text style={styles.postInfo}>
             liked by <BoldText>{postLikes[0]?.User?.username!}</BoldText>
             {postLikes.length > 1 && (
-              <>
-                and{' '}
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={navigateToPostLikes}>
-                  <BoldText>{`${post.numberOfLikes - 1} others`}</BoldText>
-                </TouchableOpacity>
-              </>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={navigateToPostLikes}
+                style={{alignSelf: 'center'}}>
+                <Text style={{textAlign: 'center', alignSelf: 'center'}}>
+                  {' '}
+                  and
+                  <BoldText>{` ${post.numberOfLikes - 1} others`}</BoldText>
+                </Text>
+              </TouchableOpacity>
             )}
           </Text>
         )}
