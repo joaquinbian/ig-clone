@@ -144,6 +144,7 @@ const Post = ({post, isVisible}: Props) => {
   const postLikes = post.Likes?.items.filter(like => !like?._deleted) ?? [];
   console.log({postLikes}, post.description, post.id);
 
+  //TODO: VER COMO MANEJAR EL UNHANDLE REJECTION
   const incrementLikes = async () => {
     const res = await onUpdatePost({
       variables: {
