@@ -10,9 +10,11 @@ import {getCommentsByPost} from './queries';
 import {GetCommentsByPostQuery, GetCommentsByPostQueryVariables} from 'src/API';
 import Loading from '@components/Loading';
 import ApiErrorMessage from '@components/ApiErrorMessage';
+import {useAuthContext} from '@context/AuthContext';
 
 const CommentsScreen = () => {
   const route = useRoute<CommentsRouteProp>();
+  const {userId} = useAuthContext();
 
   const {postId} = route.params;
 
@@ -37,6 +39,9 @@ const CommentsScreen = () => {
   const COMMENTS_FILTERED =
     data?.getCommentsByPost?.items.filter(comment => !comment?._deleted) ?? [];
 
+  console.log(postId, {userId});
+  console.log({COMMENTS_FILTERED});
+
   return (
     <>
       <View style={{flex: 1}}>
@@ -50,7 +55,7 @@ const CommentsScreen = () => {
           />
         )}
       </View>
-      <Input />
+      <Input postId={postId} />
     </>
   );
 };

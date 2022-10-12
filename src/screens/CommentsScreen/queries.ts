@@ -1,24 +1,73 @@
 import {gql} from '@apollo/client';
 
-export const getCommentsByPost = gql`
-  query GetCommentsByPost($postID: ID!) {
-    getCommentsByPost(postID: $postID) {
+export const getCommentsByPost = /* GraphQL */ gql`
+  query GetCommentsByPost(
+    $postID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelCommentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getCommentsByPost(
+      postID: $postID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        comment
+        userID
+        postID
+        User {
+          id
+          name
+          image
+          username
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
       nextToken
       startedAt
-      items {
-        _deleted
-        _version
-        comment
-        createdAt
+    }
+  }
+`;
+export const createComment = /* GraphQL */ gql`
+  mutation CreateComment(
+    $input: CreateCommentInput!
+    $condition: ModelCommentConditionInput
+  ) {
+    createComment(input: $input, condition: $condition) {
+      id
+      comment
+      userID
+      postID
+      User {
         id
+        name
+        image
+        username
+        createdAt
         updatedAt
-        User {
-          _version
-          bio
-          id
-          username
-        }
+        _version
+        _deleted
+        _lastChangedAt
       }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;

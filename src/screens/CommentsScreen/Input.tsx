@@ -1,16 +1,49 @@
 import Pressable from '@components/Pressable';
 import React, {useState} from 'react';
-import {View, Text, Image, TextInput, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TextInput,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 import {colors} from '@theme/colors';
 import {weight} from '@theme/fonts';
+import {useMutation} from '@apollo/client';
+import {createComment} from './queries';
+import {
+  CreateCommentMutation,
+  CreateCommentMutationVariables,
+  Post,
+} from 'src/API';
+import {useAuthContext} from '@context/AuthContext';
 
-const Input = () => {
+interface CommentInput {
+  postId: any;
+}
+
+const Input = ({postId}: CommentInput) => {
   const [text, setText] = useState<string>('');
+  const {userId} = useAuthContext();
+  const [onCreateComment, {loading}] = useMutation<
+    CreateCommentMutation,
+    CreateCommentMutationVariables
+  >(createComment, {
+    variables: {input: {comment: text, postID: postId, userID: userId}},
+    //TODO: ver si puedo sincronizar la lista con la data que devuevle
+    refetchQueries: ['GetCommentsByPost'],
+  });
 
-  const onPost = () => {
+  const onPost = async () => {
     //send to backend
-    console.warn(text);
+    try {
+      onCreateComment();
+    } catch (error) {
+      console.log((error as Error).message);
+    }
     setText('');
+    console.warn(text);
   };
   return (
     <View style={styles.container}>
@@ -27,10 +60,14 @@ const Input = () => {
         onChangeText={setText}
         style={styles.input}
       />
-      <Pressable style={styles.button} onPress={onPost}>
-        <Text style={{color: colors.primary, fontWeight: weight.bold}}>
-          Post
-        </Text>
+      <Pressable style={styles.button} onPress={onPost} disabled={!text}>
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <Text style={{color: colors.primary, fontWeight: weight.bold}}>
+            Post
+          </Text>
+        )}
       </Pressable>
     </View>
   );
