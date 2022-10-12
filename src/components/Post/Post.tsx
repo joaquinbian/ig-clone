@@ -13,30 +13,10 @@ import Carousel from '@components/Carousel';
 import VideoPlayer from '@components/VideoPlayer';
 import {useNavigation} from '@react-navigation/native';
 import {FeedNavigatorProps} from '@navigation/types';
-import {
-  CreateLikeMutation,
-  CreateLikeMutationVariables,
-  LikeForPostByUserIdQuery,
-  LikeForPostByUserIdQueryVariables,
-  Post as IPost,
-  Like as ILike,
-  DeleteLikeMutation,
-  DeleteLikeMutationVariables,
-  UpdatePostInput,
-  UpdatePostMutation,
-  UpdatePostMutationVariables,
-} from 'src/API';
+import {Post as IPost, Like as ILike} from 'src/API';
 import {DEFAULT_USER_IMAGE} from 'src/config';
 
-import {useAuthContext} from '@context/AuthContext';
 import PostOptions from './components/PostOptions';
-import {useMutation, useQuery} from '@apollo/client';
-import {
-  createLike,
-  deleteLike,
-  likeForPostByUserId,
-  updatePost,
-} from './queries';
 import {useLikes} from '@hooks/useLikes';
 
 interface Props {
@@ -45,26 +25,10 @@ interface Props {
 }
 
 const Post = ({post, isVisible}: Props) => {
-  const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const [viewMore, setViewMore] = useState<boolean>(false);
   const navigation = useNavigation<FeedNavigatorProps>();
-  const {userId} = useAuthContext();
-  const {incrementLikes, decrementLikes, deleteLike, likePost, like} =
-    useLikes(post);
-
-  const {data, loading, error} = useQuery<
-    LikeForPostByUserIdQuery,
-    LikeForPostByUserIdQueryVariables
-  >(likeForPostByUserId, {
-    variables: {postID: post.id, userID: {eq: userId}},
-    onCompleted(data) {
-      const like = data.likeForPostByUserId?.items[0];
-      if (like && !like._deleted) {
-        setIsLiked(true);
-      }
-    },
-  });
+  const {toggleLike, isLiked, onLikePost: likePost} = useLikes(post);
 
   const isTooLong = useMemo(
     () => post?.description?.length ?? 0 >= 20,
@@ -73,26 +37,10 @@ const Post = ({post, isVisible}: Props) => {
 
   const onLikePost = useCallback(async () => {
     //setIsLiked(true);
-    if (!like) {
-      setIsLiked(true);
-      const response = await likePost();
-      incrementLikes();
+    if (!isLiked) {
+      likePost();
     }
   }, []);
-  const toggleLike = async () => {
-    console.log('me ejecuto toggle like');
-
-    if (like) {
-      //delete like
-      setIsLiked(false);
-      await deleteLike(like);
-      decrementLikes();
-    } else {
-      setIsLiked(true);
-      const response = await likePost();
-      incrementLikes();
-    }
-  };
 
   const toggleSave = () => {
     setIsSaved(isSaved => !isSaved);
@@ -118,14 +66,8 @@ const Post = ({post, isVisible}: Props) => {
     navigation.navigate('PostLikesScreen', {postID: post.id});
   };
 
-  //revisar de nuevo si sirve si se puede poner afuera del componente
-  //ver bien si no puedo manejarlo en un estado
-  /*   const like = data?.likeForPostByUserId?.items.filter(
-    likes => !likes?._deleted,
-  )[0]; */
-
   const postLikes = post.Likes?.items.filter(like => !like?._deleted) ?? [];
-  console.log({postLikes}, post.description, post.id);
+  //console.log({postLikes}, post.description, post.id);
 
   return (
     <View style={styles.post}>
@@ -179,10 +121,10 @@ const Post = ({post, isVisible}: Props) => {
           }}>
           <TouchableOpacity onPress={toggleLike} activeOpacity={0.9}>
             <AntDesign
-              name={!!like ? 'heart' : 'hearto'}
+              name={isLiked ? 'heart' : 'hearto'}
               size={24}
               style={styles.icon}
-              color={!!like ? 'red' : colors.black}
+              color={isLiked ? 'red' : colors.black}
             />
           </TouchableOpacity>
           <Ionicons

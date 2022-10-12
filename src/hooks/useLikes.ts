@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import {Alert} from 'react-native';
 import {useMutation, useQuery} from '@apollo/client';
 import {
@@ -90,11 +89,25 @@ export const useLikes = (post: IPost) => {
     });
   };
 
+  const toggleLike = () => {
+    if (like) {
+      //delete like
+      deleteLike(like);
+      decrementLikes();
+    } else {
+      likePost();
+      incrementLikes();
+    }
+  };
+
+  const onLikePost = () => {
+    likePost();
+    incrementLikes();
+  };
+
   return {
-    incrementLikes,
-    decrementLikes,
-    deleteLike,
-    likePost,
-    like,
+    isLiked: !!like,
+    toggleLike,
+    onLikePost,
   };
 };
