@@ -17,7 +17,7 @@ import {Post as IPost, Like as ILike} from 'src/API';
 import {DEFAULT_USER_IMAGE} from 'src/config';
 
 import PostOptions from './components/PostOptions';
-import {useLikes} from '@hooks/useLikes';
+import {useLikes} from '@hooks/useLikes/useLikes';
 
 interface Props {
   post: IPost;
