@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Image, Text, View} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {Comment as IComment} from 'src/API';
+import {Comment as IComment, User} from 'src/API';
 import BoldText from '@components/BoldText';
 import {colors} from '@theme/colors';
 import {styles} from './styles';

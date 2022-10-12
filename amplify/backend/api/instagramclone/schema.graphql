@@ -15,7 +15,7 @@ type Comment @model @auth(rules: [{allow: public}]) {
   id: ID!
   comment: String!
   userID: ID! @index(name: "byUser")
-  postID: ID! @index(name: "byPost")
+  postID: ID! @index(name: "byPost", queryField: "getCommentsByPost")
   User: User @belongsTo(fields: ["userID"])
   Post: Post @belongsTo(fields: ["postID"])
 }

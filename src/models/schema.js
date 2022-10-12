@@ -497,6 +497,7 @@ export const schema = {
                     "type": "key",
                     "properties": {
                         "name": "byPost",
+                        "queryField": "getCommentsByPost",
                         "fields": [
                             "postID"
                         ]
