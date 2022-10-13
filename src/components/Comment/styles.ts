@@ -1,3 +1,4 @@
+import {colors} from '@theme/colors';
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -10,6 +11,19 @@ export const styles = StyleSheet.create({
     borderRadius: 15,
     position: 'relative',
     alignSelf: 'flex-start',
+    marginRight: 10,
+  },
+  labelsFooterContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  labelsFooterText: {
+    color: colors.lightgray,
     marginRight: 5,
+  },
+  usernameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    //para que ocupe solo el width q le corresponda
   },
 });
