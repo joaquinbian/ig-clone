@@ -26,4 +26,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     //para que ocupe solo el width q le corresponda
   },
+  menuContainer: {
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    borderWidth: 1,
+    borderColor: colors.lightgray,
+  },
 });

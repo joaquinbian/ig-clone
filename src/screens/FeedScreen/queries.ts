@@ -31,6 +31,7 @@ export const listPosts = /* GraphQL */ gql`
           items {
             id
             comment
+            _deleted
             User {
               username
             }
