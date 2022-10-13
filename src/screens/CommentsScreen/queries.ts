@@ -63,6 +63,20 @@ export const createComment = /* GraphQL */ gql`
         _deleted
         _lastChangedAt
       }
+      Post {
+        id
+        Comments {
+          items {
+            id
+            comment
+            _deleted
+            User {
+              id
+              username
+            }
+          }
+        }
+      }
       createdAt
       updatedAt
       _version
