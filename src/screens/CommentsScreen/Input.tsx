@@ -38,11 +38,11 @@ const Input = ({postId}: CommentInput) => {
   const onPost = async () => {
     //send to backend
     try {
-      onCreateComment();
+      await onCreateComment();
+      setText('');
     } catch (error) {
       console.log((error as Error).message);
     }
-    setText('');
     console.warn(text);
   };
   return (
@@ -59,6 +59,7 @@ const Input = ({postId}: CommentInput) => {
         value={text}
         onChangeText={setText}
         style={styles.input}
+        editable={!loading}
       />
       <Pressable style={styles.button} onPress={onPost} disabled={!text}>
         {loading ? (
