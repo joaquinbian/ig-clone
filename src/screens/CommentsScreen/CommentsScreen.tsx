@@ -14,7 +14,6 @@ import {useAuthContext} from '@context/AuthContext';
 
 const CommentsScreen = () => {
   const route = useRoute<CommentsRouteProp>();
-  const {userId} = useAuthContext();
 
   const {postId} = route.params;
 
@@ -39,8 +38,8 @@ const CommentsScreen = () => {
   const COMMENTS_FILTERED =
     data?.getCommentsByPost?.items.filter(comment => !comment?._deleted) ?? [];
 
-  console.log(postId, {userId});
-  console.log({COMMENTS_FILTERED});
+  //console.log(postId, {userId});
+  //console.log({COMMENTS_FILTERED});
 
   return (
     <>
