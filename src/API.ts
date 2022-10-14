@@ -1987,6 +1987,69 @@ export type SyncCommentsQuery = {
   } | null,
 };
 
+export type GetCommentsByPostQueryVariables = {
+  postID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelCommentFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type GetCommentsByPostQuery = {
+  getCommentsByPost?:  {
+    __typename: "ModelCommentConnection",
+    items:  Array< {
+      __typename: "Comment",
+      id: string,
+      comment: string,
+      userID: string,
+      postID: string,
+      User?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        image?: string | null,
+        bio?: string | null,
+        username?: string | null,
+        website?: string | null,
+        email: string,
+        numberOfPosts: number,
+        numberOfFollowers: number,
+        numberOfFollowings: number,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      Post?:  {
+        __typename: "Post",
+        id: string,
+        description?: string | null,
+        image?: string | null,
+        images?: Array< string > | null,
+        video?: string | null,
+        numberOfComments: number,
+        numberOfLikes: number,
+        userID: string,
+        untitledfield?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
 export type GetPostQueryVariables = {
   id: string,
 };

@@ -14,6 +14,8 @@ export type RootNavigatorParamList = {
   EditProfile: undefined;
 };
 
+export type CommentsRouteProp = RouteProp<RootNavigatorParamList, 'Comments'>;
+
 //-------- BottomNavigator ---------
 
 export type BottomNavigatorParamList = {
@@ -46,9 +48,13 @@ export type UserProfileNavigatorProps = NativeStackNavigationProp<
 export type EditPostRouteProp = RouteProp<HomeStackNavigator, 'EditPostScreen'>;
 
 export type UserProfileRouteProp = RouteProp<HomeStackNavigator, 'UserProfile'>;
-export type FeedNavigatorProps = NativeStackNavigationProp<
-  HomeStackNavigator,
-  'Feed'
+
+export type FeedNavigatorProps = CompositeNavigationProp<
+  NativeStackNavigationProp<HomeStackNavigator, 'Feed'>,
+  CompositeNavigationProp<
+    BottomTabNavigationProp<BottomNavigatorParamList>,
+    NativeStackNavigationProp<RootNavigatorParamList>
+  >
 >;
 export type PostLikesRouteProp = RouteProp<
   HomeStackNavigator,

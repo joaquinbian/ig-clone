@@ -1,16 +1,72 @@
 import Pressable from '@components/Pressable';
 import React, {useState} from 'react';
-import {View, Text, Image, TextInput, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TextInput,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 import {colors} from '@theme/colors';
 import {weight} from '@theme/fonts';
+import {useMutation, useQuery} from '@apollo/client';
+import {createComment, getPost, updatePost} from './queries';
+import {
+  CreateCommentMutation,
+  CreateCommentMutationVariables,
+  GetPostQuery,
+  GetPostQueryVariables,
+  Post,
+  UpdatePostMutation,
+  UpdatePostMutationVariables,
+} from 'src/API';
+import {useAuthContext} from '@context/AuthContext';
 
-const Input = () => {
+interface CommentInput {
+  postId: any;
+}
+
+const Input = ({postId}: CommentInput) => {
   const [text, setText] = useState<string>('');
+  const {userId} = useAuthContext();
 
-  const onPost = () => {
+  const {data} = useQuery<GetPostQuery, GetPostQueryVariables>(getPost, {
+    variables: {id: postId},
+  });
+  const [onCreateComment, {loading}] = useMutation<
+    CreateCommentMutation,
+    CreateCommentMutationVariables
+  >(createComment, {
+    variables: {input: {comment: text, postID: postId, userID: userId}},
+    //TODO: ver si puedo sincronizar la lista con la data que devuevle
+    refetchQueries: ['GetCommentsByPost'],
+  });
+
+  const [onUpdatePost] = useMutation<
+    UpdatePostMutation,
+    UpdatePostMutationVariables
+  >(updatePost);
+
+  const onPost = async () => {
     //send to backend
-    console.warn(text);
-    setText('');
+    try {
+      let nOfComments = data?.getPost?.numberOfComments ?? 0;
+      await onUpdatePost({
+        variables: {
+          input: {
+            _version: data?.getPost?._version,
+            id: postId,
+            numberOfComments: (nOfComments += 1),
+          },
+        },
+      });
+      await onCreateComment();
+      setText('');
+    } catch (error) {
+      console.log((error as Error).message);
+    }
+    //console.warn(text);
   };
   return (
     <View style={styles.container}>
@@ -26,11 +82,16 @@ const Input = () => {
         value={text}
         onChangeText={setText}
         style={styles.input}
+        editable={!loading}
       />
-      <Pressable style={styles.button} onPress={onPost}>
-        <Text style={{color: colors.primary, fontWeight: weight.bold}}>
-          Post
-        </Text>
+      <Pressable style={styles.button} onPress={onPost} disabled={!text}>
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <Text style={{color: colors.primary, fontWeight: weight.bold}}>
+            Post
+          </Text>
+        )}
       </Pressable>
     </View>
   );
