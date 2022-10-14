@@ -15,3 +15,36 @@ export const deleteComment = /* GraphQL */ gql`
     }
   }
 `;
+
+export const updatePost = /* GraphQL */ gql`
+  mutation UpdatePost(
+    $input: UpdatePostInput!
+    $condition: ModelPostConditionInput
+  ) {
+    updatePost(input: $input, condition: $condition) {
+      id
+      numberOfComments
+      userID
+      untitledfield
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+
+export const getPost = /* GraphQL */ gql`
+  query GetPost($id: ID!) {
+    getPost(id: $id) {
+      id
+      numberOfComments
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;

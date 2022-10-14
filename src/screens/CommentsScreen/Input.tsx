@@ -43,7 +43,7 @@ const Input = ({postId}: CommentInput) => {
     refetchQueries: ['GetCommentsByPost'],
   });
 
-  const [onUpdatePost] = useMutation<
+  const [onUpdatePost, {loading: loadingUpdatingPost}] = useMutation<
     UpdatePostMutation,
     UpdatePostMutationVariables
   >(updatePost);
@@ -85,7 +85,7 @@ const Input = ({postId}: CommentInput) => {
         editable={!loading}
       />
       <Pressable style={styles.button} onPress={onPost} disabled={!text}>
-        {loading ? (
+        {loading || loadingUpdatingPost ? (
           <ActivityIndicator />
         ) : (
           <Text style={{color: colors.primary, fontWeight: weight.bold}}>
