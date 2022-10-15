@@ -20,41 +20,17 @@ import {
   UpdatePostMutation,
   UpdatePostMutationVariables,
 } from 'src/API';
-import {deleteComment, getPost, updatePost} from './queries';
+import {useComment} from '@hooks/useComment';
 
 interface IDeleteCommentMenu {
   comment: Comment;
 }
 export default function DeleteCommentWrapper({comment}: IDeleteCommentMenu) {
-  const {data} = useQuery<GetPostQuery, GetPostQueryVariables>(getPost, {
-    variables: {id: comment.postID},
-  });
-
-  const [onDeleteComment] = useMutation<
-    DeleteCommentMutation,
-    DeleteCommentMutationVariables
-  >(deleteComment, {
-    variables: {input: {id: comment.id, _version: comment._version}},
-  });
-
-  const [onUpdatePost, {loading: loadingUpdatingPost}] = useMutation<
-    UpdatePostMutation,
-    UpdatePostMutationVariables
-  >(updatePost);
+  const {deleteComment} = useComment(comment.postID);
 
   const handleDeleteComment = async () => {
     try {
-      let nOfComments = data?.getPost?.numberOfComments ?? 0;
-      await onUpdatePost({
-        variables: {
-          input: {
-            _version: data?.getPost?._version,
-            id: comment.postID,
-            numberOfComments: nOfComments === 0 ? 0 : (nOfComments -= 1),
-          },
-        },
-      });
-      await onDeleteComment();
+      await deleteComment(comment);
     } catch (error) {}
   };
 

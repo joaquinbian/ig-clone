@@ -68,9 +68,8 @@ const Post = ({post, isVisible}: Props) => {
 
   const postLikes = post.Likes?.items.filter(like => !like?._deleted) ?? [];
 
-  const COMMENTS_FILTERED = post.Comments?.items.filter(
-    comment => !comment?._deleted,
-  );
+  const COMMENTS_FILTERED =
+    post.Comments?.items.filter(comment => !comment?._deleted) ?? [];
   //console.log({postLikes}, post.description, post.id);
 
   return (

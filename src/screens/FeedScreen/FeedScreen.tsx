@@ -29,7 +29,7 @@ const FeedScreen = () => {
   const {data, loading, error, refetch} = useQuery<
     ListPostsQuery,
     ListPostsQueryVariables
-  >(listPosts, {});
+  >(listPosts);
 
   //esta es la funcion que especifica los items que estan en pantalla
   const onViewableItemsChanged = useRef(
