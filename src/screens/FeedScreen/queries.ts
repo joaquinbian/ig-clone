@@ -27,7 +27,7 @@ export const listPosts = /* GraphQL */ gql`
           username
           image
         }
-        Comments {
+        Comments(limit: 1) {
           items {
             id
             comment

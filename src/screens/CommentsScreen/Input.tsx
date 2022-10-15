@@ -22,6 +22,7 @@ import {
   UpdatePostMutationVariables,
 } from 'src/API';
 import {useAuthContext} from '@context/AuthContext';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface CommentInput {
   postId: any;
@@ -30,6 +31,8 @@ interface CommentInput {
 const Input = ({postId}: CommentInput) => {
   const [text, setText] = useState<string>('');
   const {userId} = useAuthContext();
+
+  const {bottom} = useSafeAreaInsets();
 
   const {data} = useQuery<GetPostQuery, GetPostQueryVariables>(getPost, {
     variables: {id: postId},
@@ -69,7 +72,7 @@ const Input = ({postId}: CommentInput) => {
     //console.warn(text);
   };
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingBottom: bottom + 5}]}>
       <Image
         source={{
           uri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/2.jpg',
