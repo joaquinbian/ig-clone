@@ -45,7 +45,6 @@ export default function DeleteCommentWrapper({comment}: IDeleteCommentMenu) {
   const handleDeleteComment = async () => {
     try {
       let nOfComments = data?.getPost?.numberOfComments ?? 0;
-      await onDeleteComment();
       await onUpdatePost({
         variables: {
           input: {
@@ -55,6 +54,7 @@ export default function DeleteCommentWrapper({comment}: IDeleteCommentMenu) {
           },
         },
       });
+      await onDeleteComment();
     } catch (error) {}
   };
 

@@ -82,7 +82,7 @@ const Input = ({postId}: CommentInput) => {
         value={text}
         onChangeText={setText}
         style={styles.input}
-        editable={!loading}
+        editable={!loading && !loadingUpdatingPost}
       />
       <Pressable style={styles.button} onPress={onPost} disabled={!text}>
         {loading || loadingUpdatingPost ? (
