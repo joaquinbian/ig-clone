@@ -10,19 +10,8 @@ import {
 } from 'react-native';
 import {colors} from '@theme/colors';
 import {weight} from '@theme/fonts';
-import {useMutation, useQuery} from '@apollo/client';
-import {createComment, getPost, updatePost} from './queries';
-import {
-  CreateCommentMutation,
-  CreateCommentMutationVariables,
-  GetPostQuery,
-  GetPostQueryVariables,
-  Post,
-  UpdatePostMutation,
-  UpdatePostMutationVariables,
-} from 'src/API';
-import {useAuthContext} from '@context/AuthContext';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useComment} from '@hooks/useComment';
 
 interface CommentInput {
   postId: any;
@@ -30,41 +19,13 @@ interface CommentInput {
 
 const Input = ({postId}: CommentInput) => {
   const [text, setText] = useState<string>('');
-  const {userId} = useAuthContext();
-
+  const {addComment, isAddingComment} = useComment(postId);
   const {bottom} = useSafeAreaInsets();
-
-  const {data} = useQuery<GetPostQuery, GetPostQueryVariables>(getPost, {
-    variables: {id: postId},
-  });
-  const [onCreateComment, {loading}] = useMutation<
-    CreateCommentMutation,
-    CreateCommentMutationVariables
-  >(createComment, {
-    variables: {input: {comment: text, postID: postId, userID: userId}},
-    //TODO: ver si puedo sincronizar la lista con la data que devuevle
-    refetchQueries: ['GetCommentsByPost'],
-  });
-
-  const [onUpdatePost, {loading: loadingUpdatingPost}] = useMutation<
-    UpdatePostMutation,
-    UpdatePostMutationVariables
-  >(updatePost);
 
   const onPost = async () => {
     //send to backend
     try {
-      let nOfComments = data?.getPost?.numberOfComments ?? 0;
-      await onUpdatePost({
-        variables: {
-          input: {
-            _version: data?.getPost?._version,
-            id: postId,
-            numberOfComments: (nOfComments += 1),
-          },
-        },
-      });
-      await onCreateComment();
+      await addComment(text);
       setText('');
     } catch (error) {
       console.log((error as Error).message);
@@ -85,10 +46,10 @@ const Input = ({postId}: CommentInput) => {
         value={text}
         onChangeText={setText}
         style={styles.input}
-        editable={!loading && !loadingUpdatingPost}
+        editable={!isAddingComment}
       />
       <Pressable style={styles.button} onPress={onPost} disabled={!text}>
-        {loading || loadingUpdatingPost ? (
+        {isAddingComment ? (
           <ActivityIndicator />
         ) : (
           <Text style={{color: colors.primary, fontWeight: weight.bold}}>
