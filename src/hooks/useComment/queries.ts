@@ -8,6 +8,7 @@ export const createComment = /* GraphQL */ gql`
     createComment(input: $input, condition: $condition) {
       id
       comment
+      numberOfLikes
       userID
       postID
       User {
@@ -27,6 +28,7 @@ export const createComment = /* GraphQL */ gql`
           items {
             id
             comment
+            numberOfLikes
             _deleted
             User {
               id

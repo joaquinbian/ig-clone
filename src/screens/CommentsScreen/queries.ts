@@ -18,6 +18,7 @@ export const getCommentsByPost = /* GraphQL */ gql`
       items {
         id
         comment
+        numberOfLikes
         userID
         postID
         User {

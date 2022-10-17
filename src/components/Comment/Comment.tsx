@@ -22,6 +22,8 @@ const Comment = ({comment}: Props) => {
     setIsLiked(isLiked => !isLiked);
   };
 
+  /*   console.log(comment); */
+
   return (
     <View
       style={{
@@ -48,7 +50,9 @@ const Comment = ({comment}: Props) => {
         ) : (
           <>
             <Text style={{color: colors.black}}>{comment.comment}</Text>
-            <Text style={styles.labelsFooterText}>5 likes</Text>
+            <Text style={styles.labelsFooterText}>
+              {comment.numberOfLikes} likes
+            </Text>
           </>
         )}
       </View>

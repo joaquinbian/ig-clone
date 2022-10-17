@@ -57,9 +57,11 @@ export const useComment = (postID: string) => {
           },
         },
       });
-      await onCreateComment({
+      const response = await onCreateComment({
         variables: {input: {comment, postID, userID: userId, numberOfLikes: 0}},
       });
+
+      console.log({response});
     } catch (error) {
       Alert.alert('error adding comment');
     }
