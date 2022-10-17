@@ -213,6 +213,20 @@ export const schema = {
                         "associatedWith": "User"
                     }
                 },
+                "CommentLikes": {
+                    "name": "CommentLikes",
+                    "isArray": true,
+                    "type": {
+                        "model": "CommentLike"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "User"
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -434,6 +448,13 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "numberOfLikes": {
+                    "name": "numberOfLikes",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "User": {
                     "name": "User",
                     "isArray": false,
@@ -458,6 +479,20 @@ export const schema = {
                     "association": {
                         "connectionType": "BELONGS_TO",
                         "targetName": "postID"
+                    }
+                },
+                "CommentLikes": {
+                    "name": "CommentLikes",
+                    "isArray": true,
+                    "type": {
+                        "model": "CommentLike"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "Comment"
                     }
                 },
                 "createdAt": {
@@ -520,9 +555,107 @@ export const schema = {
                     }
                 }
             ]
+        },
+        "CommentLike": {
+            "name": "CommentLike",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "User": {
+                    "name": "User",
+                    "isArray": false,
+                    "type": {
+                        "model": "User"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetName": "userID"
+                    }
+                },
+                "Comment": {
+                    "name": "Comment",
+                    "isArray": false,
+                    "type": {
+                        "model": "Comment"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetName": "commentID"
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "CommentLikes",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byUser",
+                        "fields": [
+                            "userID"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byComment",
+                        "queryField": "likeForCommentByUserId",
+                        "fields": [
+                            "commentID",
+                            "userID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
         }
     },
     "enums": {},
     "nonModels": {},
-    "version": "d32392821747d8127016cd57153a28d0"
+    "version": "b6d2b323acd7ab1d7685c16de36daf0d"
 };

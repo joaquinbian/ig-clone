@@ -20,6 +20,10 @@ type CommentMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
+type CommentLikeMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
 export declare class Like {
   readonly id: string;
   readonly User?: User | null;
@@ -44,6 +48,7 @@ export declare class User {
   readonly Posts?: (Post | null)[] | null;
   readonly Likes?: (Like | null)[] | null;
   readonly Comments?: (Comment | null)[] | null;
+  readonly CommentLikes?: (CommentLike | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<User, UserMetaData>);
@@ -71,10 +76,22 @@ export declare class Post {
 export declare class Comment {
   readonly id: string;
   readonly comment: string;
+  readonly numberOfLikes: number;
   readonly User?: User | null;
   readonly Post?: Post | null;
+  readonly CommentLikes?: (CommentLike | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Comment, CommentMetaData>);
   static copyOf(source: Comment, mutator: (draft: MutableModel<Comment, CommentMetaData>) => MutableModel<Comment, CommentMetaData> | void): Comment;
+}
+
+export declare class CommentLike {
+  readonly id: string;
+  readonly User?: User | null;
+  readonly Comment?: Comment | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  constructor(init: ModelInit<CommentLike, CommentLikeMetaData>);
+  static copyOf(source: CommentLike, mutator: (draft: MutableModel<CommentLike, CommentLikeMetaData>) => MutableModel<CommentLike, CommentLikeMetaData> | void): CommentLike;
 }

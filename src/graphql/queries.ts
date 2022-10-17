@@ -31,6 +31,10 @@ export const getLike = /* GraphQL */ `
           nextToken
           startedAt
         }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -267,13 +271,12 @@ export const likeForPostByUserId = /* GraphQL */ `
     }
   }
 `;
-export const getComment = /* GraphQL */ `
-  query GetComment($id: ID!) {
-    getComment(id: $id) {
+export const getCommentLike = /* GraphQL */ `
+  query GetCommentLike($id: ID!) {
+    getCommentLike(id: $id) {
       id
-      comment
       userID
-      postID
+      commentID
       User {
         id
         name
@@ -294,6 +297,277 @@ export const getComment = /* GraphQL */ `
           startedAt
         }
         Comments {
+          nextToken
+          startedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      Comment {
+        id
+        comment
+        userID
+        postID
+        numberOfLikes
+        User {
+          id
+          name
+          image
+          bio
+          username
+          website
+          email
+          numberOfPosts
+          numberOfFollowers
+          numberOfFollowings
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Post {
+          id
+          description
+          image
+          images
+          video
+          numberOfComments
+          numberOfLikes
+          userID
+          untitledfield
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listCommentLikes = /* GraphQL */ `
+  query ListCommentLikes(
+    $filter: ModelCommentLikeFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCommentLikes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID
+        commentID
+        User {
+          id
+          name
+          image
+          bio
+          username
+          website
+          email
+          numberOfPosts
+          numberOfFollowers
+          numberOfFollowings
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Comment {
+          id
+          comment
+          userID
+          postID
+          numberOfLikes
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncCommentLikes = /* GraphQL */ `
+  query SyncCommentLikes(
+    $filter: ModelCommentLikeFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncCommentLikes(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        userID
+        commentID
+        User {
+          id
+          name
+          image
+          bio
+          username
+          website
+          email
+          numberOfPosts
+          numberOfFollowers
+          numberOfFollowings
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Comment {
+          id
+          comment
+          userID
+          postID
+          numberOfLikes
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const likeForCommentByUserId = /* GraphQL */ `
+  query LikeForCommentByUserId(
+    $commentID: ID!
+    $userID: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelCommentLikeFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    likeForCommentByUserId(
+      commentID: $commentID
+      userID: $userID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userID
+        commentID
+        User {
+          id
+          name
+          image
+          bio
+          username
+          website
+          email
+          numberOfPosts
+          numberOfFollowers
+          numberOfFollowings
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Comment {
+          id
+          comment
+          userID
+          postID
+          numberOfLikes
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getComment = /* GraphQL */ `
+  query GetComment($id: ID!) {
+    getComment(id: $id) {
+      id
+      comment
+      userID
+      postID
+      numberOfLikes
+      User {
+        id
+        name
+        image
+        bio
+        username
+        website
+        email
+        numberOfPosts
+        numberOfFollowers
+        numberOfFollowings
+        Posts {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        CommentLikes {
           nextToken
           startedAt
         }
@@ -344,6 +618,20 @@ export const getComment = /* GraphQL */ `
         _deleted
         _lastChangedAt
       }
+      CommentLikes {
+        items {
+          id
+          userID
+          commentID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -364,6 +652,7 @@ export const listComments = /* GraphQL */ `
         comment
         userID
         postID
+        numberOfLikes
         User {
           id
           name
@@ -396,6 +685,10 @@ export const listComments = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
         }
         createdAt
         updatedAt
@@ -426,6 +719,7 @@ export const syncComments = /* GraphQL */ `
         comment
         userID
         postID
+        numberOfLikes
         User {
           id
           name
@@ -458,6 +752,10 @@ export const syncComments = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
         }
         createdAt
         updatedAt
@@ -490,6 +788,7 @@ export const getCommentsByPost = /* GraphQL */ `
         comment
         userID
         postID
+        numberOfLikes
         User {
           id
           name
@@ -522,6 +821,10 @@ export const getCommentsByPost = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
         }
         createdAt
         updatedAt
@@ -569,6 +872,10 @@ export const getPost = /* GraphQL */ `
           nextToken
           startedAt
         }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -595,6 +902,7 @@ export const getPost = /* GraphQL */ `
           comment
           userID
           postID
+          numberOfLikes
           createdAt
           updatedAt
           _version
@@ -777,6 +1085,21 @@ export const getUser = /* GraphQL */ `
           comment
           userID
           postID
+          numberOfLikes
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      CommentLikes {
+        items {
+          id
+          userID
+          commentID
           createdAt
           updatedAt
           _version
@@ -821,6 +1144,10 @@ export const listUsers = /* GraphQL */ `
           startedAt
         }
         Comments {
+          nextToken
+          startedAt
+        }
+        CommentLikes {
           nextToken
           startedAt
         }
@@ -871,6 +1198,10 @@ export const syncUsers = /* GraphQL */ `
           nextToken
           startedAt
         }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -917,6 +1248,10 @@ export const usersByUsername = /* GraphQL */ `
           startedAt
         }
         Comments {
+          nextToken
+          startedAt
+        }
+        CommentLikes {
           nextToken
           startedAt
         }
