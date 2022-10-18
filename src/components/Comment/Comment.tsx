@@ -45,6 +45,7 @@ const Comment = ({comment}: Props) => {
     CreateCommentLikeMutationVariables
   >(createCommentLike, {
     variables: {input: {commentID: comment.id, userID: userId}},
+    //ver si se puede hacer de alguna forma la query para sacar esto
     refetchQueries: ['LikeForCommentByUserId'],
   });
 
