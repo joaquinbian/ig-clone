@@ -5,6 +5,8 @@ import {
   Comment as IComment,
   CreateCommentLikeMutation,
   CreateCommentLikeMutationVariables,
+  DeleteCommentLikeMutation,
+  DeleteCommentLikeMutationVariables,
   LikeForCommentByUserIdQuery,
   LikeForCommentByUserIdQueryVariables,
   UpdateCommentMutation,
@@ -21,6 +23,7 @@ import DeleteCommentWrapper from './DeleteCommentWrapper';
 import {useMutation, useQuery} from '@apollo/client';
 import {
   createCommentLike,
+  deleteCommentLike,
   likeForCommentByUserId,
   updateComment,
 } from './queries';
@@ -54,22 +57,41 @@ const Comment = ({comment}: Props) => {
     UpdateCommentMutationVariables
   >(updateComment);
 
+  const [onDeleteComment] = useMutation<
+    DeleteCommentLikeMutation,
+    DeleteCommentLikeMutationVariables
+  >(deleteCommentLike);
+
   const toggleLike = async () => {
     try {
-      const response = await onLikeComment();
-
       let numberOfLikes = comment.numberOfLikes;
-      const updateComment = await onUpdateComment({
-        variables: {
-          input: {
-            id: comment.id,
-            _version: comment._version,
-            numberOfLikes: (numberOfLikes += 1),
-          },
-        },
-      });
-      console.log({response, updateComment});
+      if (!isLiked) {
+        const response = await onLikeComment();
 
+        const updateComment = await onUpdateComment({
+          variables: {
+            input: {
+              id: comment.id,
+              _version: comment._version,
+              numberOfLikes: (numberOfLikes += 1),
+            },
+          },
+        });
+        //console.log({response, updateComment});
+      } else {
+        const updateComment = await onUpdateComment({
+          variables: {
+            input: {
+              id: comment.id,
+              _version: comment._version,
+              numberOfLikes: (numberOfLikes -= 1),
+            },
+          },
+        });
+        await onDeleteComment({
+          variables: {input: {id: isLiked.id, _version: isLiked._version}},
+        });
+      }
       // setIsLiked(isLiked => !isLiked);
     } catch (error) {
       console.log((error as Error).message);

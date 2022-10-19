@@ -82,3 +82,17 @@ export const likeForCommentByUserId = /* GraphQL */ gql`
     }
   }
 `;
+
+export const deleteCommentLike = /* GraphQL */ gql`
+  mutation DeleteCommentLike(
+    $input: DeleteCommentLikeInput!
+    $condition: ModelCommentLikeConditionInput
+  ) {
+    deleteCommentLike(input: $input, condition: $condition) {
+      id
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
