@@ -11,13 +11,28 @@ type Like @model @auth(rules: [{allow: public}]) {
   Post: Post @belongsTo(fields: ["postID"])
 }
 
+type CommentLike @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  userID: ID! @index(name: "byUser")
+  commentID: ID!
+    @index(
+      name: "byComment"
+      queryField: "likeForCommentByUserId"
+      sortKeyFields: ["userID"]
+    )
+  User: User @belongsTo(fields: ["userID"])
+  Comment: Comment @belongsTo(fields: ["commentID"])
+}
+
 type Comment @model @auth(rules: [{allow: public}]) {
   id: ID!
   comment: String!
   userID: ID! @index(name: "byUser")
   postID: ID! @index(name: "byPost", queryField: "getCommentsByPost")
+  numberOfLikes: Int!
   User: User @belongsTo(fields: ["userID"])
   Post: Post @belongsTo(fields: ["postID"])
+  CommentLikes: [CommentLike] @hasMany(indexName: "byComment", fields: ["id"])
 }
 
 type Post @model @auth(rules: [{allow: public}]) {
@@ -50,4 +65,5 @@ type User @model @auth(rules: [{allow: public}]) {
   Posts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
   Likes: [Like] @hasMany(indexName: "byUser", fields: ["id"])
   Comments: [Comment] @hasMany(indexName: "byUser", fields: ["id"])
+  CommentLikes: [CommentLike] @hasMany(indexName: "byUser", fields: ["id"])
 }

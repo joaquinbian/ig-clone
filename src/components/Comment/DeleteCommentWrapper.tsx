@@ -34,11 +34,15 @@ export default function DeleteCommentWrapper({comment}: IDeleteCommentMenu) {
     } catch (error) {}
   };
 
+  console.log(comment.numberOfLikes);
+
   return (
     <Menu renderer={renderers.SlideInMenu}>
       <MenuTrigger triggerOnLongPress>
         <Text style={{color: colors.black}}>{comment.comment}</Text>
-        <Text style={styles.labelsFooterText}>5 likes</Text>
+        <Text style={styles.labelsFooterText}>
+          {comment.numberOfLikes} likes
+        </Text>
       </MenuTrigger>
       <MenuOptions
         customStyles={{

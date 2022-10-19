@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Image, Text, View} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Comment as IComment} from 'src/API';
@@ -8,19 +8,17 @@ import {styles} from './styles';
 import Pressable from '@components/Pressable';
 import {DEFAULT_USER_IMAGE} from 'src/config';
 
-import {useAuthContext} from '@context/AuthContext';
 import DeleteCommentWrapper from './DeleteCommentWrapper';
+
+import useCommentLike from '@hooks/useCommentLike';
+import {useAuthContext} from '@context/AuthContext';
 
 interface Props {
   comment: IComment;
 }
 const Comment = ({comment}: Props) => {
-  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const {toggleLike, isLiked} = useCommentLike(comment);
   const {userId} = useAuthContext();
-
-  const toggleLike = () => {
-    setIsLiked(isLiked => !isLiked);
-  };
 
   return (
     <View
@@ -48,16 +46,18 @@ const Comment = ({comment}: Props) => {
         ) : (
           <>
             <Text style={{color: colors.black}}>{comment.comment}</Text>
-            <Text style={styles.labelsFooterText}>5 likes</Text>
+            <Text style={styles.labelsFooterText}>
+              {comment.numberOfLikes} likes
+            </Text>
           </>
         )}
       </View>
       <Pressable onPress={toggleLike} hitSlop={15}>
         <AntDesign
-          name={isLiked ? 'heart' : 'hearto'}
+          name={!!isLiked ? 'heart' : 'hearto'}
           size={15}
           style={[styles.icon]}
-          color={isLiked ? 'red' : colors.black}
+          color={!!isLiked ? 'red' : colors.black}
         />
       </Pressable>
     </View>
