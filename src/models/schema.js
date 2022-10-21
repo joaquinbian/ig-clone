@@ -296,6 +296,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "type": {
+                    "name": "type",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "image": {
                     "name": "image",
                     "isArray": false,
@@ -380,14 +394,6 @@ export const schema = {
                         "associatedWith": "Post"
                     }
                 },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
                 "updatedAt": {
                     "name": "updatedAt",
                     "isArray": false,
@@ -403,6 +409,17 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "postByDate",
+                        "queryField": "getPostsByDate",
+                        "fields": [
+                            "type",
+                            "createdAt"
+                        ]
+                    }
                 },
                 {
                     "type": "key",
@@ -657,5 +674,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "3eeaf25bf7b97d17f69408b54107c44b"
+    "version": "01bc9d87c153b1d2cd32bbea1fa56be3"
 };

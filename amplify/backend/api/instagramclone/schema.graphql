@@ -44,6 +44,13 @@ type Comment @model @auth(rules: [{allow: public}]) {
 type Post @model @auth(rules: [{allow: public}]) {
   id: ID!
   description: String
+  createdAt: AWSDateTime!
+  type: String!
+    @index(
+      name: "postByDate"
+      queryField: "getPostsByDate"
+      sortKeyFields: ["createdAt"]
+    )
   image: String
   images: [String!]
   video: String

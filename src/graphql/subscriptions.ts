@@ -44,6 +44,8 @@ export const onCreateLike = /* GraphQL */ `
       Post {
         id
         description
+        createdAt
+        type
         image
         images
         video
@@ -76,7 +78,6 @@ export const onCreateLike = /* GraphQL */ `
           nextToken
           startedAt
         }
-        createdAt
         updatedAt
         _version
         _deleted
@@ -132,6 +133,8 @@ export const onUpdateLike = /* GraphQL */ `
       Post {
         id
         description
+        createdAt
+        type
         image
         images
         video
@@ -164,7 +167,6 @@ export const onUpdateLike = /* GraphQL */ `
           nextToken
           startedAt
         }
-        createdAt
         updatedAt
         _version
         _deleted
@@ -220,6 +222,8 @@ export const onDeleteLike = /* GraphQL */ `
       Post {
         id
         description
+        createdAt
+        type
         image
         images
         video
@@ -252,7 +256,6 @@ export const onDeleteLike = /* GraphQL */ `
           nextToken
           startedAt
         }
-        createdAt
         updatedAt
         _version
         _deleted
@@ -332,6 +335,8 @@ export const onCreateCommentLike = /* GraphQL */ `
         Post {
           id
           description
+          createdAt
+          type
           image
           images
           video
@@ -339,7 +344,6 @@ export const onCreateCommentLike = /* GraphQL */ `
           numberOfLikes
           userID
           untitledfield
-          createdAt
           updatedAt
           _version
           _deleted
@@ -428,6 +432,8 @@ export const onUpdateCommentLike = /* GraphQL */ `
         Post {
           id
           description
+          createdAt
+          type
           image
           images
           video
@@ -435,7 +441,6 @@ export const onUpdateCommentLike = /* GraphQL */ `
           numberOfLikes
           userID
           untitledfield
-          createdAt
           updatedAt
           _version
           _deleted
@@ -524,6 +529,8 @@ export const onDeleteCommentLike = /* GraphQL */ `
         Post {
           id
           description
+          createdAt
+          type
           image
           images
           video
@@ -531,7 +538,6 @@ export const onDeleteCommentLike = /* GraphQL */ `
           numberOfLikes
           userID
           untitledfield
-          createdAt
           updatedAt
           _version
           _deleted
@@ -599,6 +605,8 @@ export const onCreateComment = /* GraphQL */ `
       Post {
         id
         description
+        createdAt
+        type
         image
         images
         video
@@ -631,7 +639,6 @@ export const onCreateComment = /* GraphQL */ `
           nextToken
           startedAt
         }
-        createdAt
         updatedAt
         _version
         _deleted
@@ -703,6 +710,8 @@ export const onUpdateComment = /* GraphQL */ `
       Post {
         id
         description
+        createdAt
+        type
         image
         images
         video
@@ -735,7 +744,6 @@ export const onUpdateComment = /* GraphQL */ `
           nextToken
           startedAt
         }
-        createdAt
         updatedAt
         _version
         _deleted
@@ -807,6 +815,8 @@ export const onDeleteComment = /* GraphQL */ `
       Post {
         id
         description
+        createdAt
+        type
         image
         images
         video
@@ -839,7 +849,6 @@ export const onDeleteComment = /* GraphQL */ `
           nextToken
           startedAt
         }
-        createdAt
         updatedAt
         _version
         _deleted
@@ -871,6 +880,8 @@ export const onCreatePost = /* GraphQL */ `
     onCreatePost {
       id
       description
+      createdAt
+      type
       image
       images
       video
@@ -941,7 +952,6 @@ export const onCreatePost = /* GraphQL */ `
         nextToken
         startedAt
       }
-      createdAt
       updatedAt
       _version
       _deleted
@@ -954,6 +964,8 @@ export const onUpdatePost = /* GraphQL */ `
     onUpdatePost {
       id
       description
+      createdAt
+      type
       image
       images
       video
@@ -1024,7 +1036,6 @@ export const onUpdatePost = /* GraphQL */ `
         nextToken
         startedAt
       }
-      createdAt
       updatedAt
       _version
       _deleted
@@ -1037,6 +1048,8 @@ export const onDeletePost = /* GraphQL */ `
     onDeletePost {
       id
       description
+      createdAt
+      type
       image
       images
       video
@@ -1107,7 +1120,6 @@ export const onDeletePost = /* GraphQL */ `
         nextToken
         startedAt
       }
-      createdAt
       updatedAt
       _version
       _deleted
@@ -1132,6 +1144,8 @@ export const onCreateUser = /* GraphQL */ `
         items {
           id
           description
+          createdAt
+          type
           image
           images
           video
@@ -1139,7 +1153,6 @@ export const onCreateUser = /* GraphQL */ `
           numberOfLikes
           userID
           untitledfield
-          createdAt
           updatedAt
           _version
           _deleted
@@ -1217,6 +1230,8 @@ export const onUpdateUser = /* GraphQL */ `
         items {
           id
           description
+          createdAt
+          type
           image
           images
           video
@@ -1224,7 +1239,6 @@ export const onUpdateUser = /* GraphQL */ `
           numberOfLikes
           userID
           untitledfield
-          createdAt
           updatedAt
           _version
           _deleted
@@ -1302,6 +1316,8 @@ export const onDeleteUser = /* GraphQL */ `
         items {
           id
           description
+          createdAt
+          type
           image
           images
           video
@@ -1309,7 +1325,6 @@ export const onDeleteUser = /* GraphQL */ `
           numberOfLikes
           userID
           untitledfield
-          createdAt
           updatedAt
           _version
           _deleted
