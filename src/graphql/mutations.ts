@@ -320,6 +320,7 @@ export const createCommentLike = /* GraphQL */ `
       Comment {
         id
         comment
+        createdAt
         userID
         postID
         numberOfLikes
@@ -360,7 +361,6 @@ export const createCommentLike = /* GraphQL */ `
           nextToken
           startedAt
         }
-        createdAt
         updatedAt
         _version
         _deleted
@@ -419,6 +419,7 @@ export const updateCommentLike = /* GraphQL */ `
       Comment {
         id
         comment
+        createdAt
         userID
         postID
         numberOfLikes
@@ -459,7 +460,6 @@ export const updateCommentLike = /* GraphQL */ `
           nextToken
           startedAt
         }
-        createdAt
         updatedAt
         _version
         _deleted
@@ -518,6 +518,7 @@ export const deleteCommentLike = /* GraphQL */ `
       Comment {
         id
         comment
+        createdAt
         userID
         postID
         numberOfLikes
@@ -558,7 +559,6 @@ export const deleteCommentLike = /* GraphQL */ `
           nextToken
           startedAt
         }
-        createdAt
         updatedAt
         _version
         _deleted
@@ -580,6 +580,7 @@ export const createComment = /* GraphQL */ `
     createComment(input: $input, condition: $condition) {
       id
       comment
+      createdAt
       userID
       postID
       numberOfLikes
@@ -671,7 +672,6 @@ export const createComment = /* GraphQL */ `
         nextToken
         startedAt
       }
-      createdAt
       updatedAt
       _version
       _deleted
@@ -687,6 +687,7 @@ export const updateComment = /* GraphQL */ `
     updateComment(input: $input, condition: $condition) {
       id
       comment
+      createdAt
       userID
       postID
       numberOfLikes
@@ -778,7 +779,6 @@ export const updateComment = /* GraphQL */ `
         nextToken
         startedAt
       }
-      createdAt
       updatedAt
       _version
       _deleted
@@ -794,6 +794,7 @@ export const deleteComment = /* GraphQL */ `
     deleteComment(input: $input, condition: $condition) {
       id
       comment
+      createdAt
       userID
       postID
       numberOfLikes
@@ -885,7 +886,6 @@ export const deleteComment = /* GraphQL */ `
         nextToken
         startedAt
       }
-      createdAt
       updatedAt
       _version
       _deleted
@@ -959,10 +959,10 @@ export const createPost = /* GraphQL */ `
         items {
           id
           comment
+          createdAt
           userID
           postID
           numberOfLikes
-          createdAt
           updatedAt
           _version
           _deleted
@@ -1045,10 +1045,10 @@ export const updatePost = /* GraphQL */ `
         items {
           id
           comment
+          createdAt
           userID
           postID
           numberOfLikes
-          createdAt
           updatedAt
           _version
           _deleted
@@ -1131,10 +1131,10 @@ export const deletePost = /* GraphQL */ `
         items {
           id
           comment
+          createdAt
           userID
           postID
           numberOfLikes
-          createdAt
           updatedAt
           _version
           _deleted
@@ -1205,10 +1205,10 @@ export const createUser = /* GraphQL */ `
         items {
           id
           comment
+          createdAt
           userID
           postID
           numberOfLikes
-          createdAt
           updatedAt
           _version
           _deleted
@@ -1293,10 +1293,10 @@ export const updateUser = /* GraphQL */ `
         items {
           id
           comment
+          createdAt
           userID
           postID
           numberOfLikes
-          createdAt
           updatedAt
           _version
           _deleted
@@ -1381,10 +1381,10 @@ export const deleteUser = /* GraphQL */ `
         items {
           id
           comment
+          createdAt
           userID
           postID
           numberOfLikes
-          createdAt
           updatedAt
           _version
           _deleted

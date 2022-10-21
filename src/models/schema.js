@@ -448,6 +448,13 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "numberOfLikes": {
                     "name": "numberOfLikes",
                     "isArray": false,
@@ -495,14 +502,6 @@ export const schema = {
                         "associatedWith": "Comment"
                     }
                 },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
                 "updatedAt": {
                     "name": "updatedAt",
                     "isArray": false,
@@ -534,7 +533,8 @@ export const schema = {
                         "name": "byPost",
                         "queryField": "getCommentsByPost",
                         "fields": [
-                            "postID"
+                            "postID",
+                            "createdAt"
                         ]
                     }
                 },
@@ -657,5 +657,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "b6d2b323acd7ab1d7685c16de36daf0d"
+    "version": "3eeaf25bf7b97d17f69408b54107c44b"
 };

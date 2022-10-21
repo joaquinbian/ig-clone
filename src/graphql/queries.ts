@@ -313,6 +313,7 @@ export const getCommentLike = /* GraphQL */ `
       Comment {
         id
         comment
+        createdAt
         userID
         postID
         numberOfLikes
@@ -353,7 +354,6 @@ export const getCommentLike = /* GraphQL */ `
           nextToken
           startedAt
         }
-        createdAt
         updatedAt
         _version
         _deleted
@@ -398,10 +398,10 @@ export const listCommentLikes = /* GraphQL */ `
         Comment {
           id
           comment
+          createdAt
           userID
           postID
           numberOfLikes
-          createdAt
           updatedAt
           _version
           _deleted
@@ -455,10 +455,10 @@ export const syncCommentLikes = /* GraphQL */ `
         Comment {
           id
           comment
+          createdAt
           userID
           postID
           numberOfLikes
-          createdAt
           updatedAt
           _version
           _deleted
@@ -516,10 +516,10 @@ export const likeForCommentByUserId = /* GraphQL */ `
         Comment {
           id
           comment
+          createdAt
           userID
           postID
           numberOfLikes
-          createdAt
           updatedAt
           _version
           _deleted
@@ -541,6 +541,7 @@ export const getComment = /* GraphQL */ `
     getComment(id: $id) {
       id
       comment
+      createdAt
       userID
       postID
       numberOfLikes
@@ -632,7 +633,6 @@ export const getComment = /* GraphQL */ `
         nextToken
         startedAt
       }
-      createdAt
       updatedAt
       _version
       _deleted
@@ -650,6 +650,7 @@ export const listComments = /* GraphQL */ `
       items {
         id
         comment
+        createdAt
         userID
         postID
         numberOfLikes
@@ -690,7 +691,6 @@ export const listComments = /* GraphQL */ `
           nextToken
           startedAt
         }
-        createdAt
         updatedAt
         _version
         _deleted
@@ -717,6 +717,7 @@ export const syncComments = /* GraphQL */ `
       items {
         id
         comment
+        createdAt
         userID
         postID
         numberOfLikes
@@ -757,7 +758,6 @@ export const syncComments = /* GraphQL */ `
           nextToken
           startedAt
         }
-        createdAt
         updatedAt
         _version
         _deleted
@@ -771,6 +771,7 @@ export const syncComments = /* GraphQL */ `
 export const getCommentsByPost = /* GraphQL */ `
   query GetCommentsByPost(
     $postID: ID!
+    $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelCommentFilterInput
     $limit: Int
@@ -778,6 +779,7 @@ export const getCommentsByPost = /* GraphQL */ `
   ) {
     getCommentsByPost(
       postID: $postID
+      createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -786,6 +788,7 @@ export const getCommentsByPost = /* GraphQL */ `
       items {
         id
         comment
+        createdAt
         userID
         postID
         numberOfLikes
@@ -826,7 +829,6 @@ export const getCommentsByPost = /* GraphQL */ `
           nextToken
           startedAt
         }
-        createdAt
         updatedAt
         _version
         _deleted
@@ -900,10 +902,10 @@ export const getPost = /* GraphQL */ `
         items {
           id
           comment
+          createdAt
           userID
           postID
           numberOfLikes
-          createdAt
           updatedAt
           _version
           _deleted
@@ -1083,10 +1085,10 @@ export const getUser = /* GraphQL */ `
         items {
           id
           comment
+          createdAt
           userID
           postID
           numberOfLikes
-          createdAt
           updatedAt
           _version
           _deleted
