@@ -7,10 +7,13 @@ import {useRoute} from '@react-navigation/native';
 import {CommentsRouteProp} from '@navigation/types';
 import {useQuery} from '@apollo/client';
 import {getCommentsByPost} from './queries';
-import {GetCommentsByPostQuery, GetCommentsByPostQueryVariables} from 'src/API';
+import {
+  GetCommentsByPostQuery,
+  GetCommentsByPostQueryVariables,
+  ModelSortDirection,
+} from 'src/API';
 import Loading from '@components/Loading';
 import ApiErrorMessage from '@components/ApiErrorMessage';
-import {useAuthContext} from '@context/AuthContext';
 
 const CommentsScreen = () => {
   const route = useRoute<CommentsRouteProp>();
@@ -20,7 +23,9 @@ const CommentsScreen = () => {
   const {data, loading, error} = useQuery<
     GetCommentsByPostQuery,
     GetCommentsByPostQueryVariables
-  >(getCommentsByPost, {variables: {postID: postId}});
+  >(getCommentsByPost, {
+    variables: {postID: postId, sortDirection: ModelSortDirection.DESC},
+  });
 
   if (loading) {
     return <Loading text="loading comments..." />;

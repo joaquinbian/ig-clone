@@ -3,6 +3,7 @@ import {gql} from '@apollo/client';
 export const getCommentsByPost = /* GraphQL */ gql`
   query GetCommentsByPost(
     $postID: ID!
+    $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelCommentFilterInput
     $limit: Int
@@ -10,6 +11,7 @@ export const getCommentsByPost = /* GraphQL */ gql`
   ) {
     getCommentsByPost(
       postID: $postID
+      createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit

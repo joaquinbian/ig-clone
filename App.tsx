@@ -8,6 +8,9 @@ import config from 'src/aws-exports';
 import Navigation from '@navigation/index';
 import {AuthProvider} from '@context/AuthContext';
 import Client from 'src/apollo/client';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import * as dayjs from 'dayjs';
+dayjs.extend(relativeTime);
 
 async function urlOpener(url: string, redirectUrl: string) {
   await InAppBrowser.isAvailable();

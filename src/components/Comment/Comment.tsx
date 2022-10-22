@@ -12,6 +12,7 @@ import DeleteCommentWrapper from './DeleteCommentWrapper';
 
 import useCommentLike from '@hooks/useCommentLike';
 import {useAuthContext} from '@context/AuthContext';
+import dayJs from 'dayjs';
 
 interface Props {
   comment: IComment;
@@ -39,7 +40,9 @@ const Comment = ({comment}: Props) => {
             style={{marginRight: 10, maxWidth: '85%'}}>
             {comment.User?.username ?? 'rober'}
           </BoldText>
-          <Text style={styles.labelsFooterText}>5d</Text>
+          <Text style={styles.labelsFooterText}>
+            {dayJs(comment.createdAt).fromNow()}
+          </Text>
         </View>
         {userId === comment.userID ? (
           <DeleteCommentWrapper comment={comment} />

@@ -18,6 +18,8 @@ import {DEFAULT_USER_IMAGE} from 'src/config';
 
 import PostOptions from './components/PostOptions';
 import {useLikes} from '@hooks/useLikes/useLikes';
+import {size} from '@theme/fonts';
+import dayjs from 'dayjs';
 
 interface Props {
   post: IPost;
@@ -196,6 +198,14 @@ const Post = ({post, isVisible}: Props) => {
             view all {post.numberOfComments} comments
           </Text>
         </Pressable>
+        <Text
+          style={{
+            color: colors.lightgray,
+            marginHorizontal: 5,
+            fontSize: size.sm,
+          }}>
+          {dayjs(post.createdAt).fromNow()}
+        </Text>
         {/* comments */}
         {/*  {COMMENTS_FILTERED.map(
           comment => comment && <Comment comment={comment} key={comment.id} />,

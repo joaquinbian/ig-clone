@@ -10,11 +10,20 @@ import {
 } from 'react-native';
 import Post from '@components/Post';
 import {API, graphqlOperation} from 'aws-amplify';
-import {ListPostsQuery, ListPostsQueryVariables, Post as IPost} from 'src/API';
+import {
+  GetPostsByDateQuery,
+  GetPostsByDateQueryVariables,
+  ListPostsQuery,
+  ListPostsQueryVariables,
+  ModelAttributeTypes,
+  ModelSortDirection,
+  Post as IPost,
+} from 'src/API';
 import {gql, useQuery} from '@apollo/client';
 import {listPosts} from './queries';
 import Loading from '@components/Loading';
 import ApiErrorMessage from '@components/ApiErrorMessage';
+import Pressable from '@components/Pressable';
 
 interface IOnViewableItemsChanged {
   viewableItems: ViewToken[];
@@ -27,9 +36,11 @@ const viewabilityConfig: ViewabilityConfig = {
 const FeedScreen = () => {
   const [currentItem, setCurrentItem] = useState<null | string>(null);
   const {data, loading, error, refetch} = useQuery<
-    ListPostsQuery,
-    ListPostsQueryVariables
-  >(listPosts);
+    GetPostsByDateQuery,
+    GetPostsByDateQueryVariables
+  >(listPosts, {
+    variables: {sortDirection: ModelSortDirection.DESC, type: 'POST'},
+  });
 
   //esta es la funcion que especifica los items que estan en pantalla
   const onViewableItemsChanged = useRef(
@@ -53,7 +64,24 @@ const FeedScreen = () => {
     return <Loading text="loading posts..." />;
   }
 
-  const posts = (data?.listPosts?.items ?? []).filter(post => !post?._deleted);
+  const posts = (data?.getPostsByDate?.items ?? []).filter(
+    post => !post?._deleted,
+  );
+
+  console.log({posts});
+
+  if (!posts.length) {
+    return (
+      <Text style={{alignItems: 'center'}}>
+        no post so far! create one
+        {/* 
+          HACER QUE NAVEGUE A LA PANTALLA PARA CREAR POSTS
+        <Pressable style={{alignItems: 'center'}} onPress={()=>nav}>
+          <Text style={{textAlign: 'center'}}>create one!</Text>
+        </Pressable> */}
+      </Text>
+    );
+  }
 
   return (
     <FlatList

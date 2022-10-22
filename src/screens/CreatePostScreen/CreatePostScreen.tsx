@@ -46,6 +46,7 @@ export default function CreatePostScreen() {
         variables: {
           input: {
             description: description ?? null,
+            type: 'POST',
             image,
             images,
             video,
