@@ -10,7 +10,7 @@ import {
   VideoQuality,
 } from 'expo-camera';
 import {colors} from '@theme/colors';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {CameraScreenNaviationProp} from '@navigation/types';
 
 const flashModes: FlashMode[] = [
@@ -49,6 +49,7 @@ const CameraScreen = () => {
   );
   const [isCameraReady, setIsCameraReady] = useState<boolean>(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
+  const isFocused = useIsFocused();
 
   const navigation = useNavigation<CameraScreenNaviationProp>();
 
@@ -125,43 +126,45 @@ const CameraScreen = () => {
     return <Text>No access to camera</Text>;
   }
   return (
-    <View style={styles.container}>
-      <View style={styles.buttonContainer}>
-        <MaterialIcons name="settings" color={colors.white} size={30} />
-        <MaterialIcons
-          name={flashIcon[isFlashActivate]}
-          color={colors.white}
-          size={30}
-          onPress={toggleFlash}
-        />
-        <MaterialIcons name="close" color={colors.white} size={30} />
-      </View>
-      <Camera
-        flashMode={isFlashActivate}
-        style={styles.camera}
-        type={type}
-        ref={ref => (camera.current = ref)}
-        onCameraReady={setCameraReady}
-      />
-      <View style={styles.buttonContainer}>
-        <MaterialIcons
-          name="flip-camera-ios"
-          color={colors.white}
-          size={30}
-          onPress={toggleCameraType}
-        />
-        {isCameraReady && (
-          <TouchableOpacity
-            onLongPress={startRecording}
-            onPressOut={stopRecording}
-            activeOpacity={0.8}
-            style={[styles.circle, isRecording && {backgroundColor: 'red'}]}
-            onPress={takePicture}
+    isFocused && (
+      <View style={styles.container}>
+        <View style={styles.buttonContainer}>
+          <MaterialIcons name="settings" color={colors.white} size={30} />
+          <MaterialIcons
+            name={flashIcon[isFlashActivate]}
+            color={colors.white}
+            size={30}
+            onPress={toggleFlash}
           />
-        )}
-        <MaterialIcons name="collections" color={colors.white} size={30} />
+          <MaterialIcons name="close" color={colors.white} size={30} />
+        </View>
+        <Camera
+          flashMode={isFlashActivate}
+          style={styles.camera}
+          type={type}
+          ref={ref => (camera.current = ref)}
+          onCameraReady={setCameraReady}
+        />
+        <View style={styles.buttonContainer}>
+          <MaterialIcons
+            name="flip-camera-ios"
+            color={colors.white}
+            size={30}
+            onPress={toggleCameraType}
+          />
+          {isCameraReady && (
+            <TouchableOpacity
+              onLongPress={startRecording}
+              onPressOut={stopRecording}
+              activeOpacity={0.8}
+              style={[styles.circle, isRecording && {backgroundColor: 'red'}]}
+              onPress={takePicture}
+            />
+          )}
+          <MaterialIcons name="collections" color={colors.white} size={30} />
+        </View>
       </View>
-    </View>
+    )
   );
 };
 
