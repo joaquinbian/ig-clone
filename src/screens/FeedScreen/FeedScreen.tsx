@@ -24,6 +24,8 @@ import {listPosts} from './queries';
 import Loading from '@components/Loading';
 import ApiErrorMessage from '@components/ApiErrorMessage';
 import Pressable from '@components/Pressable';
+import {colors} from '@theme/colors';
+import {weight} from '@theme/fonts';
 
 interface IOnViewableItemsChanged {
   viewableItems: ViewToken[];
@@ -68,18 +70,22 @@ const FeedScreen = () => {
     post => !post?._deleted,
   );
 
-  console.log({posts});
-
   if (!posts.length) {
     return (
-      <Text style={{alignItems: 'center'}}>
-        no post so far! create one
-        {/* 
-          HACER QUE NAVEGUE A LA PANTALLA PARA CREAR POSTS
-        <Pressable style={{alignItems: 'center'}} onPress={()=>nav}>
-          <Text style={{textAlign: 'center'}}>create one!</Text>
-        </Pressable> */}
-      </Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginTop: 10,
+        }}>
+        <Text style={{color: colors.gray}}>No posts so far... </Text>
+        <Pressable>
+          <Text style={{color: colors.gray, fontWeight: weight.bold}}>
+            create one!
+          </Text>
+        </Pressable>
+      </View>
     );
   }
 
