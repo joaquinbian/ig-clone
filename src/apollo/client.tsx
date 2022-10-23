@@ -37,10 +37,12 @@ const typePolicies: TypePolicies = {
       getCommentsByPost: {
         keyArgs: ['postID', 'createdAt', 'sortDirection', 'filter'],
         merge: (existing = {}, incoming) => {
+          console.log({existing, incoming});
+
           return {
             ...existing,
             ...incoming,
-            items: [...(existing.items ?? []), ...incoming],
+            items: [...(existing?.items ?? []), ...incoming.items],
           };
         },
       },
