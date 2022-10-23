@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, FlatList, Text} from 'react-native';
+import React, {useState} from 'react';
+import {View, FlatList, Text, ActivityIndicator} from 'react-native';
 import comments from '@assets/comments.json';
 import Comment from '@components/Comment';
 import Input from './Input';
@@ -14,17 +14,23 @@ import {
 } from 'src/API';
 import Loading from '@components/Loading';
 import ApiErrorMessage from '@components/ApiErrorMessage';
+import {colors} from '@theme/colors';
 
 const CommentsScreen = () => {
   const route = useRoute<CommentsRouteProp>();
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
 
   const {postId} = route.params;
 
-  const {data, loading, error} = useQuery<
+  const {data, loading, error, fetchMore} = useQuery<
     GetCommentsByPostQuery,
     GetCommentsByPostQueryVariables
   >(getCommentsByPost, {
-    variables: {postID: postId, sortDirection: ModelSortDirection.DESC},
+    variables: {
+      postID: postId,
+      sortDirection: ModelSortDirection.DESC,
+      limit: 10,
+    },
   });
 
   if (loading) {
@@ -46,6 +52,17 @@ const CommentsScreen = () => {
   //console.log(postId, {userId});
   //console.log({COMMENTS_FILTERED});
 
+  const nextToken = data?.getCommentsByPost?.nextToken;
+
+  const loadComments = async () => {
+    if (nextToken && !isFetchingMore) {
+      setIsFetchingMore(true);
+      const response = await fetchMore({variables: {nextToken}});
+      console.log('Loading more comments');
+      setIsFetchingMore(false);
+    }
+  };
+
   return (
     <>
       <View style={{flex: 1}}>
@@ -56,6 +73,17 @@ const CommentsScreen = () => {
             data={COMMENTS_FILTERED}
             renderItem={({item}) => item && <Comment comment={item} />}
             ItemSeparatorComponent={() => <View style={{marginVertical: 5}} />}
+            onEndReached={loadComments}
+            ListFooterComponent={
+              <View style={{backgroundColor: 'red'}}>
+                {isFetchingMore && (
+                  <ActivityIndicator
+                    color={colors.primary}
+                    style={{alignSelf: 'center'}}
+                  />
+                )}
+              </View>
+            }
           />
         )}
       </View>
