@@ -44,6 +44,18 @@ const typePolicies: TypePolicies = {
           };
         },
       },
+      getPostsByDate: {
+        keyArgs: ['type', 'createdAt', 'sortDirection', 'filter'],
+        merge: (existing = {}, incoming) => {
+          console.log({existing, incoming});
+
+          return {
+            ...existing,
+            ...incoming,
+            items: [...(existing?.items ?? []), ...incoming.items],
+          };
+        },
+      },
     },
   },
 };

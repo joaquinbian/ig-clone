@@ -13,9 +13,6 @@ import {API, graphqlOperation} from 'aws-amplify';
 import {
   GetPostsByDateQuery,
   GetPostsByDateQueryVariables,
-  ListPostsQuery,
-  ListPostsQueryVariables,
-  ModelAttributeTypes,
   ModelSortDirection,
   Post as IPost,
 } from 'src/API';
@@ -37,11 +34,16 @@ const viewabilityConfig: ViewabilityConfig = {
 
 const FeedScreen = () => {
   const [currentItem, setCurrentItem] = useState<null | string>(null);
-  const {data, loading, error, refetch} = useQuery<
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
+  const {data, loading, error, refetch, fetchMore} = useQuery<
     GetPostsByDateQuery,
     GetPostsByDateQueryVariables
   >(listPosts, {
-    variables: {sortDirection: ModelSortDirection.DESC, type: 'POST'},
+    variables: {
+      sortDirection: ModelSortDirection.DESC,
+      type: 'POST',
+      limit: 3,
+    },
   });
 
   //esta es la funcion que especifica los items que estan en pantalla
@@ -52,6 +54,21 @@ const FeedScreen = () => {
       }
     },
   );
+
+  const nextToken = data?.getPostsByDate?.nextToken;
+  const getMorePosts = async () => {
+    try {
+      if (nextToken && !isFetchingMore) {
+        console.log('entro a busca mas');
+
+        setIsFetchingMore(true);
+        await fetchMore({variables: {nextToken}});
+      }
+    } catch (error) {
+    } finally {
+      setIsFetchingMore(false);
+    }
+  };
 
   if (error) {
     return (
@@ -100,6 +117,17 @@ const FeedScreen = () => {
       showsVerticalScrollIndicator={false}
       refreshing={loading}
       onRefresh={refetch}
+      onEndReached={getMorePosts}
+      ListFooterComponent={
+        <View
+          style={{
+            marginVertical: 10,
+            justifyContent: 'center',
+            alignContent: 'center',
+          }}>
+          {isFetchingMore && <ActivityIndicator color={colors.black} />}
+        </View>
+      }
     />
   );
 };
