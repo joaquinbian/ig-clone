@@ -34,7 +34,7 @@ export default function DeleteCommentWrapper({comment}: IDeleteCommentMenu) {
     } catch (error) {}
   };
 
-  console.log(comment.numberOfLikes);
+  //console.log(comment.numberOfLikes);
 
   return (
     <Menu renderer={renderers.SlideInMenu}>

@@ -55,13 +55,17 @@ const CommentsScreen = () => {
   const nextToken = data?.getCommentsByPost?.nextToken;
 
   const loadComments = async () => {
-    if (nextToken && !isFetchingMore) {
-      setIsFetchingMore(true);
-      const response = await fetchMore({variables: {nextToken}});
-      //console.log('Loading more comments');
-      setIsFetchingMore(false);
+    if (!nextToken || isFetchingMore) {
+      return;
     }
+    console.log('ME EJECUTO LOAD COMMENS');
+
+    setIsFetchingMore(true);
+    const response = await fetchMore({variables: {nextToken}});
+    //console.log('Loading more comments');
+    setIsFetchingMore(false);
   };
+  console.log({isFetchingMore});
 
   return (
     <>
@@ -75,13 +79,11 @@ const CommentsScreen = () => {
             ItemSeparatorComponent={() => <View style={{marginVertical: 5}} />}
             onEndReached={loadComments}
             ListFooterComponent={
-              <View style={{backgroundColor: 'red'}}>
-                {isFetchingMore && (
-                  <ActivityIndicator
-                    color={colors.primary}
-                    style={{alignSelf: 'center'}}
-                  />
-                )}
+              <View style={{opacity: isFetchingMore ? 1 : 0}}>
+                <ActivityIndicator
+                  color={colors.primary}
+                  style={{alignSelf: 'center'}}
+                />
               </View>
             }
           />

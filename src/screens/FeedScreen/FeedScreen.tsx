@@ -57,11 +57,15 @@ const FeedScreen = () => {
 
   const nextToken = data?.getPostsByDate?.nextToken;
   const getMorePosts = async () => {
-    try {
-      if (nextToken && !isFetchingMore) {
-        console.log('entro a busca mas');
+    setIsFetchingMore(true);
+    console.log({nextToken, isFetchingMore});
 
-        setIsFetchingMore(true);
+    try {
+      console.log('FETCHING MORE ');
+
+      if (nextToken || !isFetchingMore) {
+        //console.log('entro a busca mas');
+
         await fetchMore({variables: {nextToken}});
       }
     } catch (error) {
@@ -118,14 +122,16 @@ const FeedScreen = () => {
       refreshing={loading}
       onRefresh={refetch}
       onEndReached={getMorePosts}
+      //onEndReachedThreshold={0.01}
+      style={{flex: 1}}
       ListFooterComponent={
         <View
           style={{
-            marginVertical: 10,
+            opacity: isFetchingMore ? 1 : 0,
             justifyContent: 'center',
             alignContent: 'center',
           }}>
-          {isFetchingMore && <ActivityIndicator color={colors.black} />}
+          <ActivityIndicator color={colors.black} />
         </View>
       }
     />
