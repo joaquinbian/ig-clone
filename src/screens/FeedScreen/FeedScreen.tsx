@@ -6,10 +6,9 @@ import {
   View,
   ActivityIndicator,
   Text,
-  RefreshControl,
 } from 'react-native';
 import Post from '@components/Post';
-import {API, graphqlOperation} from 'aws-amplify';
+
 import {
   GetPostsByDateQuery,
   GetPostsByDateQueryVariables,
@@ -42,7 +41,7 @@ const FeedScreen = () => {
     variables: {
       sortDirection: ModelSortDirection.DESC,
       type: 'POST',
-      limit: 3,
+      limit: 4,
     },
   });
 
@@ -57,17 +56,15 @@ const FeedScreen = () => {
 
   const nextToken = data?.getPostsByDate?.nextToken;
   const getMorePosts = async () => {
-    setIsFetchingMore(true);
-    console.log({nextToken, isFetchingMore});
-
+    //console.log({nextToken, isFetchingMore});
+    if (!nextToken || isFetchingMore) {
+      return;
+    }
     try {
-      console.log('FETCHING MORE ');
+      // console.log('entro a busca mas');
 
-      if (nextToken || !isFetchingMore) {
-        //console.log('entro a busca mas');
-
-        await fetchMore({variables: {nextToken}});
-      }
+      setIsFetchingMore(true);
+      await fetchMore({variables: {nextToken}});
     } catch (error) {
     } finally {
       setIsFetchingMore(false);
