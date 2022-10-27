@@ -2,7 +2,10 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 
 
 
-
+export declare class Suscription {
+  readonly onCreateCommentByPostId?: Comment | null;
+  constructor(init: ModelInit<Suscription>);
+}
 
 type LikeMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';

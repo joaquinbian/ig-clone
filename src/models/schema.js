@@ -673,6 +673,21 @@ export const schema = {
         }
     },
     "enums": {},
-    "nonModels": {},
-    "version": "01bc9d87c153b1d2cd32bbea1fa56be3"
+    "nonModels": {
+        "Suscription": {
+            "name": "Suscription",
+            "fields": {
+                "onCreateCommentByPostId": {
+                    "name": "onCreateCommentByPostId",
+                    "isArray": false,
+                    "type": {
+                        "model": "Comment"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                }
+            }
+        }
+    },
+    "version": "68624b13bbf9abecba69d5a9416993e5"
 };
