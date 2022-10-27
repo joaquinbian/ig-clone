@@ -81,7 +81,7 @@ type User @model @auth(rules: [{allow: public}]) {
   CommentLikes: [CommentLike] @hasMany(indexName: "byUser", fields: ["id"])
 }
 
-type Suscription {
+type Subscription {
   onCreateCommentByPostId(postID: ID!): Comment
     @aws_subscribe(mutations: ["createComment"])
 }

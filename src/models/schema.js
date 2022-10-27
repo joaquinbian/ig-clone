@@ -1,12 +1,33 @@
 export const schema = {
     "models": {
-        "Like": {
-            "name": "Like",
+        "Comment": {
+            "name": "Comment",
             "fields": {
                 "id": {
                     "name": "id",
                     "isArray": false,
                     "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "comment": {
+                    "name": "comment",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "numberOfLikes": {
+                    "name": "numberOfLikes",
+                    "isArray": false,
+                    "type": "Int",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -36,13 +57,19 @@ export const schema = {
                         "targetName": "postID"
                     }
                 },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
+                "CommentLikes": {
+                    "name": "CommentLikes",
+                    "isArray": true,
+                    "type": {
+                        "model": "CommentLike"
+                    },
                     "isRequired": false,
                     "attributes": [],
-                    "isReadOnly": true
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "Comment"
+                    }
                 },
                 "updatedAt": {
                     "name": "updatedAt",
@@ -54,7 +81,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "Likes",
+            "pluralName": "Comments",
             "attributes": [
                 {
                     "type": "model",
@@ -73,10 +100,10 @@ export const schema = {
                     "type": "key",
                     "properties": {
                         "name": "byPost",
-                        "queryField": "likeForPostByUserId",
+                        "queryField": "getCommentsByPost",
                         "fields": [
                             "postID",
-                            "userID"
+                            "createdAt"
                         ]
                     }
                 },
@@ -448,34 +475,13 @@ export const schema = {
                 }
             ]
         },
-        "Comment": {
-            "name": "Comment",
+        "Like": {
+            "name": "Like",
             "fields": {
                 "id": {
                     "name": "id",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "comment": {
-                    "name": "comment",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "numberOfLikes": {
-                    "name": "numberOfLikes",
-                    "isArray": false,
-                    "type": "Int",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -505,19 +511,13 @@ export const schema = {
                         "targetName": "postID"
                     }
                 },
-                "CommentLikes": {
-                    "name": "CommentLikes",
-                    "isArray": true,
-                    "type": {
-                        "model": "CommentLike"
-                    },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
                     "isRequired": false,
                     "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "Comment"
-                    }
+                    "isReadOnly": true
                 },
                 "updatedAt": {
                     "name": "updatedAt",
@@ -529,7 +529,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "Comments",
+            "pluralName": "Likes",
             "attributes": [
                 {
                     "type": "model",
@@ -548,10 +548,10 @@ export const schema = {
                     "type": "key",
                     "properties": {
                         "name": "byPost",
-                        "queryField": "getCommentsByPost",
+                        "queryField": "likeForPostByUserId",
                         "fields": [
                             "postID",
-                            "createdAt"
+                            "userID"
                         ]
                     }
                 },
@@ -673,21 +673,6 @@ export const schema = {
         }
     },
     "enums": {},
-    "nonModels": {
-        "Suscription": {
-            "name": "Suscription",
-            "fields": {
-                "onCreateCommentByPostId": {
-                    "name": "onCreateCommentByPostId",
-                    "isArray": false,
-                    "type": {
-                        "model": "Comment"
-                    },
-                    "isRequired": false,
-                    "attributes": []
-                }
-            }
-        }
-    },
-    "version": "68624b13bbf9abecba69d5a9416993e5"
+    "nonModels": {},
+    "version": "01bc9d87c153b1d2cd32bbea1fa56be3"
 };

@@ -2,6 +2,111 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateCommentByPostId = /* GraphQL */ `
+  subscription OnCreateCommentByPostId($postID: ID!) {
+    onCreateCommentByPostId(postID: $postID) {
+      id
+      comment
+      createdAt
+      userID
+      postID
+      numberOfLikes
+      User {
+        id
+        name
+        image
+        bio
+        username
+        website
+        email
+        numberOfPosts
+        numberOfFollowers
+        numberOfFollowings
+        Posts {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      Post {
+        id
+        description
+        createdAt
+        type
+        image
+        images
+        video
+        numberOfComments
+        numberOfLikes
+        userID
+        untitledfield
+        User {
+          id
+          name
+          image
+          bio
+          username
+          website
+          email
+          numberOfPosts
+          numberOfFollowers
+          numberOfFollowings
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      CommentLikes {
+        items {
+          id
+          userID
+          commentID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const onCreateLike = /* GraphQL */ `
   subscription OnCreateLike {
     onCreateLike {
