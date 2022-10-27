@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, FlatList, Text, ActivityIndicator} from 'react-native';
 import comments from '@assets/comments.json';
 import Comment from '@components/Comment';
@@ -6,7 +6,10 @@ import Input from './Input';
 import {useRoute} from '@react-navigation/native';
 import {CommentsRouteProp} from '@navigation/types';
 import {useQuery} from '@apollo/client';
-import {getCommentsByPost} from './queries';
+import {
+  getCommentsByPost,
+  onCreateCommentByPostIdSubscription,
+} from './queries';
 import {
   GetCommentsByPostQuery,
   GetCommentsByPostQueryVariables,
@@ -22,7 +25,7 @@ const CommentsScreen = () => {
 
   const {postId} = route.params;
 
-  const {data, loading, error, fetchMore} = useQuery<
+  const {data, loading, error, fetchMore, subscribeToMore} = useQuery<
     GetCommentsByPostQuery,
     GetCommentsByPostQueryVariables
   >(getCommentsByPost, {
@@ -32,6 +35,33 @@ const CommentsScreen = () => {
       limit: 10,
     },
   });
+
+  useEffect(() => {
+    if (!subscribeToMore) {
+      return;
+    }
+    subscribeToMore({
+      document: onCreateCommentByPostIdSubscription,
+      variables: {
+        postID: postId,
+        sortDirection: ModelSortDirection.DESC,
+        // limit: 10,
+      },
+      updateQuery: (prev, {subscriptionData}) => {
+        console.log({prev, subscriptionData});
+        if (!subscriptionData.data) return prev;
+        const newComment = subscriptionData.data.onCreateCommentByPostId;
+        console.log({newComment});
+        return {
+          getCommentsByPost: {
+            ...prev.getCommentsByPost,
+            //agtrgs el comentario al final
+            items: [newComment],
+          },
+        };
+      },
+    });
+  }, [subscribeToMore]);
 
   if (loading) {
     return <Loading text="loading comments..." />;

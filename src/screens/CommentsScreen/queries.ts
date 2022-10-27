@@ -45,3 +45,46 @@ export const getCommentsByPost = /* GraphQL */ gql`
     }
   }
 `;
+
+export const onCreateCommentByPostIdSubscription = /* GraphQL */ gql`
+  subscription OnCreateCommentByPostId($postID: ID!) {
+    onCreateCommentByPostId(postID: $postID) {
+      id
+      comment
+      numberOfLikes
+      userID
+      postID
+      User {
+        id
+        name
+        image
+        username
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      Post {
+        id
+        Comments {
+          items {
+            id
+            comment
+            numberOfLikes
+            _deleted
+            User {
+              id
+              username
+            }
+          }
+        }
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
