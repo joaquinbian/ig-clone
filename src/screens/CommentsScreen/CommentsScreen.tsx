@@ -14,6 +14,8 @@ import {
   GetCommentsByPostQuery,
   GetCommentsByPostQueryVariables,
   ModelSortDirection,
+  OnCreateCommentByPostIdSubscription,
+  OnCreateCommentByPostIdSubscriptionVariables,
 } from 'src/API';
 import Loading from '@components/Loading';
 import ApiErrorMessage from '@components/ApiErrorMessage';
@@ -40,25 +42,26 @@ const CommentsScreen = () => {
     if (!subscribeToMore) {
       return;
     }
-    subscribeToMore({
+    subscribeToMore<
+      OnCreateCommentByPostIdSubscription,
+      OnCreateCommentByPostIdSubscriptionVariables
+    >({
       document: onCreateCommentByPostIdSubscription,
       variables: {
         postID: postId,
-        sortDirection: ModelSortDirection.DESC,
-        // limit: 10,
       },
+
       updateQuery: (prev, {subscriptionData}) => {
         console.log({prev, subscriptionData});
         if (!subscriptionData.data) return prev;
         const newComment = subscriptionData.data.onCreateCommentByPostId;
-        console.log({newComment});
-        return {
+
+        return Object.assign({}, prev, {
           getCommentsByPost: {
             ...prev.getCommentsByPost,
-            //agtrgs el comentario al final
             items: [newComment],
           },
-        };
+        });
       },
     });
   }, [subscribeToMore]);
