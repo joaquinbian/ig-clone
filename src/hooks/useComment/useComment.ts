@@ -31,7 +31,7 @@ export const useComment = (postID: string) => {
     CreateCommentMutation,
     CreateCommentMutationVariables
   >(createComment, {
-    refetchQueries: ['GetCommentsByPost'],
+    // refetchQueries: ['GetCommentsByPost'],
   });
   const [onDeleteComment] = useMutation<
     DeleteCommentMutation,
@@ -60,8 +60,6 @@ export const useComment = (postID: string) => {
       const response = await onCreateComment({
         variables: {input: {comment, postID, userID: userId, numberOfLikes: 0}},
       });
-
-      console.log({response});
     } catch (error) {
       Alert.alert('error adding comment');
     }

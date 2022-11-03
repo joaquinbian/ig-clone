@@ -36,7 +36,15 @@ const typePolicies: TypePolicies = {
     fields: {
       getCommentsByPost: {
         keyArgs: ['postID', 'createdAt', 'sortDirection', 'filter'],
-        merge: (existing = {}, incoming) => {
+        merge: (existing = {}, incoming, {args, variables}) => {
+          if (existing.nextToken === incoming.nextToken) {
+            return {
+              ...existing,
+              ...incoming,
+              items: [...incoming.items, ...(existing.items ?? [])],
+            };
+          }
+
           return {
             ...existing,
             ...incoming,
@@ -47,7 +55,7 @@ const typePolicies: TypePolicies = {
       getPostsByDate: {
         keyArgs: ['type', 'createdAt', 'sortDirection', 'filter'],
         merge: (existing = {}, incoming) => {
-          console.log({existing, incoming});
+          // console.log({existing, incoming});
 
           return {
             ...existing,

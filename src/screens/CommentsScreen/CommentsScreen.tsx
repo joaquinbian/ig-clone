@@ -52,7 +52,6 @@ const CommentsScreen = () => {
       },
 
       updateQuery: (prev, {subscriptionData}) => {
-        console.log({prev, subscriptionData});
         if (!subscriptionData.data) return prev;
         const newComment = subscriptionData.data.onCreateCommentByPostId;
 
@@ -86,6 +85,7 @@ const CommentsScreen = () => {
   //console.log({COMMENTS_FILTERED});
 
   const nextToken = data?.getCommentsByPost?.nextToken;
+  console.log({nextToken});
 
   const loadComments = async () => {
     if (!nextToken || isFetchingMore) {
@@ -94,7 +94,9 @@ const CommentsScreen = () => {
 
     setIsFetchingMore(true);
     const response = await fetchMore({variables: {nextToken}});
-    //console.log('Loading more comments');
+    //console.log('Loading more comments');4
+    console.log({response}, 'is fetching mroe');
+
     setIsFetchingMore(false);
   };
 
