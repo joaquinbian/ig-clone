@@ -37,12 +37,13 @@ export const listPosts = /* GraphQL */ gql`
           username
           image
         }
-        Comments(limit: 1) {
+        Comments {
           items {
             id
             comment
             _deleted
             User {
+              id
               username
             }
           }

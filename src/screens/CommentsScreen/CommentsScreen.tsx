@@ -85,7 +85,7 @@ const CommentsScreen = () => {
   //console.log({COMMENTS_FILTERED});
 
   const nextToken = data?.getCommentsByPost?.nextToken;
-  console.log({nextToken});
+  //console.log({nextToken});
 
   const loadComments = async () => {
     if (!nextToken || isFetchingMore) {
