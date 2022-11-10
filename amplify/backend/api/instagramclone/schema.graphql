@@ -1,4 +1,4 @@
-type Like @model @auth(rules: [{allow: public}]) {
+type Like @model @auth(rules: [{allow: private}]) {
   id: ID!
   userID: ID! @index(name: "byUser")
   postID: ID!
@@ -11,7 +11,7 @@ type Like @model @auth(rules: [{allow: public}]) {
   Post: Post @belongsTo(fields: ["postID"])
 }
 
-type CommentLike @model @auth(rules: [{allow: public}]) {
+type CommentLike @model @auth(rules: [{allow: private}]) {
   id: ID!
   userID: ID! @index(name: "byUser")
   commentID: ID!
@@ -24,7 +24,7 @@ type CommentLike @model @auth(rules: [{allow: public}]) {
   Comment: Comment @belongsTo(fields: ["commentID"])
 }
 
-type Comment @model @auth(rules: [{allow: public}]) {
+type Comment @model @auth(rules: [{allow: private}]) {
   id: ID!
   comment: String!
   createdAt: AWSDateTime!
@@ -41,7 +41,7 @@ type Comment @model @auth(rules: [{allow: public}]) {
   CommentLikes: [CommentLike] @hasMany(indexName: "byComment", fields: ["id"])
 }
 
-type Post @model @auth(rules: [{allow: public}]) {
+type Post @model @auth(rules: [{allow: private}]) {
   id: ID!
   description: String
   createdAt: AWSDateTime!
@@ -63,7 +63,7 @@ type Post @model @auth(rules: [{allow: public}]) {
   Comments: [Comment] @hasMany(indexName: "byPost", fields: ["id"])
 }
 
-type User @model @auth(rules: [{allow: public}]) {
+type User @model @auth(rules: [{allow: private}]) {
   id: ID!
   name: String!
   image: String
