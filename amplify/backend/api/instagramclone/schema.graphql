@@ -81,7 +81,7 @@ type User
   username: String
     @index(name: "usersByUsername", queryField: "usersByUsername")
   website: AWSURL
-  email: String! @auth(rules: [{allow: owner}])
+  email: String @auth(rules: [{allow: owner}])
   numberOfPosts: Int!
   numberOfFollowers: Int!
   numberOfFollowings: Int!
