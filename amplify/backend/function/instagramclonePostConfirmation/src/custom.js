@@ -74,6 +74,7 @@ exports.handler = async (event, context) => {
   //if user does not exist in db, save itn
   const newUser = {
     id: sub,
+    owner: sub,
     name,
     email,
     numberOfPosts: 0,
