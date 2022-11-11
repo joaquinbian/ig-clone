@@ -22,7 +22,6 @@ export type AmplifyDependentResourcesAttributes = {
     },
     "api": {
         "instagramclone": {
-            "GraphQLAPIKeyOutput": "string",
             "GraphQLAPIIdOutput": "string",
             "GraphQLAPIEndpointOutput": "string"
         }
