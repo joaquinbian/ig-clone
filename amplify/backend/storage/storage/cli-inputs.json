@@ -1,0 +1,14 @@
+{
+  "resourceName": "storage",
+  "policyUUID": "c52abf74",
+  "bucketName": "instagramclone-joa-media",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
