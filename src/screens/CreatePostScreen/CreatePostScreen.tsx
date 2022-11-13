@@ -6,7 +6,7 @@ import {
   Alert,
   useWindowDimensions,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {CreatePostNavigationProp, CreatePostRouteProp} from '@navigation/types';
 import CustomInput from '@components/CustomInput';
@@ -32,6 +32,7 @@ export default function CreatePostScreen() {
   const {image, video, images} = route.params;
   const {width} = useWindowDimensions();
   const {userId} = useAuthContext();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const {control, handleSubmit} = useForm<ICreatePost>({
     defaultValues: {description: null},
     mode: 'all',
@@ -42,10 +43,13 @@ export default function CreatePostScreen() {
   >(createPost);
 
   const createPostHandler = async ({description}: ICreatePost) => {
-    if (loading) {
+    let imageToUpload: string | undefined = undefined;
+    setIsSubmitting(true);
+    if (isSubmitting) {
+      console.log('entro a LOADING');
+
       return;
     }
-    let imageToUpload: string | undefined = undefined;
 
     //store media files to S3 and get the key
     try {
@@ -75,6 +79,8 @@ export default function CreatePostScreen() {
       navigation.navigate('HomeStack');
     } catch (error) {
       Alert.alert('error fetching posts', (error as Error).message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
