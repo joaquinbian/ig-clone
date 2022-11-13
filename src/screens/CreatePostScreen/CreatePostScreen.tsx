@@ -1,6 +1,5 @@
 import {
   StyleSheet,
-  Text,
   View,
   Image,
   Alert,
@@ -20,6 +19,7 @@ import Carousel from '@components/Carousel';
 import VideoPlayer from '@components/VideoPlayer';
 import {Storage} from 'aws-amplify';
 import {v4 as uuidv4} from 'uuid';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 interface ICreatePost {
   description: string | null;
@@ -124,31 +124,30 @@ export default function CreatePostScreen() {
   }
 
   return (
-    <>
-      <View style={{alignItems: 'center', margin: 10}}>
-        <View style={styles.contentContainer}>{content}</View>
-        <View style={{marginVertical: 10, alignSelf: 'stretch'}}>
-          <CustomInput
-            control={control}
-            name="description"
-            placeholder="insert a description here..."
-            rules={{
-              maxLength: {
-                value: 500,
-                message: 'description can not exceed 500 characters',
-              },
-            }}
-            multiline
-          />
-          <CustomButton
-            type="PRIMARY"
-            text="Submit"
-            onPress={handleSubmit(createPostHandler)}
-            isLoading={loading}
-          />
-        </View>
+    <KeyboardAwareScrollView
+      contentContainerStyle={{alignItems: 'center', margin: 10}}>
+      <View style={styles.contentContainer}>{content}</View>
+      <View style={{marginVertical: 10, alignSelf: 'stretch'}}>
+        <CustomInput
+          control={control}
+          name="description"
+          placeholder="insert a description here..."
+          rules={{
+            maxLength: {
+              value: 500,
+              message: 'description can not exceed 500 characters',
+            },
+          }}
+          multiline
+        />
+        <CustomButton
+          type="PRIMARY"
+          text="Submit"
+          onPress={handleSubmit(createPostHandler)}
+          isLoading={loading}
+        />
       </View>
-    </>
+    </KeyboardAwareScrollView>
   );
 }
 
