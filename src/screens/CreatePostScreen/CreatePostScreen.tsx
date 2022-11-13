@@ -18,6 +18,8 @@ import {CreatePostMutation, CreatePostMutationVariables} from 'src/API';
 import {useAuthContext} from '@context/AuthContext';
 import Carousel from '@components/Carousel';
 import VideoPlayer from '@components/VideoPlayer';
+import {Storage} from 'aws-amplify';
+import {PutResult} from '@aws-amplify/storage';
 
 interface ICreatePost {
   description: string | null;
@@ -40,14 +42,23 @@ export default function CreatePostScreen() {
   >(createPost);
 
   const createPostHandler = async ({description}: ICreatePost) => {
-    //   console.log({description});
+    if (loading) {
+      return;
+    }
+    let imageToUpload: string | undefined = undefined;
+
+    //store media files to S3 and get the key
     try {
+      if (image) {
+        const imageKey = await uploadMedia(image);
+        imageToUpload = imageKey;
+      }
       const response = await onCreatePost({
         variables: {
           input: {
             description: description ?? null,
             type: 'POST',
-            image,
+            image: imageToUpload,
             images,
             video,
             numberOfComments: 0,
@@ -64,6 +75,21 @@ export default function CreatePostScreen() {
       navigation.navigate('HomeStack');
     } catch (error) {
       Alert.alert('error fetching posts', (error as Error).message);
+    }
+  };
+
+  const uploadMedia = async (image: string) => {
+    try {
+      //get the blob of the fiel from url
+      const responseImage = await fetch(image);
+      const imageBlob = await responseImage.blob();
+
+      //upload the file to S3
+      const s3response = await Storage.put('image.png', imageBlob);
+      return s3response.key;
+      console.log({s3response});
+    } catch (error) {
+      Alert.alert('error uploading image');
     }
   };
 
