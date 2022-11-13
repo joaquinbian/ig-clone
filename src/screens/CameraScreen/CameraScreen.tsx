@@ -73,9 +73,7 @@ const CameraScreen = () => {
         console.log(data.uri);
         setImage(data?.uri);
         navigation.navigate('CreatePost', {
-          images: new Array(3).fill(
-            'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/1.jpg',
-          ),
+          image: data?.uri,
         });
       }
     } catch (error) {
