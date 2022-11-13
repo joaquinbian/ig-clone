@@ -20,6 +20,7 @@ import PostOptions from './components/PostOptions';
 import {useLikes} from '@hooks/useLikes/useLikes';
 import {size} from '@theme/fonts';
 import dayjs from 'dayjs';
+import PostContent from './components/PostContent';
 
 interface Props {
   post: IPost;
@@ -95,25 +96,11 @@ const Post = ({post, isVisible}: Props) => {
 
       {/* POST IMAGE */}
 
-      {post.image && (
-        <Pressable onDoublePress={onLikePost}>
-          <Image
-            source={{
-              uri: post.image,
-            }}
-            style={styles.postImage}
-            resizeMode="cover"
-          />
-        </Pressable>
-      )}
-      {post.images && <Carousel images={post.images} onLikePost={onLikePost} />}
-      {post.video && (
-        <VideoPlayer
-          source={post.video}
-          isVisible={isVisible}
-          onLikePost={onLikePost}
-        />
-      )}
+      <PostContent
+        post={post}
+        isVisible={!!isVisible}
+        onLikePost={onLikePost}
+      />
 
       {/* POST FOOTER */}
 
