@@ -12,6 +12,7 @@ import {
 import {colors} from '@theme/colors';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {CameraScreenNaviationProp} from '@navigation/types';
+import {Asset, launchImageLibrary} from 'react-native-image-picker';
 
 const flashModes: FlashMode[] = [
   FlashMode.auto,
@@ -20,6 +21,7 @@ const flashModes: FlashMode[] = [
   FlashMode.torch,
 ];
 
+// TODO : check if i can make this an enum
 const flashIcon = {
   auto: 'flash-auto',
   off: 'flash-off',
@@ -125,6 +127,27 @@ const CameraScreen = () => {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
+
+  const launchGallery = async () => {
+    const {didCancel, assets, errorCode} = await launchImageLibrary({
+      mediaType: 'photo',
+      selectionLimit: 10,
+    });
+
+    if (!didCancel && !errorCode && assets) {
+      // console.log({assets});
+      if (assets.length === 1) {
+        navigation.navigate('CreatePost', {
+          image: assets[0].uri,
+        });
+      } else {
+        navigation.navigate('CreatePost', {
+          images: assets.map(asset => asset.uri!),
+        });
+      }
+    }
+  };
+
   return (
     isFocused && (
       <View style={styles.container}>
@@ -161,7 +184,9 @@ const CameraScreen = () => {
               onPress={takePicture}
             />
           )}
-          <MaterialIcons name="collections" color={colors.white} size={30} />
+          <TouchableOpacity activeOpacity={0.8} onPress={launchGallery}>
+            <MaterialIcons name="collections" color={colors.white} size={30} />
+          </TouchableOpacity>
         </View>
       </View>
     )
