@@ -30,6 +30,7 @@
     "react": "17.0.2",
     "react-hook-form": "^7.31.2",
     "react-native": "0.68.5",
+    "react-native-get-random-values": "^1.8.0",
     "react-native-image-picker": "^4.10.0",
     "react-native-inappbrowser-reborn": "^3.7.0",
     "react-native-popup-menu": "^0.16.1",
@@ -37,7 +38,8 @@
     "react-native-screens": "^3.13.1",
     "react-native-svg": "^12.3.0",
     "react-native-vector-icons": "^9.1.0",
-    "react-native-video": "^5.2.0"
+    "react-native-video": "^5.2.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -47,6 +49,7 @@
     "@types/react-native": "^0.67.3",
     "@types/react-native-video": "^5.0.13",
     "@types/react-test-renderer": "^17.0.1",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
     "babel-jest": "^26.6.3",

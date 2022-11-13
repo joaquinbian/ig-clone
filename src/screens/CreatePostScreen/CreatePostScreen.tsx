@@ -19,7 +19,7 @@ import {useAuthContext} from '@context/AuthContext';
 import Carousel from '@components/Carousel';
 import VideoPlayer from '@components/VideoPlayer';
 import {Storage} from 'aws-amplify';
-import {PutResult} from '@aws-amplify/storage';
+import {v4 as uuidv4} from 'uuid';
 
 interface ICreatePost {
   description: string | null;
@@ -89,11 +89,16 @@ export default function CreatePostScreen() {
       //get the blob of the fiel from url
       const responseImage = await fetch(image);
       const imageBlob = await responseImage.blob();
+      const urlParts = image.split('.');
+      const extension = urlParts[urlParts.length - 1];
 
       //upload the file to S3
-      const s3response = await Storage.put('image.png', imageBlob);
+      const s3response = await Storage.put(
+        `${uuidv4()}.${extension}`,
+        imageBlob,
+      );
       return s3response.key;
-      console.log({s3response});
+      //console.log({s3response});
     } catch (error) {
       Alert.alert('error uploading image');
     }

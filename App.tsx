@@ -1,5 +1,6 @@
 /* eslint-disable eslint-comments/no-unlimited-disable */
 /* eslint-disable */
+import 'react-native-get-random-values';
 import {Linking, StyleSheet, View} from 'react-native';
 import Amplify from 'aws-amplify';
 import {MenuProvider} from 'react-native-popup-menu';
