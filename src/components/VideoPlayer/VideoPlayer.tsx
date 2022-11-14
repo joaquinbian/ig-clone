@@ -5,6 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {styles} from './styles';
 import {colors} from '@theme/colors';
 import Pressable from '@components/Pressable';
+import CustomVideo from '@components/CustomVideo';
 
 interface IProps {
   source: string;
@@ -12,7 +13,6 @@ interface IProps {
   onLikePost?: () => void;
 }
 const VideoPlayer = ({source: uri, isVisible, onLikePost}: IProps) => {
-  const player = useRef<Video | null>();
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean | undefined>(isVisible);
   const {width} = useWindowDimensions();
@@ -36,13 +36,11 @@ const VideoPlayer = ({source: uri, isVisible, onLikePost}: IProps) => {
           agregra el timepo del video
        */}
       <Pressable onDoublePress={onLikePost} onPress={toggleMuted}>
-        <Video
-          ref={ref => (player.current = ref)}
-          source={{uri}}
-          style={[{width, aspectRatio: 1}]}
-          resizeMode="cover"
-          muted={isMuted}
-          paused={isPaused}
+        <CustomVideo
+          uri={uri}
+          isMuted={isMuted}
+          isPaused={!!isPaused}
+          width={width}
           repeat
         />
       </Pressable>

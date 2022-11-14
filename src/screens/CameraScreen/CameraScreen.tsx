@@ -11,7 +11,10 @@ import {
 } from 'expo-camera';
 import {colors} from '@theme/colors';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
-import {CameraScreenNaviationProp} from '@navigation/types';
+import {
+  CameraScreenNaviationProp,
+  CreatePostRouteProp,
+} from '@navigation/types';
 import {Asset, launchImageLibrary} from 'react-native-image-picker';
 
 const flashModes: FlashMode[] = [
@@ -41,6 +44,12 @@ const videoOptions: CameraRecordingOptions = {
   maxDuration: 60,
   maxFileSize: 10 * 1024 * 1024,
 };
+
+interface ICreatePostParams {
+  image?: string;
+  images?: string[];
+  video?: string;
+}
 const CameraScreen = () => {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [type, setType] = useState<CameraType>(CameraType.back);
@@ -128,22 +137,34 @@ const CameraScreen = () => {
 
   const launchGallery = async () => {
     const {didCancel, assets, errorCode} = await launchImageLibrary({
-      mediaType: 'photo',
+      mediaType: 'mixed',
       selectionLimit: 10,
     });
 
     if (!didCancel && !errorCode && assets) {
       // console.log({assets});
       if (assets.length === 1) {
-        navigation.navigate('CreatePost', {
+        /* navigation.navigate('CreatePost', {
           image: assets[0].uri,
-        });
+        }); */
+        if (assets[0].type?.startsWith('video')) {
+          navigateToCreatePost({video: assets[0].uri});
+        } else {
+          navigateToCreatePost({image: assets[0].uri});
+        }
       } else if (assets.length > 1) {
-        navigation.navigate('CreatePost', {
+        /* navigation.navigate('CreatePost', {
+          images: assets.map(asset => asset.uri as string),
+        }); */
+        navigateToCreatePost({
           images: assets.map(asset => asset.uri as string),
         });
       }
     }
+  };
+
+  const navigateToCreatePost = (params: ICreatePostParams) => {
+    navigation.navigate('CreatePost', params);
   };
 
   return (

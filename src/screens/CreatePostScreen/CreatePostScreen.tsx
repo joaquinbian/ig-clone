@@ -20,6 +20,7 @@ import VideoPlayer from '@components/VideoPlayer';
 import {Storage} from 'aws-amplify';
 import {v4 as uuidv4} from 'uuid';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import CustomVideo from '@components/CustomVideo';
 
 interface ICreatePost {
   description: string | null;
@@ -33,6 +34,7 @@ export default function CreatePostScreen() {
   const {width} = useWindowDimensions();
   const {userId} = useAuthContext();
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const {control, handleSubmit} = useForm<ICreatePost>({
     defaultValues: {description: null},
     mode: 'all',
@@ -127,7 +129,15 @@ export default function CreatePostScreen() {
   } else if (images) {
     content = <Carousel images={images} imageWidth={width - 20} />;
   } else if (video) {
-    content = <VideoPlayer source={video} />;
+    content = (
+      <CustomVideo
+        width={width}
+        uri={video}
+        isMuted={true}
+        isPaused={false}
+        repeat
+      />
+    );
   }
 
   return (
