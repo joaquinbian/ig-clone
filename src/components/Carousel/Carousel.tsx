@@ -9,6 +9,7 @@ import {
   useWindowDimensions,
   ViewToken,
   ViewabilityConfig,
+  ActivityIndicator,
 } from 'react-native';
 interface ICarouselProps {
   images: string[];
@@ -43,10 +44,14 @@ const Carousel = ({
 
   const renderItem = ({item}: {item: string}) => (
     <Pressable onDoublePress={onLikePost}>
-      <Image
-        source={{uri: item}}
-        style={{width: imageWidth ?? width, aspectRatio: 1}}
-      />
+      {item ? (
+        <Image
+          source={{uri: item}}
+          style={{width: imageWidth ?? width, aspectRatio: 1}}
+        />
+      ) : (
+        <ActivityIndicator />
+      )}
     </Pressable>
   );
   return (

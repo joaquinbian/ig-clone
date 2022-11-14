@@ -20,6 +20,7 @@ export default function PostContent({
   onLikePost,
 }: IPostContent) {
   const [image, setImage] = useState<string | null>(null);
+  const [images, setImages] = useState<string[] | null>(null);
   useEffect(() => {
     downloadMedia();
   }, []);
@@ -29,6 +30,11 @@ export default function PostContent({
       if (post.image) {
         const uri = await Storage.get(post.image);
         setImage(uri);
+      } else if (post.images) {
+        const uris = await Promise.all(
+          post.images.map(image => Storage.get(image)),
+        );
+        setImages(uris);
       }
     } catch (error) {}
   };
@@ -43,8 +49,8 @@ export default function PostContent({
         />
       </Pressable>
     );
-  } else if (post.images) {
-    return <Carousel images={post.images} onLikePost={onLikePost} />;
+  } else if (images) {
+    return <Carousel images={images} onLikePost={onLikePost} />;
   } else if (post.video) {
     <VideoPlayer
       source={post.video}

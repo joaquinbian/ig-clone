@@ -44,7 +44,9 @@ export default function CreatePostScreen() {
 
   const createPostHandler = async ({description}: ICreatePost) => {
     let imageToUpload: string | undefined = undefined;
+    let imagesToUpload: string[] | undefined = undefined;
     setIsSubmitting(true);
+
     if (isSubmitting) {
       console.log('entro a LOADING');
 
@@ -56,6 +58,11 @@ export default function CreatePostScreen() {
       if (image) {
         const imageKey = await uploadMedia(image);
         imageToUpload = imageKey;
+      } else if (images) {
+        const imagesKeys = await Promise.all(
+          images.map(image => uploadMedia(image)),
+        );
+        imagesToUpload = imagesKeys.filter(key => key) as string[];
       }
       const response = await onCreatePost({
         variables: {
@@ -63,7 +70,7 @@ export default function CreatePostScreen() {
             description: description ?? null,
             type: 'POST',
             image: imageToUpload,
-            images,
+            images: imagesToUpload,
             video,
             numberOfComments: 0,
             numberOfLikes: 0,

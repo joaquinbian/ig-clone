@@ -138,9 +138,9 @@ const CameraScreen = () => {
         navigation.navigate('CreatePost', {
           image: assets[0].uri,
         });
-      } else {
+      } else if (assets.length > 1) {
         navigation.navigate('CreatePost', {
-          images: assets.map(asset => asset.uri!),
+          images: assets.map(asset => asset.uri as string),
         });
       }
     }
