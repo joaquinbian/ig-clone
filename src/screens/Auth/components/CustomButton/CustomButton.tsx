@@ -1,5 +1,11 @@
 import React from 'react';
-import {Text, StyleSheet, Pressable, ActivityIndicator} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  Pressable,
+  ActivityIndicator,
+  TouchableOpacity,
+} from 'react-native';
 import {colors} from '@theme/colors';
 
 interface ICustomButton {
@@ -20,16 +26,17 @@ const CustomButton = ({
   isLoading = false,
 }: ICustomButton) => {
   return (
-    <Pressable
+    <TouchableOpacity
       onPress={onPress}
       disabled={isLoading}
+      activeOpacity={0.8}
       style={[
         styles.container,
         styles[`container_${type}`],
         bgColor ? {backgroundColor: bgColor} : {},
       ]}>
       {isLoading ? (
-        <ActivityIndicator />
+        <ActivityIndicator color={colors.white} />
       ) : (
         <Text
           style={[
@@ -40,7 +47,7 @@ const CustomButton = ({
           {text}
         </Text>
       )}
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 

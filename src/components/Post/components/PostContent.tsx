@@ -6,7 +6,6 @@ import Carousel from '@components/Carousel';
 import VideoPlayer from '@components/VideoPlayer';
 import {styles} from '../styles';
 import {Storage} from 'aws-amplify';
-import {PossibleTypeExtensions} from 'graphql/validation/rules/PossibleTypeExtensions';
 
 interface IPostContent {
   post: Post;
@@ -21,6 +20,7 @@ export default function PostContent({
 }: IPostContent) {
   const [image, setImage] = useState<string | null>(null);
   const [images, setImages] = useState<string[] | null>(null);
+  const [video, setVideo] = useState<string | null>(null);
   useEffect(() => {
     downloadMedia();
   }, []);
@@ -35,6 +35,9 @@ export default function PostContent({
           post.images.map(image => Storage.get(image)),
         );
         setImages(uris);
+      } else if (post.video) {
+        const videoUri = await Storage.get(post.video);
+        setVideo(videoUri);
       }
     } catch (error) {}
   };
@@ -51,13 +54,16 @@ export default function PostContent({
     );
   } else if (images) {
     return <Carousel images={images} onLikePost={onLikePost} />;
-  } else if (post.video) {
-    <VideoPlayer
-      source={post.video}
-      isVisible={isVisible}
-      onLikePost={onLikePost}
-    />;
+  } else if (video) {
+    return (
+      <VideoPlayer
+        source={video}
+        isVisible={isVisible}
+        onLikePost={onLikePost}
+      />
+    );
   }
+
   return (
     <View
       style={[

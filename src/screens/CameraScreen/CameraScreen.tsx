@@ -79,7 +79,6 @@ const CameraScreen = () => {
     try {
       if (camera.current && isCameraReady) {
         const data = await camera.current.takePictureAsync(cameraOptions);
-        console.log(data.uri);
         setImage(data?.uri);
         navigation.navigate('CreatePost', {
           image: data?.uri,
@@ -113,7 +112,8 @@ const CameraScreen = () => {
       //cuando paremos el video o la max quality o el max size se alcance, obtenemos el video
       //terminar de ver esto y ponerlo adentro de un try catch
       try {
-        await camera.current.recordAsync(videoOptions);
+        const video = await camera.current.recordAsync(videoOptions);
+        navigateToCreatePost({video: video.uri});
       } catch (error) {
         setIsRecording(false);
       }
@@ -142,20 +142,13 @@ const CameraScreen = () => {
     });
 
     if (!didCancel && !errorCode && assets) {
-      // console.log({assets});
       if (assets.length === 1) {
-        /* navigation.navigate('CreatePost', {
-          image: assets[0].uri,
-        }); */
         if (assets[0].type?.startsWith('video')) {
           navigateToCreatePost({video: assets[0].uri});
         } else {
           navigateToCreatePost({image: assets[0].uri});
         }
       } else if (assets.length > 1) {
-        /* navigation.navigate('CreatePost', {
-          images: assets.map(asset => asset.uri as string),
-        }); */
         navigateToCreatePost({
           images: assets.map(asset => asset.uri as string),
         });

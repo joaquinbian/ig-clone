@@ -16,7 +16,6 @@ import {createPost} from './queries';
 import {CreatePostMutation, CreatePostMutationVariables} from 'src/API';
 import {useAuthContext} from '@context/AuthContext';
 import Carousel from '@components/Carousel';
-import VideoPlayer from '@components/VideoPlayer';
 import {Storage} from 'aws-amplify';
 import {v4 as uuidv4} from 'uuid';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -47,11 +46,10 @@ export default function CreatePostScreen() {
   const createPostHandler = async ({description}: ICreatePost) => {
     let imageToUpload: string | undefined = undefined;
     let imagesToUpload: string[] | undefined = undefined;
+    let videoToUpload: string | undefined = undefined;
     setIsSubmitting(true);
 
     if (isSubmitting) {
-      console.log('entro a LOADING');
-
       return;
     }
 
@@ -65,6 +63,8 @@ export default function CreatePostScreen() {
           images.map(image => uploadMedia(image)),
         );
         imagesToUpload = imagesKeys.filter(key => key) as string[];
+      } else if (video) {
+        videoToUpload = await uploadMedia(video);
       }
       const response = await onCreatePost({
         variables: {
@@ -73,23 +73,20 @@ export default function CreatePostScreen() {
             type: 'POST',
             image: imageToUpload,
             images: imagesToUpload,
-            video,
+            video: videoToUpload,
             numberOfComments: 0,
             numberOfLikes: 0,
             userID: userId,
           },
         },
       });
-
-      //console.log({response});
       //para que no quede la segunda pantalla en el historial
       navigation.popToTop();
 
       navigation.navigate('HomeStack');
     } catch (error) {
-      Alert.alert('error fetching posts', (error as Error).message);
-    } finally {
       setIsSubmitting(false);
+      Alert.alert('error fetching posts', (error as Error).message);
     }
   };
 
@@ -161,7 +158,7 @@ export default function CreatePostScreen() {
           type="PRIMARY"
           text="Submit"
           onPress={handleSubmit(createPostHandler)}
-          isLoading={loading}
+          isLoading={isSubmitting}
         />
       </View>
     </KeyboardAwareScrollView>
