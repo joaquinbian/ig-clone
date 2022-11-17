@@ -8,8 +8,8 @@ import {ProfileNavigatorProps} from '@navigation/types';
 import {Auth, Storage} from 'aws-amplify';
 import {User} from 'src/API';
 import {DEFAULT_USER_IMAGE} from 'src/config';
-import {LoneSchemaDefinition} from 'graphql/validation/rules/LoneSchemaDefinition';
 import {useAuthContext} from '@context/AuthContext';
+import UserImage from '@components/UserImage';
 
 type ProfileHeaderProps = Pick<
   User,
@@ -34,26 +34,6 @@ const ProfileHeader = ({
   const navigation = useNavigation<ProfileNavigatorProps>();
   console.log({image}, 'IMAGE EN PROFILE HEADER');
 
-  const [avatar, setAvatar] = useState<string | null | undefined>(undefined);
-  const [loadingImage, setLoadingImage] = useState(true);
-
-  useEffect(() => {
-    getUserAvatar();
-  }, []);
-
-  const getUserAvatar = async () => {
-    setLoadingImage(true);
-    try {
-      if (image) {
-        const userAvatar = await Storage.get(image);
-        setAvatar(userAvatar);
-      }
-    } catch (error) {
-    } finally {
-      setLoadingImage(false);
-    }
-  };
-
   const {user} = useAuthContext();
 
   const navigateToEditProfile = () => {
@@ -66,11 +46,7 @@ const ProfileHeader = ({
   return (
     <View style={{padding: 10}}>
       <View style={styles.firstRow}>
-        <Image
-          source={{uri: image ? avatar : DEFAULT_USER_IMAGE}}
-          style={styles.avatar}
-        />
-        {loadingImage && <ActivityIndicator />}
+        <UserImage image={image} />
         <View style={styles.dataRowContainer}>
           <View style={styles.dataContainer}>
             <Text style={styles.data}>{numberOfPosts}</Text>

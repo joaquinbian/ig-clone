@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
   },
   avatar: {
     width: 40,
-    height: 40,
+    aspectRatio: 1,
     borderRadius: 25,
     marginRight: 10,
   },

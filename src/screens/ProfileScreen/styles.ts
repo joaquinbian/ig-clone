@@ -3,7 +3,11 @@ import {colors} from '@theme/colors';
 import {weight} from '@theme/fonts';
 
 export const styles = StyleSheet.create({
-  avatar: {width: 100, aspectRatio: 1, borderRadius: 50},
+  avatar: {
+    width: 100,
+    aspectRatio: 1,
+    borderRadius: 50,
+  },
   container: {
     // padding: 10,
     flex: 1,

@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, {useEffect, useState} from 'react';
-import {View, Image, ScrollView, Alert, ActivityIndicator} from 'react-native';
+import {View, ScrollView, Alert} from 'react-native';
 import Button from '@components/Button';
 import {useForm} from 'react-hook-form';
 import {Asset, launchImageLibrary} from 'react-native-image-picker';
@@ -33,6 +33,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {Auth, Storage} from 'aws-amplify';
 import {uploadMedia} from '@utils/aws';
+import UserImage from '@components/UserImage';
 
 const URL_REGEX =
   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
@@ -40,8 +41,6 @@ const URL_REGEX =
 const EditProfile = () => {
   const [imageSelected, setImageSelected] = useState<string | undefined>();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [avatar, setAvatar] = useState<undefined | string>();
-  const [isLoadingImage, setIsLoadingImage] = useState(true);
   const {user} = useAuthContext();
 
   const navigation = useNavigation();
@@ -82,22 +81,6 @@ const EditProfile = () => {
     {error: deleteUserError, loading: loadingDeleteUser},
   ] = useMutation<DeleteUserMutation, DeleteUserMutationVariables>(deleteUser);
 
-  useEffect(() => {
-    getUserAvatar();
-  }, []);
-
-  const getUserAvatar = async () => {
-    try {
-      if (data?.getUser?.image) {
-        const userAvatar = await Storage.get(data?.getUser?.image);
-        setAvatar(userAvatar);
-      }
-    } catch (error) {
-    } finally {
-      setIsLoadingImage(false);
-    }
-  };
-
   const onChangePhoto = async () => {
     const {didCancel, assets, errorCode} = await launchImageLibrary({
       mediaType: 'photo',
@@ -118,7 +101,6 @@ const EditProfile = () => {
         console.log('entro en IMAGE SELECTED');
 
         image = await uploadMedia(imageSelected);
-        console.log({image}, 'ACTUALLY IMAGE TO UPLAOD');
       }
       const {bio, username, name, website} = formData;
       await updateUser({
@@ -216,26 +198,10 @@ const EditProfile = () => {
 
   return (
     <ScrollView style={{flex: 1}}>
-      <Image
-        source={{
-          uri: imageSelected || (avatar ?? DEFAULT_USER_IMAGE),
-        }}
-        style={styles.avatar}
+      <UserImage
+        image={imageSelected ?? data?.getUser?.image}
+        style={{marginTop: 20}}
       />
-
-      {isLoadingImage && (
-        <View
-          style={[
-            styles.avatar,
-            {
-              backgroundColor: colors.lightgray,
-              justifyContent: 'center',
-              alignItems: 'center',
-            },
-          ]}>
-          <ActivityIndicator />
-        </View>
-      )}
 
       <Button
         title="edit profile photo"
