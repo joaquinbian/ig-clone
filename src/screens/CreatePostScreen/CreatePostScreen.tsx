@@ -20,6 +20,7 @@ import {Storage} from 'aws-amplify';
 import {v4 as uuidv4} from 'uuid';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import CustomVideo from '@components/CustomVideo';
+import {uploadMedia} from '@utils/aws';
 
 interface ICreatePost {
   description: string | null;
@@ -32,6 +33,7 @@ export default function CreatePostScreen() {
   const {image, video, images} = route.params;
   const {width} = useWindowDimensions();
   const {userId} = useAuthContext();
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {control, handleSubmit} = useForm<ICreatePost>({
@@ -87,26 +89,6 @@ export default function CreatePostScreen() {
     } catch (error) {
       setIsSubmitting(false);
       Alert.alert('error fetching posts', (error as Error).message);
-    }
-  };
-
-  const uploadMedia = async (image: string) => {
-    try {
-      //get the blob of the fiel from url
-      const responseImage = await fetch(image);
-      const imageBlob = await responseImage.blob();
-      const urlParts = image.split('.');
-      const extension = urlParts[urlParts.length - 1];
-
-      //upload the file to S3
-      const s3response = await Storage.put(
-        `${uuidv4()}.${extension}`,
-        imageBlob,
-      );
-      return s3response.key;
-      //console.log({s3response});
-    } catch (error) {
-      Alert.alert('error uploading image');
     }
   };
 
