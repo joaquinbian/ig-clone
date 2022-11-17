@@ -13,6 +13,7 @@ import DeleteCommentWrapper from './DeleteCommentWrapper';
 import useCommentLike from '@hooks/useCommentLike';
 import {useAuthContext} from '@context/AuthContext';
 import dayJs from 'dayjs';
+import UserImage from '@components/UserImage';
 
 interface Props {
   comment: IComment;
@@ -29,10 +30,7 @@ const Comment = ({comment}: Props) => {
         marginHorizontal: 5,
         // flex: 1,
       }}>
-      <Image
-        source={{uri: comment.User?.image ?? DEFAULT_USER_IMAGE}}
-        style={[styles.userImage]}
-      />
+      <UserImage image={comment.User?.image} style={[styles.userImage]} />
       <View style={{flex: 1}}>
         <View style={styles.usernameContainer}>
           <BoldText
