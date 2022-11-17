@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {View, Text, Image, TouchableOpacity, Alert} from 'react-native';
 import {styles} from './styles';
 import {colors} from '@theme/colors';
@@ -21,6 +21,7 @@ import {useLikes} from '@hooks/useLikes/useLikes';
 import {size} from '@theme/fonts';
 import dayjs from 'dayjs';
 import PostContent from './components/PostContent';
+import {Storage} from 'aws-amplify';
 
 interface Props {
   post: IPost;
@@ -33,6 +34,9 @@ const Post = ({post, isVisible}: Props) => {
   const navigation = useNavigation<FeedNavigatorProps>();
   const {toggleLike, isLiked, onLikePost: likePost} = useLikes(post);
 
+  const [avatar, setAvatar] = useState<undefined | string>();
+  const [isLoadingImage, setIsLoadingImage] = useState(true);
+
   const isTooLong = useMemo(
     () => post?.description?.length ?? 0 >= 20,
     [post?.description],
@@ -44,6 +48,22 @@ const Post = ({post, isVisible}: Props) => {
       likePost();
     }
   }, []);
+
+  useEffect(() => {
+    getUserAvatar();
+  }, []);
+
+  const getUserAvatar = async () => {
+    try {
+      if (post.User?.image) {
+        const userAvatar = await Storage.get(post.User?.image);
+        setAvatar(userAvatar);
+      }
+    } catch (error) {
+    } finally {
+      setIsLoadingImage(false);
+    }
+  };
 
   const toggleSave = () => {
     setIsSaved(isSaved => !isSaved);
@@ -82,7 +102,7 @@ const Post = ({post, isVisible}: Props) => {
         <Pressable onPress={navigateToProfile} style={styles.userInfo}>
           <Image
             source={{
-              uri: post.User?.image ?? DEFAULT_USER_IMAGE,
+              uri: avatar ?? DEFAULT_USER_IMAGE,
             }}
             resizeMode="cover"
             style={styles.avatar}

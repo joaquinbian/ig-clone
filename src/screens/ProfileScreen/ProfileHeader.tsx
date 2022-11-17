@@ -1,11 +1,11 @@
 import Button from '@components/Button';
-import React from 'react';
-import {View, Text, Image} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, Image, ActivityIndicator} from 'react-native';
 import {styles} from './styles';
 import {colors} from '@theme/colors';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {ProfileNavigatorProps} from '@navigation/types';
-import {Auth} from 'aws-amplify';
+import {Auth, Storage} from 'aws-amplify';
 import {User} from 'src/API';
 import {DEFAULT_USER_IMAGE} from 'src/config';
 import {LoneSchemaDefinition} from 'graphql/validation/rules/LoneSchemaDefinition';
@@ -32,6 +32,27 @@ const ProfileHeader = ({
   image,
 }: ProfileHeaderProps) => {
   const navigation = useNavigation<ProfileNavigatorProps>();
+  console.log({image}, 'IMAGE EN PROFILE HEADER');
+
+  const [avatar, setAvatar] = useState<string | null | undefined>(undefined);
+  const [loadingImage, setLoadingImage] = useState(true);
+
+  useEffect(() => {
+    getUserAvatar();
+  }, []);
+
+  const getUserAvatar = async () => {
+    setLoadingImage(true);
+    try {
+      if (image) {
+        const userAvatar = await Storage.get(image);
+        setAvatar(userAvatar);
+      }
+    } catch (error) {
+    } finally {
+      setLoadingImage(false);
+    }
+  };
 
   const {user} = useAuthContext();
 
@@ -46,10 +67,10 @@ const ProfileHeader = ({
     <View style={{padding: 10}}>
       <View style={styles.firstRow}>
         <Image
-          source={{uri: image ?? DEFAULT_USER_IMAGE}}
+          source={{uri: image ? avatar : DEFAULT_USER_IMAGE}}
           style={styles.avatar}
         />
-
+        {loadingImage && <ActivityIndicator />}
         <View style={styles.dataRowContainer}>
           <View style={styles.dataContainer}>
             <Text style={styles.data}>{numberOfPosts}</Text>

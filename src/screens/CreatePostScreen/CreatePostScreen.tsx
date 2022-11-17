@@ -16,8 +16,6 @@ import {createPost} from './queries';
 import {CreatePostMutation, CreatePostMutationVariables} from 'src/API';
 import {useAuthContext} from '@context/AuthContext';
 import Carousel from '@components/Carousel';
-import {Storage} from 'aws-amplify';
-import {v4 as uuidv4} from 'uuid';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import CustomVideo from '@components/CustomVideo';
 import {uploadMedia} from '@utils/aws';

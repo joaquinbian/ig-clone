@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
-import {View, Image, ScrollView, Alert} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Image, ScrollView, Alert, ActivityIndicator} from 'react-native';
 import Button from '@components/Button';
 import {useForm} from 'react-hook-form';
 import {Asset, launchImageLibrary} from 'react-native-image-picker';
@@ -21,7 +21,6 @@ import {
   UsersByUsernameQueryVariables,
   UsersByUsernameQuery,
 } from 'src/API';
-import {getUserById} from '@screens/ProfileScreen/queries';
 import {DEFAULT_USER_IMAGE} from 'src/config';
 import ApiErrorMessage from '@components/ApiErrorMessage';
 import Loading from '@components/Loading';
@@ -32,13 +31,17 @@ import {
   getUserByUsername,
 } from './queries';
 import {useNavigation} from '@react-navigation/native';
-import {Auth} from 'aws-amplify';
+import {Auth, Storage} from 'aws-amplify';
+import {uploadMedia} from '@utils/aws';
 
 const URL_REGEX =
   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
 const EditProfile = () => {
-  const [imageSelected, setImageSelected] = useState<Asset | undefined>();
+  const [imageSelected, setImageSelected] = useState<string | undefined>();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [avatar, setAvatar] = useState<undefined | string>();
+  const [isLoadingImage, setIsLoadingImage] = useState(true);
   const {user} = useAuthContext();
 
   const navigation = useNavigation();
@@ -64,18 +67,36 @@ const EditProfile = () => {
     },
   });
 
-  const [updateUser, {error: editError, loading: editLoading, data: editData}] =
-    useMutation<UpdateUserMutation, UpdateUserMutationVariables>(editUser);
+  const [updateUser, {error: editError}] = useMutation<
+    UpdateUserMutation,
+    UpdateUserMutationVariables
+  >(editUser);
 
-  const [getUser, {data: userData, error: userError, loading: userLoading}] =
-    useLazyQuery<UsersByUsernameQuery, UsersByUsernameQueryVariables>(
-      getUserByUsername,
-    );
+  const [getUser] = useLazyQuery<
+    UsersByUsernameQuery,
+    UsersByUsernameQueryVariables
+  >(getUserByUsername);
 
   const [
     deleteUserMutation,
     {error: deleteUserError, loading: loadingDeleteUser},
   ] = useMutation<DeleteUserMutation, DeleteUserMutationVariables>(deleteUser);
+
+  useEffect(() => {
+    getUserAvatar();
+  }, []);
+
+  const getUserAvatar = async () => {
+    try {
+      if (data?.getUser?.image) {
+        const userAvatar = await Storage.get(data?.getUser?.image);
+        setAvatar(userAvatar);
+      }
+    } catch (error) {
+    } finally {
+      setIsLoadingImage(false);
+    }
+  };
 
   const onChangePhoto = async () => {
     const {didCancel, assets, errorCode} = await launchImageLibrary({
@@ -84,33 +105,43 @@ const EditProfile = () => {
 
     if (!didCancel && !errorCode && assets) {
       console.log({assets});
-      setImageSelected(assets[0]);
+      setImageSelected(assets[0].uri);
     }
   };
 
   const onSubmit = async (formData: IEditableUser) => {
-    //console.log({formData});
-    //const response = await getUser();
+    setIsSubmitting(submitting => !submitting);
+    try {
+      let image: string | undefined = undefined;
 
-    // if (response.data?.usersByUsername?.items.length ?? 0 >= 1) {
-    //   setError('username', {message: 'username must be unique'});
-    // } else {
-    const {bio, username, name, website} = formData;
-    await updateUser({
-      variables: {
-        input: {
-          bio,
-          username,
-          name,
-          website,
-          id: sub,
-          _version: data?.getUser?._version,
+      if (imageSelected) {
+        console.log('entro en IMAGE SELECTED');
+
+        image = await uploadMedia(imageSelected);
+        console.log({image}, 'ACTUALLY IMAGE TO UPLAOD');
+      }
+      const {bio, username, name, website} = formData;
+      await updateUser({
+        variables: {
+          input: {
+            bio,
+            username,
+            name,
+            website,
+            image,
+            id: sub,
+            _version: data?.getUser?._version,
+          },
         },
-      },
-    });
+      });
 
-    if (navigation.canGoBack()) {
-      navigation.goBack();
+      if (navigation.canGoBack()) {
+        navigation.goBack();
+      }
+    } catch (error) {
+      Alert.alert((error as Error).message);
+    } finally {
+      setIsSubmitting(submitting => !submitting);
     }
     //}
   };
@@ -187,17 +218,24 @@ const EditProfile = () => {
     <ScrollView style={{flex: 1}}>
       <Image
         source={{
-          uri:
-            imageSelected?.uri || (data?.getUser?.image ?? DEFAULT_USER_IMAGE),
+          uri: imageSelected || (avatar ?? DEFAULT_USER_IMAGE),
         }}
-        style={{
-          alignSelf: 'center',
-          width: 100,
-          aspectRatio: 1,
-          borderRadius: 50,
-          marginTop: 20,
-        }}
+        style={styles.avatar}
       />
+
+      {isLoadingImage && (
+        <View
+          style={[
+            styles.avatar,
+            {
+              backgroundColor: colors.lightgray,
+              justifyContent: 'center',
+              alignItems: 'center',
+            },
+          ]}>
+          <ActivityIndicator />
+        </View>
+      )}
 
       <Button
         title="edit profile photo"
@@ -260,14 +298,14 @@ const EditProfile = () => {
         <Button
           title="submit"
           onPress={handleSubmit(onSubmit)}
-          isLoading={editLoading}
+          isLoading={isSubmitting}
+          disabled={isSubmitting}
           style={{backgroundColor: 'transparent', marginVertical: 10}}
           titleStyle={{color: colors.primary}}
         />
         <Button
           title="Delete account"
           onPress={onConfirmDelete}
-          //isLoading={editLoading}
           style={{
             backgroundColor: 'transparent',
             marginVertical: 10,
