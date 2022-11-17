@@ -20,6 +20,7 @@ import {useMutation} from '@apollo/client';
 import {deletePost} from '../queries';
 import {FeedNavigatorProps} from '@navigation/types';
 import {useNavigation} from '@react-navigation/native';
+import {Storage} from 'aws-amplify';
 
 interface IPostOptions {
   post: IPost;
@@ -35,8 +36,19 @@ export default function PostOptions({post}: IPostOptions) {
   >(deletePost, {variables: {input: {id: post.id, _version: post._version}}});
 
   const startDeletingPost = async () => {
-    const response = await onDeletePost();
-    console.log({response}, 'delete post');
+    try {
+      if (post.image) {
+        await Storage.remove(post.image);
+      } else if (post.video) {
+        await Storage.remove(post.video);
+      } else if (post.images) {
+        await Promise.all(post.images.map(image => Storage.remove(image)));
+      }
+      const response = await onDeletePost();
+      console.log({response}, 'delete post');
+    } catch (error) {
+      Alert.alert('error deleting post');
+    }
   };
 
   const onDeletePressed = () => {
