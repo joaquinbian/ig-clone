@@ -5,7 +5,7 @@ import {styles} from './styles';
 import {Storage} from 'aws-amplify';
 
 interface IUserImage {
-  image: string | undefined | null;
+  image?: string | undefined | null;
   width?: number;
   style?: StyleProp<ImageStyle>;
 }
