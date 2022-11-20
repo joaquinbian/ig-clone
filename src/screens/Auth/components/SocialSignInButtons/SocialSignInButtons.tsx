@@ -29,6 +29,8 @@ const SocialSignInButtons = () => {
       });
       console.warn('onSignInGoogle');
     } catch (error) {
+      console.log({error});
+
       Alert.alert((error as Error).message);
     } finally {
       setisLoadingGoogle(false);
