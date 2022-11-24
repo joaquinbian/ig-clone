@@ -40,6 +40,7 @@ export const getLike = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       Post {
         id
@@ -69,6 +70,7 @@ export const getLike = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         Likes {
           nextToken
@@ -82,12 +84,14 @@ export const getLike = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -118,6 +122,7 @@ export const listLikes = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         Post {
           id
@@ -135,12 +140,14 @@ export const listLikes = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -180,6 +187,7 @@ export const syncLikes = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         Post {
           id
@@ -197,12 +205,14 @@ export const syncLikes = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -246,6 +256,7 @@ export const likeForPostByUserId = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         Post {
           id
@@ -263,12 +274,14 @@ export const likeForPostByUserId = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -313,6 +326,7 @@ export const getCommentLike = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       Comment {
         id
@@ -337,6 +351,7 @@ export const getCommentLike = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         Post {
           id
@@ -354,6 +369,7 @@ export const getCommentLike = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         CommentLikes {
           nextToken
@@ -363,12 +379,14 @@ export const getCommentLike = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -399,6 +417,7 @@ export const listCommentLikes = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         Comment {
           id
@@ -411,12 +430,14 @@ export const listCommentLikes = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -456,6 +477,7 @@ export const syncCommentLikes = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         Comment {
           id
@@ -468,12 +490,14 @@ export const syncCommentLikes = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -517,6 +541,7 @@ export const likeForCommentByUserId = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         Comment {
           id
@@ -529,12 +554,14 @@ export const likeForCommentByUserId = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -582,6 +609,7 @@ export const getComment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       Post {
         id
@@ -611,6 +639,7 @@ export const getComment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         Likes {
           nextToken
@@ -624,6 +653,7 @@ export const getComment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       CommentLikes {
         items {
@@ -635,6 +665,7 @@ export const getComment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -643,6 +674,7 @@ export const getComment = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -676,6 +708,7 @@ export const listComments = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         Post {
           id
@@ -693,6 +726,7 @@ export const listComments = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         CommentLikes {
           nextToken
@@ -702,6 +736,7 @@ export const listComments = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -744,6 +779,7 @@ export const syncComments = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         Post {
           id
@@ -761,6 +797,7 @@ export const syncComments = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         CommentLikes {
           nextToken
@@ -770,6 +807,7 @@ export const syncComments = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -816,6 +854,7 @@ export const getCommentsByPost = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         Post {
           id
@@ -833,6 +872,7 @@ export const getCommentsByPost = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         CommentLikes {
           nextToken
@@ -842,6 +882,7 @@ export const getCommentsByPost = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -894,6 +935,7 @@ export const getPost = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       Likes {
         items {
@@ -905,6 +947,7 @@ export const getPost = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -921,6 +964,7 @@ export const getPost = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -929,6 +973,7 @@ export const getPost = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -967,6 +1012,7 @@ export const listPosts = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         Likes {
           nextToken
@@ -980,6 +1026,7 @@ export const listPosts = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -1027,6 +1074,7 @@ export const syncPosts = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         Likes {
           nextToken
@@ -1040,6 +1088,7 @@ export const syncPosts = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -1091,6 +1140,7 @@ export const getPostsByDate = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         Likes {
           nextToken
@@ -1104,6 +1154,7 @@ export const getPostsByDate = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -1140,6 +1191,7 @@ export const getUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1154,6 +1206,7 @@ export const getUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1170,6 +1223,7 @@ export const getUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1184,6 +1238,7 @@ export const getUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1193,6 +1248,7 @@ export const getUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -1235,6 +1291,7 @@ export const listUsers = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -1286,6 +1343,7 @@ export const syncUsers = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -1339,6 +1397,7 @@ export const usersByUsername = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt

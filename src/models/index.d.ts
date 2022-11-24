@@ -44,7 +44,7 @@ export declare class User {
   readonly bio?: string | null;
   readonly username?: string | null;
   readonly website?: string | null;
-  readonly email: string;
+  readonly email?: string | null;
   readonly numberOfPosts: number;
   readonly numberOfFollowers: number;
   readonly numberOfFollowings: number;
