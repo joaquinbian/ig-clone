@@ -52,7 +52,7 @@ const saveUser = async user => {
 exports.handler = async (event, context) => {
   // insert code to be executed by your lambda trigger
 
-  console.log('lambda function here');
+  console.log('lambda function here, updated function');
 
   //parameters the lambda function will receive
 
@@ -61,7 +61,6 @@ exports.handler = async (event, context) => {
     congnito will send inside the event all the data that 
     knows about the user that just signed up
   */
-  console.log({event});
 
   //here there is the user data
   if (!event.request.userAttributes) {
