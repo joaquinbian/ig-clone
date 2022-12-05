@@ -15,7 +15,6 @@ import {GetUserQuery, GetUserQueryVariables} from 'src/API';
 import Loading from '@components/Loading';
 import ApiErrorMessage from '@components/ApiErrorMessage';
 import {useAuthContext} from '@context/AuthContext';
-import {LoneSchemaDefinition} from 'graphql/validation/rules/LoneSchemaDefinition';
 
 const ProfileScreen = () => {
   const route = useRoute<ProfileBottomRouteProp | UserProfileRouteProp>();
