@@ -10,7 +10,6 @@ export const getUserById = /* GraphQL */ gql`
       bio
       username
       website
-      email
       numberOfPosts
       numberOfFollowers
       numberOfFollowings

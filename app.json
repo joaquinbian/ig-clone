@@ -1,4 +1,9 @@
 {
   "name": "joaPhotos",
-  "displayName": "joaPhotos"
+  "displayName": "joaPhotos",
+  "extra": {
+    "eas": {
+      "projectId": "32bb7747-30a2-4420-900d-829367a73565"
+    }
+  }
 }
