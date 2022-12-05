@@ -71,10 +71,7 @@ build/
 dist/
 node_modules/
 aws-exports.js
-<<<<<<< HEAD
 aws-exports.ts
-=======
->>>>>>> develop
 awsconfiguration.json
 amplifyconfiguration.json
 amplifyconfiguration.dart
