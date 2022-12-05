@@ -70,11 +70,6 @@ amplify/backend/.temp
 build/
 dist/
 node_modules/
-aws-exports.js
-<<<<<<< HEAD
-aws-exports.ts
-=======
->>>>>>> develop
 awsconfiguration.json
 amplifyconfiguration.json
 amplifyconfiguration.dart
@@ -84,5 +79,3 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
-
-aws-exports.ts
