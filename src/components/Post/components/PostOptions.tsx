@@ -85,6 +85,11 @@ export default function PostOptions({post}: IPostOptions) {
         <MenuOption onSelect={() => Alert.alert(`edit`)}>
           <Text style={styles.optionText}>Save</Text>
         </MenuOption>
+        <MenuOption onSelect={() => Alert.alert(`report`)}>
+          <Text style={[styles.optionText, {color: colors.error}]}>
+            Report post
+          </Text>
+        </MenuOption>
         {post.userID === userId && (
           <>
             <MenuOption onSelect={onDeletePressed}>
