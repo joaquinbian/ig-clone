@@ -16,7 +16,7 @@ type ProfileHeaderProps = Pick<
   | 'numberOfFollowers'
   | 'numberOfPosts'
   | 'numberOfFollowings'
-  | 'username'
+  | 'name'
   | 'bio'
   | 'id'
   | 'image'
@@ -25,7 +25,7 @@ type ProfileHeaderProps = Pick<
 const ProfileHeader = ({
   numberOfFollowers,
   numberOfPosts,
-  username,
+  name,
   bio,
   numberOfFollowings,
   id,
@@ -63,7 +63,7 @@ const ProfileHeader = ({
         </View>
       </View>
       <View style={{marginTop: 5}}>
-        <Text style={styles.data}>{username}</Text>
+        <Text style={styles.data}>{name}</Text>
         <Text style={{color: colors.black}}>{bio}</Text>
       </View>
       <View style={{flexDirection: 'row', marginVertical: 5}}>
