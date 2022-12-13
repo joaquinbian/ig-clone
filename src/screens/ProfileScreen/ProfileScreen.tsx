@@ -16,6 +16,7 @@ import {GetUserQuery, GetUserQueryVariables} from 'src/API';
 import Loading from '@components/Loading';
 import ApiErrorMessage from '@components/ApiErrorMessage';
 import {useAuthContext} from '@context/AuthContext';
+import UserOptions from './components/UserOptions';
 
 const ProfileScreen = () => {
   const route = useRoute<ProfileBottomRouteProp | UserProfileRouteProp>();
@@ -51,9 +52,7 @@ const ProfileScreen = () => {
   useEffect(() => {
     if (route.name === 'UserProfile') {
       navigation.setOptions({
-        headerRight: () => (
-          <SimpleLineIcons name="options-vertical" size={16} color="black" />
-        ),
+        headerRight: () => <UserOptions />,
       });
     }
   }, [navigation]);
