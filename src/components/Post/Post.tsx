@@ -7,21 +7,16 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import BoldText from '@components/BoldText';
-import Comment from '@components/Comment';
 import Pressable from '@components/Pressable';
-import Carousel from '@components/Carousel';
-import VideoPlayer from '@components/VideoPlayer';
 import {useNavigation} from '@react-navigation/native';
 import {FeedNavigatorProps} from '@navigation/types';
 import {Post as IPost, Like as ILike} from 'src/API';
-import {DEFAULT_USER_IMAGE} from 'src/config';
 
 import PostOptions from './components/PostOptions';
 import {useLikes} from '@hooks/useLikes/useLikes';
 import {size} from '@theme/fonts';
 import dayjs from 'dayjs';
 import PostContent from './components/PostContent';
-import {Storage} from 'aws-amplify';
 import UserImage from '@components/UserImage';
 
 interface Props {
