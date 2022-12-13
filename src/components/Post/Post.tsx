@@ -79,7 +79,7 @@ const Post = ({post, isVisible}: Props) => {
         <Pressable onPress={navigateToProfile} style={styles.userInfo}>
           <UserImage image={post?.User?.image} style={styles.avatar} />
           <BoldText style={{color: colors.black}}>
-            {post.User?.name ?? 'valeria'}
+            {post.User?.username ?? 'valeria'}
           </BoldText>
         </Pressable>
         <PostOptions post={post} />
