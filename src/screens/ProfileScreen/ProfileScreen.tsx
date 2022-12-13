@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import ProfileHeader from './ProfileHeader';
 import FeedGridView from '@components/FeedGridView';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {
   BottomNavigatorParamList,
@@ -45,7 +46,17 @@ const ProfileScreen = () => {
           ? route.params.username
           : data?.getUser?.username ?? 'Profile',
     });
-  }, []);
+  }, [navigation]);
+
+  useEffect(() => {
+    if (route.name === 'UserProfile') {
+      navigation.setOptions({
+        headerRight: () => (
+          <SimpleLineIcons name="options-vertical" size={16} color="black" />
+        ),
+      });
+    }
+  }, [navigation]);
 
   //console.warn('userid: ', route.params?.userId);
 
@@ -74,7 +85,7 @@ const ProfileScreen = () => {
           numberOfFollowings={data?.getUser?.numberOfFollowings ?? 0}
           numberOfPosts={data?.getUser?.numberOfPosts ?? 0}
           bio={data?.getUser?.bio}
-          username={data?.getUser?.username}
+          name={data?.getUser?.name ?? ''}
           id={data?.getUser?.id ?? ''}
           image={data?.getUser?.image}
         />
