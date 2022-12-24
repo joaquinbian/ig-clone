@@ -83,3 +83,5 @@ amplifytools.xcconfig
 #amplify-do-not-edit-end
 
 aws-exports.ts
+
+service_account.json
