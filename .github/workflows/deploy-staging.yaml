@@ -6,22 +6,18 @@ on:
       - staging
       - develop
 jobs:
-  build:
-    name: Install and build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
-          cache: npm
-      - name: Setup Expo and EAS
-        uses: expo/expo-github-action@v7
-        with:
-          expo-version: 5.x
-          eas-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
-      - name: Install dependencies
-        run: npm ci
-      - name: Build on EAS
-        run: eas build --profile preview --platform android --non-interactive
+  build-android:
+    name: Install and build android (PREVIEW)
+    uses: ./.github/workflows/eas-build.yaml
+    secrets: inherit
+    with:
+      PLATFORM: android
+      PROFILE: preview
+
+  build-ios:
+    name: Install and build ios (PREVIEW)
+    uses: ./.github/workflows/eas-build.yaml
+    secrets: inherit
+    with:
+      PLATFORM: ios
+      PROFILE: preview
