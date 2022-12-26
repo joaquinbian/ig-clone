@@ -1,12 +1,13 @@
 name: EAS Build
+
 on:
   workflow_call:
-    inputs:
-      PLATFORM: required:true
-        type:string
-      PROFILE: required:false
-        type:string
-        default:production
+  inputs:
+    PLATFORM: required:true
+      type:string
+    PROFILE: required:false
+      type:string
+      default:production
 
 jobs:
   build:
