@@ -30,4 +30,4 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build on EAS
-        run: eas build --profile ${{input.PROFILE}} --platform ${{input.PLATFORM}} --non-interactive
+        run: eas build --profile ${{inputs.PROFILE}} --platform ${{inputs.PLATFORM}} --non-interactive
