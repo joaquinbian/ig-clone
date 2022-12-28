@@ -47,7 +47,7 @@ jobs:
 
       #initialize back env
       - name: initialize backend environment
-        run: ./.github/scripts/amplify-init.sh staging
+        run: sudo ./.github/scripts/amplify-init.sh staging
 
       # push to cloud
       - name: push backend changes
