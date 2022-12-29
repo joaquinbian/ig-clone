@@ -113,8 +113,11 @@ export const onCreateCommentByPostId = /* GraphQL */ `
   }
 `;
 export const onCreateLike = /* GraphQL */ `
-  subscription OnCreateLike($owner: String) {
-    onCreateLike(owner: $owner) {
+  subscription OnCreateLike(
+    $filter: ModelSubscriptionLikeFilterInput
+    $owner: String
+  ) {
+    onCreateLike(filter: $filter, owner: $owner) {
       id
       userID
       postID
@@ -206,8 +209,11 @@ export const onCreateLike = /* GraphQL */ `
   }
 `;
 export const onUpdateLike = /* GraphQL */ `
-  subscription OnUpdateLike($owner: String) {
-    onUpdateLike(owner: $owner) {
+  subscription OnUpdateLike(
+    $filter: ModelSubscriptionLikeFilterInput
+    $owner: String
+  ) {
+    onUpdateLike(filter: $filter, owner: $owner) {
       id
       userID
       postID
@@ -299,8 +305,11 @@ export const onUpdateLike = /* GraphQL */ `
   }
 `;
 export const onDeleteLike = /* GraphQL */ `
-  subscription OnDeleteLike($owner: String) {
-    onDeleteLike(owner: $owner) {
+  subscription OnDeleteLike(
+    $filter: ModelSubscriptionLikeFilterInput
+    $owner: String
+  ) {
+    onDeleteLike(filter: $filter, owner: $owner) {
       id
       userID
       postID
@@ -392,8 +401,11 @@ export const onDeleteLike = /* GraphQL */ `
   }
 `;
 export const onCreateCommentLike = /* GraphQL */ `
-  subscription OnCreateCommentLike($owner: String) {
-    onCreateCommentLike(owner: $owner) {
+  subscription OnCreateCommentLike(
+    $filter: ModelSubscriptionCommentLikeFilterInput
+    $owner: String
+  ) {
+    onCreateCommentLike(filter: $filter, owner: $owner) {
       id
       userID
       commentID
@@ -494,8 +506,11 @@ export const onCreateCommentLike = /* GraphQL */ `
   }
 `;
 export const onUpdateCommentLike = /* GraphQL */ `
-  subscription OnUpdateCommentLike($owner: String) {
-    onUpdateCommentLike(owner: $owner) {
+  subscription OnUpdateCommentLike(
+    $filter: ModelSubscriptionCommentLikeFilterInput
+    $owner: String
+  ) {
+    onUpdateCommentLike(filter: $filter, owner: $owner) {
       id
       userID
       commentID
@@ -596,8 +611,11 @@ export const onUpdateCommentLike = /* GraphQL */ `
   }
 `;
 export const onDeleteCommentLike = /* GraphQL */ `
-  subscription OnDeleteCommentLike($owner: String) {
-    onDeleteCommentLike(owner: $owner) {
+  subscription OnDeleteCommentLike(
+    $filter: ModelSubscriptionCommentLikeFilterInput
+    $owner: String
+  ) {
+    onDeleteCommentLike(filter: $filter, owner: $owner) {
       id
       userID
       commentID
@@ -698,8 +716,11 @@ export const onDeleteCommentLike = /* GraphQL */ `
   }
 `;
 export const onCreateComment = /* GraphQL */ `
-  subscription OnCreateComment($owner: String) {
-    onCreateComment(owner: $owner) {
+  subscription OnCreateComment(
+    $filter: ModelSubscriptionCommentFilterInput
+    $owner: String
+  ) {
+    onCreateComment(filter: $filter, owner: $owner) {
       id
       comment
       createdAt
@@ -808,8 +829,11 @@ export const onCreateComment = /* GraphQL */ `
   }
 `;
 export const onUpdateComment = /* GraphQL */ `
-  subscription OnUpdateComment($owner: String) {
-    onUpdateComment(owner: $owner) {
+  subscription OnUpdateComment(
+    $filter: ModelSubscriptionCommentFilterInput
+    $owner: String
+  ) {
+    onUpdateComment(filter: $filter, owner: $owner) {
       id
       comment
       createdAt
@@ -918,8 +942,11 @@ export const onUpdateComment = /* GraphQL */ `
   }
 `;
 export const onDeleteComment = /* GraphQL */ `
-  subscription OnDeleteComment($owner: String) {
-    onDeleteComment(owner: $owner) {
+  subscription OnDeleteComment(
+    $filter: ModelSubscriptionCommentFilterInput
+    $owner: String
+  ) {
+    onDeleteComment(filter: $filter, owner: $owner) {
       id
       comment
       createdAt
@@ -1028,8 +1055,11 @@ export const onDeleteComment = /* GraphQL */ `
   }
 `;
 export const onCreatePost = /* GraphQL */ `
-  subscription OnCreatePost($owner: String) {
-    onCreatePost(owner: $owner) {
+  subscription OnCreatePost(
+    $filter: ModelSubscriptionPostFilterInput
+    $owner: String
+  ) {
+    onCreatePost(filter: $filter, owner: $owner) {
       id
       description
       createdAt
@@ -1116,8 +1146,11 @@ export const onCreatePost = /* GraphQL */ `
   }
 `;
 export const onUpdatePost = /* GraphQL */ `
-  subscription OnUpdatePost($owner: String) {
-    onUpdatePost(owner: $owner) {
+  subscription OnUpdatePost(
+    $filter: ModelSubscriptionPostFilterInput
+    $owner: String
+  ) {
+    onUpdatePost(filter: $filter, owner: $owner) {
       id
       description
       createdAt
@@ -1204,8 +1237,11 @@ export const onUpdatePost = /* GraphQL */ `
   }
 `;
 export const onDeletePost = /* GraphQL */ `
-  subscription OnDeletePost($owner: String) {
-    onDeletePost(owner: $owner) {
+  subscription OnDeletePost(
+    $filter: ModelSubscriptionPostFilterInput
+    $owner: String
+  ) {
+    onDeletePost(filter: $filter, owner: $owner) {
       id
       description
       createdAt
@@ -1292,8 +1328,11 @@ export const onDeletePost = /* GraphQL */ `
   }
 `;
 export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser($owner: String) {
-    onCreateUser(owner: $owner) {
+  subscription OnCreateUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onCreateUser(filter: $filter, owner: $owner) {
       id
       name
       image
@@ -1383,8 +1422,11 @@ export const onCreateUser = /* GraphQL */ `
   }
 `;
 export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser($owner: String) {
-    onUpdateUser(owner: $owner) {
+  subscription OnUpdateUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onUpdateUser(filter: $filter, owner: $owner) {
       id
       name
       image
@@ -1474,8 +1516,11 @@ export const onUpdateUser = /* GraphQL */ `
   }
 `;
 export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser($owner: String) {
-    onDeleteUser(owner: $owner) {
+  subscription OnDeleteUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onDeleteUser(filter: $filter, owner: $owner) {
       id
       name
       image

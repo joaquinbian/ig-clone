@@ -19,8 +19,14 @@
       "function": {
         "instagramclonePostConfirmation": {
           "deploymentBucketName": "amplify-instagramclone-staging-153534-deployment",
-          "s3Key": "amplify-builds/instagramclonePostConfirmation-4a4c624e3177517a4e35-build.zip"
+          "s3Key": "amplify-builds/instagramclonePostConfirmation-373134514f596d6a7639-build.zip"
         }
+      },
+      "api": {
+        "instagramclone": {}
+      },
+      "storage": {
+        "storage": {}
       }
     }
   },
