@@ -48,13 +48,13 @@ jobs:
           echo "amplify version $(amplify --version)"
 
       #initialize back env
-      - name: initialize backend environment
+      - name: initialize prod backend environment
         if: ${{inputs.env == 'production'}}
         run: ./.github/scripts/amplify-init.sh production
-        
-        if: ${{inputs.env == 'staging'}} 
+
+      - name: inintalize staging backend environment
+        if: ${{inputs.env == 'staging'}}
         run: ./.github/scripts/amplify-init.sh staging
-        
 
       # push to cloud
       - name: push backend changes
