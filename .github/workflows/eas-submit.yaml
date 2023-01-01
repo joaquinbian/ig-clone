@@ -27,7 +27,7 @@ jobs:
 
       - name: decode and store google service account
         env:
-          GOOGLE_SERVICE_ACCOUNT_BASE64: ${{ secrets.GOOGLE_SERVICES_ACCOUNT }}
+          GOOGLE_SERVICE_ACCOUNT_BASE64: ${{secrets.GOOGLE_SERVICES_ACCOUNT}}
         run: |
           echo $GOOGLE_SERVICE_ACCOUNT_BASE64 | base64 --decode > service_account.json
 
