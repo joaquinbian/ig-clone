@@ -21,8 +21,7 @@
     "production": {
       "android": {
         "serviceAccountKeyPath": "./service_account.json",
-        "track": "production",
-        "changesNotSentForReview": true
+        "track": "production"
       }
     }
   }
