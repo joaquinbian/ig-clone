@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        run: git pull origin ${{github.ref_name}}
 
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@v7
