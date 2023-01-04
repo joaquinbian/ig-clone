@@ -1,12 +1,11 @@
-import React from 'react';
+import React, {PropsWithChildren} from 'react';
 import {StyleProp, Text, TextStyle, TextProps} from 'react-native';
 import {weight} from '@theme/fonts';
 
 interface Props extends TextProps {
-  children: string | number | JSX.Element | JSX.Element[];
   style?: StyleProp<TextStyle>;
 }
-const BoldText = ({style, children, ...rest}: Props) => {
+const BoldText = ({style, children, ...rest}: PropsWithChildren<Props>) => {
   return (
     <Text style={[style, {fontWeight: weight.bold}]} {...rest}>
       {children}
