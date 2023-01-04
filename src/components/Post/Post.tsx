@@ -14,7 +14,7 @@ import {Post as IPost, Like as ILike} from 'src/API';
 
 import PostOptions from './components/PostOptions';
 import {useLikes} from '@hooks/useLikes/useLikes';
-import {size} from '@theme/fonts';
+import {size, weight} from '@theme/fonts';
 import dayjs from 'dayjs';
 import PostContent from './components/PostContent';
 import UserImage from '@components/UserImage';
@@ -75,13 +75,29 @@ const Post = ({post, isVisible}: Props) => {
   return (
     <View style={styles.post}>
       {/* POST HEADER */}
-      <View style={styles.postHeader}>
-        <Pressable onPress={navigateToProfile} style={styles.userInfo}>
-          <UserImage image={post?.User?.image} style={styles.avatar} />
-          <BoldText style={{color: colors.black}}>
-            {post.User?.username ?? 'valeria'}
-          </BoldText>
-        </Pressable>
+      <View style={[styles.postHeader]}>
+        <View style={[styles.userInfo]}>
+          <Pressable onPress={navigateToProfile}>
+            <UserImage image={post?.User?.image} style={styles.avatar} />
+          </Pressable>
+          <View>
+            <Pressable onPress={navigateToProfile}>
+              <BoldText style={{color: colors.black}}>
+                {post.User?.username ?? 'valeria'}
+              </BoldText>
+            </Pressable>
+            {post.location && (
+              <Text
+                style={{
+                  fontWeight: weight.thin,
+                  color: colors.gray,
+                  fontSize: size.sm,
+                }}>
+                {post.location}
+              </Text>
+            )}
+          </View>
+        </View>
         <PostOptions post={post} />
       </View>
 
