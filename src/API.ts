@@ -109,6 +109,7 @@ export type Post = {
   description?: string | null,
   createdAt: string,
   type: string,
+  location?: string | null,
   image?: string | null,
   images?: Array< string > | null,
   video?: string | null,
@@ -288,6 +289,7 @@ export type CreatePostInput = {
   description?: string | null,
   createdAt?: string | null,
   type: string,
+  location?: string | null,
   image?: string | null,
   images?: Array< string > | null,
   video?: string | null,
@@ -302,6 +304,7 @@ export type ModelPostConditionInput = {
   description?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   type?: ModelStringInput | null,
+  location?: ModelStringInput | null,
   image?: ModelStringInput | null,
   images?: ModelStringInput | null,
   video?: ModelStringInput | null,
@@ -319,6 +322,7 @@ export type UpdatePostInput = {
   description?: string | null,
   createdAt?: string | null,
   type?: string | null,
+  location?: string | null,
   image?: string | null,
   images?: Array< string > | null,
   video?: string | null,
@@ -443,6 +447,7 @@ export type ModelPostFilterInput = {
   description?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   type?: ModelStringInput | null,
+  location?: ModelStringInput | null,
   image?: ModelStringInput | null,
   images?: ModelStringInput | null,
   video?: ModelStringInput | null,
@@ -476,106 +481,6 @@ export type ModelUserConnection = {
   items:  Array<User | null >,
   nextToken?: string | null,
   startedAt?: number | null,
-};
-
-export type ModelSubscriptionLikeFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  userID?: ModelSubscriptionIDInput | null,
-  postID?: ModelSubscriptionIDInput | null,
-  and?: Array< ModelSubscriptionLikeFilterInput | null > | null,
-  or?: Array< ModelSubscriptionLikeFilterInput | null > | null,
-};
-
-export type ModelSubscriptionIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  in?: Array< string | null > | null,
-  notIn?: Array< string | null > | null,
-};
-
-export type ModelSubscriptionCommentLikeFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  userID?: ModelSubscriptionIDInput | null,
-  commentID?: ModelSubscriptionIDInput | null,
-  and?: Array< ModelSubscriptionCommentLikeFilterInput | null > | null,
-  or?: Array< ModelSubscriptionCommentLikeFilterInput | null > | null,
-};
-
-export type ModelSubscriptionCommentFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  comment?: ModelSubscriptionStringInput | null,
-  createdAt?: ModelSubscriptionStringInput | null,
-  userID?: ModelSubscriptionIDInput | null,
-  postID?: ModelSubscriptionIDInput | null,
-  numberOfLikes?: ModelSubscriptionIntInput | null,
-  and?: Array< ModelSubscriptionCommentFilterInput | null > | null,
-  or?: Array< ModelSubscriptionCommentFilterInput | null > | null,
-};
-
-export type ModelSubscriptionStringInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  in?: Array< string | null > | null,
-  notIn?: Array< string | null > | null,
-};
-
-export type ModelSubscriptionIntInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  in?: Array< number | null > | null,
-  notIn?: Array< number | null > | null,
-};
-
-export type ModelSubscriptionPostFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  description?: ModelSubscriptionStringInput | null,
-  createdAt?: ModelSubscriptionStringInput | null,
-  type?: ModelSubscriptionStringInput | null,
-  image?: ModelSubscriptionStringInput | null,
-  images?: ModelSubscriptionStringInput | null,
-  video?: ModelSubscriptionStringInput | null,
-  numberOfComments?: ModelSubscriptionIntInput | null,
-  numberOfLikes?: ModelSubscriptionIntInput | null,
-  userID?: ModelSubscriptionIDInput | null,
-  untitledfield?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionPostFilterInput | null > | null,
-  or?: Array< ModelSubscriptionPostFilterInput | null > | null,
-};
-
-export type ModelSubscriptionUserFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  name?: ModelSubscriptionStringInput | null,
-  image?: ModelSubscriptionStringInput | null,
-  bio?: ModelSubscriptionStringInput | null,
-  username?: ModelSubscriptionStringInput | null,
-  website?: ModelSubscriptionStringInput | null,
-  email?: ModelSubscriptionStringInput | null,
-  numberOfPosts?: ModelSubscriptionIntInput | null,
-  numberOfFollowers?: ModelSubscriptionIntInput | null,
-  numberOfFollowings?: ModelSubscriptionIntInput | null,
-  and?: Array< ModelSubscriptionUserFilterInput | null > | null,
-  or?: Array< ModelSubscriptionUserFilterInput | null > | null,
 };
 
 export type CreateLikeMutationVariables = {
@@ -634,6 +539,7 @@ export type CreateLikeMutation = {
       description?: string | null,
       createdAt: string,
       type: string,
+      location?: string | null,
       image?: string | null,
       images?: Array< string > | null,
       video?: string | null,
@@ -741,6 +647,7 @@ export type UpdateLikeMutation = {
       description?: string | null,
       createdAt: string,
       type: string,
+      location?: string | null,
       image?: string | null,
       images?: Array< string > | null,
       video?: string | null,
@@ -848,6 +755,7 @@ export type DeleteLikeMutation = {
       description?: string | null,
       createdAt: string,
       type: string,
+      location?: string | null,
       image?: string | null,
       images?: Array< string > | null,
       video?: string | null,
@@ -982,6 +890,7 @@ export type CreateCommentLikeMutation = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
@@ -1098,6 +1007,7 @@ export type UpdateCommentLikeMutation = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
@@ -1214,6 +1124,7 @@ export type DeleteCommentLikeMutation = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
@@ -1306,6 +1217,7 @@ export type CreateCommentMutation = {
       description?: string | null,
       createdAt: string,
       type: string,
+      location?: string | null,
       image?: string | null,
       images?: Array< string > | null,
       video?: string | null,
@@ -1432,6 +1344,7 @@ export type UpdateCommentMutation = {
       description?: string | null,
       createdAt: string,
       type: string,
+      location?: string | null,
       image?: string | null,
       images?: Array< string > | null,
       video?: string | null,
@@ -1558,6 +1471,7 @@ export type DeleteCommentMutation = {
       description?: string | null,
       createdAt: string,
       type: string,
+      location?: string | null,
       image?: string | null,
       images?: Array< string > | null,
       video?: string | null,
@@ -1637,6 +1551,7 @@ export type CreatePostMutation = {
     description?: string | null,
     createdAt: string,
     type: string,
+    location?: string | null,
     image?: string | null,
     images?: Array< string > | null,
     video?: string | null,
@@ -1739,6 +1654,7 @@ export type UpdatePostMutation = {
     description?: string | null,
     createdAt: string,
     type: string,
+    location?: string | null,
     image?: string | null,
     images?: Array< string > | null,
     video?: string | null,
@@ -1841,6 +1757,7 @@ export type DeletePostMutation = {
     description?: string | null,
     createdAt: string,
     type: string,
+    location?: string | null,
     image?: string | null,
     images?: Array< string > | null,
     video?: string | null,
@@ -1957,6 +1874,7 @@ export type CreateUserMutation = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
@@ -2061,6 +1979,7 @@ export type UpdateUserMutation = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
@@ -2165,6 +2084,7 @@ export type DeleteUserMutation = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
@@ -2298,6 +2218,7 @@ export type GetLikeQuery = {
       description?: string | null,
       createdAt: string,
       type: string,
+      location?: string | null,
       image?: string | null,
       images?: Array< string > | null,
       video?: string | null,
@@ -2388,6 +2309,7 @@ export type ListLikesQuery = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
@@ -2453,6 +2375,7 @@ export type SyncLikesQuery = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
@@ -2520,6 +2443,7 @@ export type LikeForPostByUserIdQuery = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
@@ -2627,6 +2551,7 @@ export type GetCommentLikeQuery = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
@@ -2899,6 +2824,7 @@ export type GetCommentQuery = {
       description?: string | null,
       createdAt: string,
       type: string,
+      location?: string | null,
       image?: string | null,
       images?: Array< string > | null,
       video?: string | null,
@@ -3008,6 +2934,7 @@ export type ListCommentsQuery = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
@@ -3080,6 +3007,7 @@ export type SyncCommentsQuery = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
@@ -3154,6 +3082,7 @@ export type GetCommentsByPostQuery = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
@@ -3194,6 +3123,7 @@ export type GetPostQuery = {
     description?: string | null,
     createdAt: string,
     type: string,
+    location?: string | null,
     image?: string | null,
     images?: Array< string > | null,
     video?: string | null,
@@ -3299,6 +3229,7 @@ export type ListPostsQuery = {
       description?: string | null,
       createdAt: string,
       type: string,
+      location?: string | null,
       image?: string | null,
       images?: Array< string > | null,
       video?: string | null,
@@ -3362,6 +3293,7 @@ export type SyncPostsQuery = {
       description?: string | null,
       createdAt: string,
       type: string,
+      location?: string | null,
       image?: string | null,
       images?: Array< string > | null,
       video?: string | null,
@@ -3427,6 +3359,7 @@ export type GetPostsByDateQuery = {
       description?: string | null,
       createdAt: string,
       type: string,
+      location?: string | null,
       image?: string | null,
       images?: Array< string > | null,
       video?: string | null,
@@ -3499,6 +3432,7 @@ export type GetUserQuery = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
@@ -3797,6 +3731,7 @@ export type OnCreateCommentByPostIdSubscription = {
       description?: string | null,
       createdAt: string,
       type: string,
+      location?: string | null,
       image?: string | null,
       images?: Array< string > | null,
       video?: string | null,
@@ -3865,7 +3800,6 @@ export type OnCreateCommentByPostIdSubscription = {
 };
 
 export type OnCreateLikeSubscriptionVariables = {
-  filter?: ModelSubscriptionLikeFilterInput | null,
   owner?: string | null,
 };
 
@@ -3920,6 +3854,7 @@ export type OnCreateLikeSubscription = {
       description?: string | null,
       createdAt: string,
       type: string,
+      location?: string | null,
       image?: string | null,
       images?: Array< string > | null,
       video?: string | null,
@@ -3972,7 +3907,6 @@ export type OnCreateLikeSubscription = {
 };
 
 export type OnUpdateLikeSubscriptionVariables = {
-  filter?: ModelSubscriptionLikeFilterInput | null,
   owner?: string | null,
 };
 
@@ -4027,6 +3961,7 @@ export type OnUpdateLikeSubscription = {
       description?: string | null,
       createdAt: string,
       type: string,
+      location?: string | null,
       image?: string | null,
       images?: Array< string > | null,
       video?: string | null,
@@ -4079,7 +4014,6 @@ export type OnUpdateLikeSubscription = {
 };
 
 export type OnDeleteLikeSubscriptionVariables = {
-  filter?: ModelSubscriptionLikeFilterInput | null,
   owner?: string | null,
 };
 
@@ -4134,6 +4068,7 @@ export type OnDeleteLikeSubscription = {
       description?: string | null,
       createdAt: string,
       type: string,
+      location?: string | null,
       image?: string | null,
       images?: Array< string > | null,
       video?: string | null,
@@ -4186,7 +4121,6 @@ export type OnDeleteLikeSubscription = {
 };
 
 export type OnCreateCommentLikeSubscriptionVariables = {
-  filter?: ModelSubscriptionCommentLikeFilterInput | null,
   owner?: string | null,
 };
 
@@ -4268,6 +4202,7 @@ export type OnCreateCommentLikeSubscription = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
@@ -4302,7 +4237,6 @@ export type OnCreateCommentLikeSubscription = {
 };
 
 export type OnUpdateCommentLikeSubscriptionVariables = {
-  filter?: ModelSubscriptionCommentLikeFilterInput | null,
   owner?: string | null,
 };
 
@@ -4384,6 +4318,7 @@ export type OnUpdateCommentLikeSubscription = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
@@ -4418,7 +4353,6 @@ export type OnUpdateCommentLikeSubscription = {
 };
 
 export type OnDeleteCommentLikeSubscriptionVariables = {
-  filter?: ModelSubscriptionCommentLikeFilterInput | null,
   owner?: string | null,
 };
 
@@ -4500,6 +4434,7 @@ export type OnDeleteCommentLikeSubscription = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
@@ -4534,7 +4469,6 @@ export type OnDeleteCommentLikeSubscription = {
 };
 
 export type OnCreateCommentSubscriptionVariables = {
-  filter?: ModelSubscriptionCommentFilterInput | null,
   owner?: string | null,
 };
 
@@ -4592,6 +4526,7 @@ export type OnCreateCommentSubscription = {
       description?: string | null,
       createdAt: string,
       type: string,
+      location?: string | null,
       image?: string | null,
       images?: Array< string > | null,
       video?: string | null,
@@ -4660,7 +4595,6 @@ export type OnCreateCommentSubscription = {
 };
 
 export type OnUpdateCommentSubscriptionVariables = {
-  filter?: ModelSubscriptionCommentFilterInput | null,
   owner?: string | null,
 };
 
@@ -4718,6 +4652,7 @@ export type OnUpdateCommentSubscription = {
       description?: string | null,
       createdAt: string,
       type: string,
+      location?: string | null,
       image?: string | null,
       images?: Array< string > | null,
       video?: string | null,
@@ -4786,7 +4721,6 @@ export type OnUpdateCommentSubscription = {
 };
 
 export type OnDeleteCommentSubscriptionVariables = {
-  filter?: ModelSubscriptionCommentFilterInput | null,
   owner?: string | null,
 };
 
@@ -4844,6 +4778,7 @@ export type OnDeleteCommentSubscription = {
       description?: string | null,
       createdAt: string,
       type: string,
+      location?: string | null,
       image?: string | null,
       images?: Array< string > | null,
       video?: string | null,
@@ -4912,7 +4847,6 @@ export type OnDeleteCommentSubscription = {
 };
 
 export type OnCreatePostSubscriptionVariables = {
-  filter?: ModelSubscriptionPostFilterInput | null,
   owner?: string | null,
 };
 
@@ -4923,6 +4857,7 @@ export type OnCreatePostSubscription = {
     description?: string | null,
     createdAt: string,
     type: string,
+    location?: string | null,
     image?: string | null,
     images?: Array< string > | null,
     video?: string | null,
@@ -5014,7 +4949,6 @@ export type OnCreatePostSubscription = {
 };
 
 export type OnUpdatePostSubscriptionVariables = {
-  filter?: ModelSubscriptionPostFilterInput | null,
   owner?: string | null,
 };
 
@@ -5025,6 +4959,7 @@ export type OnUpdatePostSubscription = {
     description?: string | null,
     createdAt: string,
     type: string,
+    location?: string | null,
     image?: string | null,
     images?: Array< string > | null,
     video?: string | null,
@@ -5116,7 +5051,6 @@ export type OnUpdatePostSubscription = {
 };
 
 export type OnDeletePostSubscriptionVariables = {
-  filter?: ModelSubscriptionPostFilterInput | null,
   owner?: string | null,
 };
 
@@ -5127,6 +5061,7 @@ export type OnDeletePostSubscription = {
     description?: string | null,
     createdAt: string,
     type: string,
+    location?: string | null,
     image?: string | null,
     images?: Array< string > | null,
     video?: string | null,
@@ -5218,7 +5153,6 @@ export type OnDeletePostSubscription = {
 };
 
 export type OnCreateUserSubscriptionVariables = {
-  filter?: ModelSubscriptionUserFilterInput | null,
   owner?: string | null,
 };
 
@@ -5243,6 +5177,7 @@ export type OnCreateUserSubscription = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
@@ -5322,7 +5257,6 @@ export type OnCreateUserSubscription = {
 };
 
 export type OnUpdateUserSubscriptionVariables = {
-  filter?: ModelSubscriptionUserFilterInput | null,
   owner?: string | null,
 };
 
@@ -5347,6 +5281,7 @@ export type OnUpdateUserSubscription = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
@@ -5426,7 +5361,6 @@ export type OnUpdateUserSubscription = {
 };
 
 export type OnDeleteUserSubscriptionVariables = {
-  filter?: ModelSubscriptionUserFilterInput | null,
   owner?: string | null,
 };
 
@@ -5451,6 +5385,7 @@ export type OnDeleteUserSubscription = {
         description?: string | null,
         createdAt: string,
         type: string,
+        location?: string | null,
         image?: string | null,
         images?: Array< string > | null,
         video?: string | null,
