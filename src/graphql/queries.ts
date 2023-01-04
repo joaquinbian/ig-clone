@@ -47,6 +47,7 @@ export const getLike = /* GraphQL */ `
         description
         createdAt
         type
+        location
         image
         images
         video
@@ -129,6 +130,7 @@ export const listLikes = /* GraphQL */ `
           description
           createdAt
           type
+          location
           image
           images
           video
@@ -194,6 +196,7 @@ export const syncLikes = /* GraphQL */ `
           description
           createdAt
           type
+          location
           image
           images
           video
@@ -263,6 +266,7 @@ export const likeForPostByUserId = /* GraphQL */ `
           description
           createdAt
           type
+          location
           image
           images
           video
@@ -358,6 +362,7 @@ export const getCommentLike = /* GraphQL */ `
           description
           createdAt
           type
+          location
           image
           images
           video
@@ -616,6 +621,7 @@ export const getComment = /* GraphQL */ `
         description
         createdAt
         type
+        location
         image
         images
         video
@@ -715,6 +721,7 @@ export const listComments = /* GraphQL */ `
           description
           createdAt
           type
+          location
           image
           images
           video
@@ -786,6 +793,7 @@ export const syncComments = /* GraphQL */ `
           description
           createdAt
           type
+          location
           image
           images
           video
@@ -861,6 +869,7 @@ export const getCommentsByPost = /* GraphQL */ `
           description
           createdAt
           type
+          location
           image
           images
           video
@@ -896,6 +905,7 @@ export const getPost = /* GraphQL */ `
       description
       createdAt
       type
+      location
       image
       images
       video
@@ -989,6 +999,7 @@ export const listPosts = /* GraphQL */ `
         description
         createdAt
         type
+        location
         image
         images
         video
@@ -1051,6 +1062,7 @@ export const syncPosts = /* GraphQL */ `
         description
         createdAt
         type
+        location
         image
         images
         video
@@ -1117,6 +1129,7 @@ export const getPostsByDate = /* GraphQL */ `
         description
         createdAt
         type
+        location
         image
         images
         video
@@ -1180,6 +1193,7 @@ export const getUser = /* GraphQL */ `
           description
           createdAt
           type
+          location
           image
           images
           video

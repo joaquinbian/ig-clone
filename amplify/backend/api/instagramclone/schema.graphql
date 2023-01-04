@@ -59,6 +59,7 @@ type Post
       queryField: "getPostsByDate"
       sortKeyFields: ["createdAt"]
     )
+  location: String
   image: String
   images: [String!]
   video: String

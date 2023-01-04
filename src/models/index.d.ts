@@ -63,6 +63,7 @@ export declare class Post {
   readonly description?: string | null;
   readonly createdAt: string;
   readonly type: string;
+  readonly location?: string | null;
   readonly image?: string | null;
   readonly images?: string[] | null;
   readonly video?: string | null;

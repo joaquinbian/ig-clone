@@ -82,4 +82,8 @@ amplifytools.xcconfig
 **.sample
 #amplify-do-not-edit-end
 
-aws-exports.ts
+
+!aws-exports.js
+!aws-exports.ts
+
+service_account.json

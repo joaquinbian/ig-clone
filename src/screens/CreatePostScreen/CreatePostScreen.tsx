@@ -22,6 +22,7 @@ import {uploadMedia} from '@utils/aws';
 
 interface ICreatePost {
   description: string | null;
+  location: string | null;
 }
 
 export default function CreatePostScreen() {
@@ -35,7 +36,7 @@ export default function CreatePostScreen() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {control, handleSubmit} = useForm<ICreatePost>({
-    defaultValues: {description: null},
+    defaultValues: {description: null, location: null},
     mode: 'all',
   });
   const [onCreatePost, {loading, error}] = useMutation<
@@ -43,7 +44,7 @@ export default function CreatePostScreen() {
     CreatePostMutationVariables
   >(createPost);
 
-  const createPostHandler = async ({description}: ICreatePost) => {
+  const createPostHandler = async ({description, location}: ICreatePost) => {
     let imageToUpload: string | undefined = undefined;
     let imagesToUpload: string[] | undefined = undefined;
     let videoToUpload: string | undefined = undefined;
@@ -71,6 +72,7 @@ export default function CreatePostScreen() {
           input: {
             description: description ?? null,
             type: 'POST',
+            location: location ?? null,
             image: imageToUpload,
             images: imagesToUpload,
             video: videoToUpload,
@@ -133,6 +135,17 @@ export default function CreatePostScreen() {
             },
           }}
           multiline
+        />
+        <CustomInput
+          control={control}
+          name="location"
+          placeholder="insert location here..."
+          rules={{
+            maxLength: {
+              value: 100,
+              message: 'location can not exceed 100 characters',
+            },
+          }}
         />
         <CustomButton
           type="PRIMARY"

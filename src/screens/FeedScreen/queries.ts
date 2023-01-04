@@ -20,6 +20,7 @@ export const listPosts = /* GraphQL */ gql`
       items {
         id
         description
+        location
         video
         image
         images

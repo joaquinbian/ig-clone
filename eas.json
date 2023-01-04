@@ -18,6 +18,11 @@
     "production": {}
   },
   "submit": {
-    "production": {}
+    "production": {
+      "android": {
+        "serviceAccountKeyPath": "./service_account.json",
+        "track": "production"
+      }
+    }
   }
 }
