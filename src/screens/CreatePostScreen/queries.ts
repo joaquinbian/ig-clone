@@ -8,6 +8,7 @@ export const createPost = /* GraphQL */ gql`
     createPost(input: $input, condition: $condition) {
       id
       description
+      location
       image
       images
       video

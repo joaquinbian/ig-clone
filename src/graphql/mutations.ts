@@ -50,6 +50,7 @@ export const createLike = /* GraphQL */ `
         description
         createdAt
         type
+        location
         image
         images
         video
@@ -146,6 +147,7 @@ export const updateLike = /* GraphQL */ `
         description
         createdAt
         type
+        location
         image
         images
         video
@@ -242,6 +244,7 @@ export const deleteLike = /* GraphQL */ `
         description
         createdAt
         type
+        location
         image
         images
         video
@@ -363,6 +366,7 @@ export const createCommentLike = /* GraphQL */ `
           description
           createdAt
           type
+          location
           image
           images
           video
@@ -468,6 +472,7 @@ export const updateCommentLike = /* GraphQL */ `
           description
           createdAt
           type
+          location
           image
           images
           video
@@ -573,6 +578,7 @@ export const deleteCommentLike = /* GraphQL */ `
           description
           createdAt
           type
+          location
           image
           images
           video
@@ -656,6 +662,7 @@ export const createComment = /* GraphQL */ `
         description
         createdAt
         type
+        location
         image
         images
         video
@@ -769,6 +776,7 @@ export const updateComment = /* GraphQL */ `
         description
         createdAt
         type
+        location
         image
         images
         video
@@ -882,6 +890,7 @@ export const deleteComment = /* GraphQL */ `
         description
         createdAt
         type
+        location
         image
         images
         video
@@ -954,6 +963,7 @@ export const createPost = /* GraphQL */ `
       description
       createdAt
       type
+      location
       image
       images
       video
@@ -1045,6 +1055,7 @@ export const updatePost = /* GraphQL */ `
       description
       createdAt
       type
+      location
       image
       images
       video
@@ -1136,6 +1147,7 @@ export const deletePost = /* GraphQL */ `
       description
       createdAt
       type
+      location
       image
       images
       video
@@ -1239,6 +1251,7 @@ export const createUser = /* GraphQL */ `
           description
           createdAt
           type
+          location
           image
           images
           video
@@ -1333,6 +1346,7 @@ export const updateUser = /* GraphQL */ `
           description
           createdAt
           type
+          location
           image
           images
           video
@@ -1427,6 +1441,7 @@ export const deleteUser = /* GraphQL */ `
           description
           createdAt
           type
+          location
           image
           images
           video

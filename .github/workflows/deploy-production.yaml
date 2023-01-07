@@ -1,0 +1,86 @@
+name: Build and deploy app to production
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+  AWS_REGION: ${{secrets.AWS_REGION}}
+  AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+  AMPLIFY_FACEBOOK_CLIENT_ID_STAGING: ${{secrets.AMPLIFY_FACEBOOK_CLIENT_ID_STAGING}}
+  AMPLIFY_FACEBOOK_CLIENT_SECRET_STAGING: ${{secrets.AMPLIFY_FACEBOOK_CLIENT_SECRET_STAGING}}
+  AMPLIFY_GOOGLE_CLIENT_ID: ${{secrets.AMPLIFY_GOOGLE_CLIENT_ID}}
+  AMPLIFY_GOOGLE_CLIENT_SECRET: ${{secrets.AMPLIFY_GOOGLE_CLIENT_SECRET}}
+
+jobs:
+  deploy-backend:
+    name: deploy backend to production env
+    uses: ./.github/workflows/configure-aws-amplify.yaml
+    secrets: inherit
+    with:
+      ENV: production
+
+  patch-version:
+    name: increase app version
+    needs: deploy-backend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: git pull origin ${{github.ref_name}}
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: git configure author
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: patch version
+        run: npm version patch
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+
+  build-android:
+    name: Install and build android (PRODUCTION)
+    needs: patch-version
+    uses: ./.github/workflows/eas-build.yaml
+    secrets: inherit
+    with:
+      PLATFORM: android
+      PROFILE: production
+
+  build-ios:
+    name: Install and build ios (PRODUCTION)
+    needs: patch-version
+    uses: ./.github/workflows/eas-build.yaml
+    secrets: inherit
+    with:
+      PLATFORM: ios
+      PROFILE: production
+
+  submit-android:
+    name: submit android to playstore
+    needs: build-android
+    uses: ./.github/workflows/eas-submit.yaml
+    secrets: inherit
+    with:
+      PLATFORM: android
+      PROFILE: production
+
+  submit-ios:
+    name: submit ios to appstore
+    needs: build-ios
+    uses: ./.github/workflows/eas-submit.yaml
+    secrets: inherit
+    with:
+      PLATFORM: ios
+      PROFILE: production

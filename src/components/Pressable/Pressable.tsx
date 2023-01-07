@@ -1,18 +1,17 @@
-import React, {useRef} from 'react';
+import React, {useRef, PropsWithChildren} from 'react';
 import {Pressable as PressableRN, PressableProps} from 'react-native';
 
 interface IPressableProps extends PressableProps {
-  children: JSX.Element[] | JSX.Element;
   onDoublePress?: () => void;
   onPress?: () => void;
 }
 
 const Pressable = ({
-  children,
   onDoublePress,
   onPress,
+  children,
   ...rest
-}: IPressableProps) => {
+}: PropsWithChildren<IPressableProps>) => {
   const lastTap = useRef<number>(0);
 
   let timeOut: any;
