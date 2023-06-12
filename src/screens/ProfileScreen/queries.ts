@@ -59,3 +59,74 @@ export type GetUserQueryById = {
     _lastChangedAt: number;
   } | null;
 };
+
+export const createUserFollow = /* GraphQL */ gql`
+  mutation CreateUserFollow(
+    $input: CreateUserFollowInput!
+    $condition: ModelUserFollowConditionInput
+  ) {
+    createUserFollow(input: $input, condition: $condition) {
+      id
+      followerID
+      followeeID
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+
+export const userFollowings = /* GraphQL */ gql`
+  query UserFollowings(
+    $followerID: ID!
+    $followeeID: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFollowFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    userFollowings(
+      followerID: $followerID
+      followeeID: $followeeID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        followerID
+        followeeID
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const deleteUserFollow = /* GraphQL */ gql`
+  mutation DeleteUserFollow(
+    $input: DeleteUserFollowInput!
+    $condition: ModelUserFollowConditionInput
+  ) {
+    deleteUserFollow(input: $input, condition: $condition) {
+      id
+      followerID
+      followeeID
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;

@@ -21,15 +21,17 @@ import UserOptions from './components/UserOptions';
 const ProfileScreen = () => {
   const route = useRoute<ProfileBottomRouteProp | UserProfileRouteProp>();
   const {user} = useAuthContext();
+
   const {data, error, loading, refetch} = useQuery<
     GetUserQuery,
     GetUserQueryVariables
   >(getUserById, {
     variables: {
-      id:
+      /* id:
         route.name === 'UserProfile'
           ? route.params?.userId!
-          : user?.attributes.sub,
+          : user?.attributes.sub, */
+      id: route.params?.userId ?? user?.attributes.sub,
     },
   });
 

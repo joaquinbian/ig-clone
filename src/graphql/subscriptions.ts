@@ -38,6 +38,14 @@ export const onCreateCommentByPostId = /* GraphQL */ `
           nextToken
           startedAt
         }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -114,11 +122,8 @@ export const onCreateCommentByPostId = /* GraphQL */ `
   }
 `;
 export const onCreateLike = /* GraphQL */ `
-  subscription OnCreateLike(
-    $filter: ModelSubscriptionLikeFilterInput
-    $owner: String
-  ) {
-    onCreateLike(filter: $filter, owner: $owner) {
+  subscription OnCreateLike($owner: String) {
+    onCreateLike(owner: $owner) {
       id
       userID
       postID
@@ -146,6 +151,14 @@ export const onCreateLike = /* GraphQL */ `
           startedAt
         }
         CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -211,11 +224,8 @@ export const onCreateLike = /* GraphQL */ `
   }
 `;
 export const onUpdateLike = /* GraphQL */ `
-  subscription OnUpdateLike(
-    $filter: ModelSubscriptionLikeFilterInput
-    $owner: String
-  ) {
-    onUpdateLike(filter: $filter, owner: $owner) {
+  subscription OnUpdateLike($owner: String) {
+    onUpdateLike(owner: $owner) {
       id
       userID
       postID
@@ -243,6 +253,14 @@ export const onUpdateLike = /* GraphQL */ `
           startedAt
         }
         CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -308,11 +326,8 @@ export const onUpdateLike = /* GraphQL */ `
   }
 `;
 export const onDeleteLike = /* GraphQL */ `
-  subscription OnDeleteLike(
-    $filter: ModelSubscriptionLikeFilterInput
-    $owner: String
-  ) {
-    onDeleteLike(filter: $filter, owner: $owner) {
+  subscription OnDeleteLike($owner: String) {
+    onDeleteLike(owner: $owner) {
       id
       userID
       postID
@@ -340,6 +355,14 @@ export const onDeleteLike = /* GraphQL */ `
           startedAt
         }
         CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -405,11 +428,8 @@ export const onDeleteLike = /* GraphQL */ `
   }
 `;
 export const onCreateCommentLike = /* GraphQL */ `
-  subscription OnCreateCommentLike(
-    $filter: ModelSubscriptionCommentLikeFilterInput
-    $owner: String
-  ) {
-    onCreateCommentLike(filter: $filter, owner: $owner) {
+  subscription OnCreateCommentLike($owner: String) {
+    onCreateCommentLike(owner: $owner) {
       id
       userID
       commentID
@@ -437,6 +457,14 @@ export const onCreateCommentLike = /* GraphQL */ `
           startedAt
         }
         CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -511,11 +539,8 @@ export const onCreateCommentLike = /* GraphQL */ `
   }
 `;
 export const onUpdateCommentLike = /* GraphQL */ `
-  subscription OnUpdateCommentLike(
-    $filter: ModelSubscriptionCommentLikeFilterInput
-    $owner: String
-  ) {
-    onUpdateCommentLike(filter: $filter, owner: $owner) {
+  subscription OnUpdateCommentLike($owner: String) {
+    onUpdateCommentLike(owner: $owner) {
       id
       userID
       commentID
@@ -543,6 +568,14 @@ export const onUpdateCommentLike = /* GraphQL */ `
           startedAt
         }
         CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -617,11 +650,8 @@ export const onUpdateCommentLike = /* GraphQL */ `
   }
 `;
 export const onDeleteCommentLike = /* GraphQL */ `
-  subscription OnDeleteCommentLike(
-    $filter: ModelSubscriptionCommentLikeFilterInput
-    $owner: String
-  ) {
-    onDeleteCommentLike(filter: $filter, owner: $owner) {
+  subscription OnDeleteCommentLike($owner: String) {
+    onDeleteCommentLike(owner: $owner) {
       id
       userID
       commentID
@@ -649,6 +679,14 @@ export const onDeleteCommentLike = /* GraphQL */ `
           startedAt
         }
         CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -723,11 +761,8 @@ export const onDeleteCommentLike = /* GraphQL */ `
   }
 `;
 export const onCreateComment = /* GraphQL */ `
-  subscription OnCreateComment(
-    $filter: ModelSubscriptionCommentFilterInput
-    $owner: String
-  ) {
-    onCreateComment(filter: $filter, owner: $owner) {
+  subscription OnCreateComment($owner: String) {
+    onCreateComment(owner: $owner) {
       id
       comment
       createdAt
@@ -758,6 +793,14 @@ export const onCreateComment = /* GraphQL */ `
           startedAt
         }
         CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -837,11 +880,8 @@ export const onCreateComment = /* GraphQL */ `
   }
 `;
 export const onUpdateComment = /* GraphQL */ `
-  subscription OnUpdateComment(
-    $filter: ModelSubscriptionCommentFilterInput
-    $owner: String
-  ) {
-    onUpdateComment(filter: $filter, owner: $owner) {
+  subscription OnUpdateComment($owner: String) {
+    onUpdateComment(owner: $owner) {
       id
       comment
       createdAt
@@ -872,6 +912,14 @@ export const onUpdateComment = /* GraphQL */ `
           startedAt
         }
         CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -951,11 +999,8 @@ export const onUpdateComment = /* GraphQL */ `
   }
 `;
 export const onDeleteComment = /* GraphQL */ `
-  subscription OnDeleteComment(
-    $filter: ModelSubscriptionCommentFilterInput
-    $owner: String
-  ) {
-    onDeleteComment(filter: $filter, owner: $owner) {
+  subscription OnDeleteComment($owner: String) {
+    onDeleteComment(owner: $owner) {
       id
       comment
       createdAt
@@ -986,6 +1031,14 @@ export const onDeleteComment = /* GraphQL */ `
           startedAt
         }
         CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -1065,11 +1118,8 @@ export const onDeleteComment = /* GraphQL */ `
   }
 `;
 export const onCreatePost = /* GraphQL */ `
-  subscription OnCreatePost(
-    $filter: ModelSubscriptionPostFilterInput
-    $owner: String
-  ) {
-    onCreatePost(filter: $filter, owner: $owner) {
+  subscription OnCreatePost($owner: String) {
+    onCreatePost(owner: $owner) {
       id
       description
       createdAt
@@ -1106,6 +1156,14 @@ export const onCreatePost = /* GraphQL */ `
           startedAt
         }
         CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -1157,11 +1215,8 @@ export const onCreatePost = /* GraphQL */ `
   }
 `;
 export const onUpdatePost = /* GraphQL */ `
-  subscription OnUpdatePost(
-    $filter: ModelSubscriptionPostFilterInput
-    $owner: String
-  ) {
-    onUpdatePost(filter: $filter, owner: $owner) {
+  subscription OnUpdatePost($owner: String) {
+    onUpdatePost(owner: $owner) {
       id
       description
       createdAt
@@ -1198,6 +1253,14 @@ export const onUpdatePost = /* GraphQL */ `
           startedAt
         }
         CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -1249,11 +1312,8 @@ export const onUpdatePost = /* GraphQL */ `
   }
 `;
 export const onDeletePost = /* GraphQL */ `
-  subscription OnDeletePost(
-    $filter: ModelSubscriptionPostFilterInput
-    $owner: String
-  ) {
-    onDeletePost(filter: $filter, owner: $owner) {
+  subscription OnDeletePost($owner: String) {
+    onDeletePost(owner: $owner) {
       id
       description
       createdAt
@@ -1290,6 +1350,14 @@ export const onDeletePost = /* GraphQL */ `
           startedAt
         }
         CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -1341,11 +1409,8 @@ export const onDeletePost = /* GraphQL */ `
   }
 `;
 export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser(
-    $filter: ModelSubscriptionUserFilterInput
-    $owner: String
-  ) {
-    onCreateUser(filter: $filter, owner: $owner) {
+  subscription OnCreateUser($owner: String) {
+    onCreateUser(owner: $owner) {
       id
       name
       image
@@ -1416,6 +1481,36 @@ export const onCreateUser = /* GraphQL */ `
           id
           userID
           commentID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Followers {
+        items {
+          id
+          followerID
+          followeeID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Followings {
+        items {
+          id
+          followerID
+          followeeID
           createdAt
           updatedAt
           _version
@@ -1436,11 +1531,8 @@ export const onCreateUser = /* GraphQL */ `
   }
 `;
 export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser(
-    $filter: ModelSubscriptionUserFilterInput
-    $owner: String
-  ) {
-    onUpdateUser(filter: $filter, owner: $owner) {
+  subscription OnUpdateUser($owner: String) {
+    onUpdateUser(owner: $owner) {
       id
       name
       image
@@ -1511,6 +1603,36 @@ export const onUpdateUser = /* GraphQL */ `
           id
           userID
           commentID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Followers {
+        items {
+          id
+          followerID
+          followeeID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Followings {
+        items {
+          id
+          followerID
+          followeeID
           createdAt
           updatedAt
           _version
@@ -1531,11 +1653,8 @@ export const onUpdateUser = /* GraphQL */ `
   }
 `;
 export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser(
-    $filter: ModelSubscriptionUserFilterInput
-    $owner: String
-  ) {
-    onDeleteUser(filter: $filter, owner: $owner) {
+  subscription OnDeleteUser($owner: String) {
+    onDeleteUser(owner: $owner) {
       id
       name
       image
@@ -1615,6 +1734,333 @@ export const onDeleteUser = /* GraphQL */ `
         }
         nextToken
         startedAt
+      }
+      Followers {
+        items {
+          id
+          followerID
+          followeeID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Followings {
+        items {
+          id
+          followerID
+          followeeID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onCreateUserFollow = /* GraphQL */ `
+  subscription OnCreateUserFollow($owner: String) {
+    onCreateUserFollow(owner: $owner) {
+      id
+      followerID
+      followeeID
+      Follower {
+        id
+        name
+        image
+        bio
+        username
+        website
+        email
+        numberOfPosts
+        numberOfFollowers
+        numberOfFollowings
+        Posts {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      Followee {
+        id
+        name
+        image
+        bio
+        username
+        website
+        email
+        numberOfPosts
+        numberOfFollowers
+        numberOfFollowings
+        Posts {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onUpdateUserFollow = /* GraphQL */ `
+  subscription OnUpdateUserFollow($owner: String) {
+    onUpdateUserFollow(owner: $owner) {
+      id
+      followerID
+      followeeID
+      Follower {
+        id
+        name
+        image
+        bio
+        username
+        website
+        email
+        numberOfPosts
+        numberOfFollowers
+        numberOfFollowings
+        Posts {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      Followee {
+        id
+        name
+        image
+        bio
+        username
+        website
+        email
+        numberOfPosts
+        numberOfFollowers
+        numberOfFollowings
+        Posts {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onDeleteUserFollow = /* GraphQL */ `
+  subscription OnDeleteUserFollow($owner: String) {
+    onDeleteUserFollow(owner: $owner) {
+      id
+      followerID
+      followeeID
+      Follower {
+        id
+        name
+        image
+        bio
+        username
+        website
+        email
+        numberOfPosts
+        numberOfFollowers
+        numberOfFollowings
+        Posts {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      Followee {
+        id
+        name
+        image
+        bio
+        username
+        website
+        email
+        numberOfPosts
+        numberOfFollowers
+        numberOfFollowings
+        Posts {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
       }
       createdAt
       updatedAt

@@ -38,6 +38,14 @@ export const createLike = /* GraphQL */ `
           nextToken
           startedAt
         }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -132,6 +140,14 @@ export const updateLike = /* GraphQL */ `
           startedAt
         }
         CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -232,6 +248,14 @@ export const deleteLike = /* GraphQL */ `
           nextToken
           startedAt
         }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -326,6 +350,14 @@ export const createCommentLike = /* GraphQL */ `
           startedAt
         }
         CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -435,6 +467,14 @@ export const updateCommentLike = /* GraphQL */ `
           nextToken
           startedAt
         }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -538,6 +578,14 @@ export const deleteCommentLike = /* GraphQL */ `
           startedAt
         }
         CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -647,6 +695,14 @@ export const createComment = /* GraphQL */ `
           startedAt
         }
         CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -764,6 +820,14 @@ export const updateComment = /* GraphQL */ `
           nextToken
           startedAt
         }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -875,6 +939,14 @@ export const deleteComment = /* GraphQL */ `
           startedAt
         }
         CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -998,6 +1070,14 @@ export const createPost = /* GraphQL */ `
           nextToken
           startedAt
         }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -1090,6 +1170,14 @@ export const updatePost = /* GraphQL */ `
           nextToken
           startedAt
         }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -1179,6 +1267,14 @@ export const deletePost = /* GraphQL */ `
           startedAt
         }
         CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -1315,6 +1411,36 @@ export const createUser = /* GraphQL */ `
         nextToken
         startedAt
       }
+      Followers {
+        items {
+          id
+          followerID
+          followeeID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Followings {
+        items {
+          id
+          followerID
+          followeeID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -1400,6 +1526,36 @@ export const updateUser = /* GraphQL */ `
           id
           userID
           commentID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Followers {
+        items {
+          id
+          followerID
+          followeeID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Followings {
+        items {
+          id
+          followerID
+          followeeID
           createdAt
           updatedAt
           _version
@@ -1504,6 +1660,342 @@ export const deleteUser = /* GraphQL */ `
         }
         nextToken
         startedAt
+      }
+      Followers {
+        items {
+          id
+          followerID
+          followeeID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Followings {
+        items {
+          id
+          followerID
+          followeeID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const createUserFollow = /* GraphQL */ `
+  mutation CreateUserFollow(
+    $input: CreateUserFollowInput!
+    $condition: ModelUserFollowConditionInput
+  ) {
+    createUserFollow(input: $input, condition: $condition) {
+      id
+      followerID
+      followeeID
+      Follower {
+        id
+        name
+        image
+        bio
+        username
+        website
+        email
+        numberOfPosts
+        numberOfFollowers
+        numberOfFollowings
+        Posts {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      Followee {
+        id
+        name
+        image
+        bio
+        username
+        website
+        email
+        numberOfPosts
+        numberOfFollowers
+        numberOfFollowings
+        Posts {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const updateUserFollow = /* GraphQL */ `
+  mutation UpdateUserFollow(
+    $input: UpdateUserFollowInput!
+    $condition: ModelUserFollowConditionInput
+  ) {
+    updateUserFollow(input: $input, condition: $condition) {
+      id
+      followerID
+      followeeID
+      Follower {
+        id
+        name
+        image
+        bio
+        username
+        website
+        email
+        numberOfPosts
+        numberOfFollowers
+        numberOfFollowings
+        Posts {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      Followee {
+        id
+        name
+        image
+        bio
+        username
+        website
+        email
+        numberOfPosts
+        numberOfFollowers
+        numberOfFollowings
+        Posts {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const deleteUserFollow = /* GraphQL */ `
+  mutation DeleteUserFollow(
+    $input: DeleteUserFollowInput!
+    $condition: ModelUserFollowConditionInput
+  ) {
+    deleteUserFollow(input: $input, condition: $condition) {
+      id
+      followerID
+      followeeID
+      Follower {
+        id
+        name
+        image
+        bio
+        username
+        website
+        email
+        numberOfPosts
+        numberOfFollowers
+        numberOfFollowings
+        Posts {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      Followee {
+        id
+        name
+        image
+        bio
+        username
+        website
+        email
+        numberOfPosts
+        numberOfFollowers
+        numberOfFollowings
+        Posts {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
       }
       createdAt
       updatedAt

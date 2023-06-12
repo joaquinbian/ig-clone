@@ -1,63 +1,21 @@
 {
-  "api": {
-    "instagramclone": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "instagramclone"
-        }
-      ],
-      "output": {
-        "authConfig": {
-          "additionalAuthenticationProviders": [
-            {
-              "authenticationType": "AWS_IAM"
-            }
-          ],
-          "defaultAuthentication": {
-            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
-            "userPoolConfig": {
-              "userPoolId": "authinstagramclone"
-            }
-          }
-        }
-      },
-      "providerPlugin": "awscloudformation",
-      "service": "AppSync"
-    }
-  },
   "auth": {
     "instagramclone": {
-      "customAuth": false,
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
+          "category": "function",
+          "resourceName": "instagramclonePostConfirmation",
+          "triggerProvider": "Cognito",
           "attributes": [
             "Arn",
             "Name"
-          ],
-          "category": "function",
-          "resourceName": "instagramclonePostConfirmation",
-          "triggerProvider": "Cognito"
+          ]
         }
       ],
+      "customAuth": false,
       "frontendAuthConfig": {
-        "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ],
-        "passwordProtectionSettings": {
-          "passwordPolicyCharacters": [
-            "REQUIRES_LOWERCASE"
-          ],
-          "passwordPolicyMinLength": 8
-        },
-        "signupAttributes": [
-          "EMAIL",
-          "NAME"
-        ],
         "socialProviders": [
           "FACEBOOK",
           "GOOGLE"
@@ -65,54 +23,78 @@
         "usernameAttributes": [
           "EMAIL"
         ],
+        "signupAttributes": [
+          "EMAIL",
+          "NAME"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": [
+            "REQUIRES_LOWERCASE"
+          ]
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
         "verificationMechanisms": [
           "EMAIL"
         ]
-      },
-      "providerPlugin": "awscloudformation",
-      "service": "Cognito"
+      }
     }
   },
   "function": {
     "instagramclonePostConfirmation": {
       "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
       "dependsOn": [
         {
+          "category": "api",
+          "resourceName": "instagramclone",
           "attributes": [
             "GraphQLAPIIdOutput",
             "GraphQLAPIEndpointOutput"
-          ],
-          "category": "api",
-          "resourceName": "instagramclone"
+          ]
         }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
+      ]
     }
   },
-  "parameters": {
-    "AMPLIFY_function_instagramclonePostConfirmation_deploymentBucketName": {
-      "usedBy": [
+  "api": {
+    "instagramclone": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
         {
-          "category": "function",
-          "resourceName": "instagramclonePostConfirmation"
+          "category": "auth",
+          "resourceName": "instagramclone",
+          "attributes": [
+            "UserPoolId"
+          ]
         }
-      ]
-    },
-    "AMPLIFY_function_instagramclonePostConfirmation_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "instagramclonePostConfirmation"
+      ],
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authinstagramclone"
+            }
+          },
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
         }
-      ]
+      }
     }
   },
   "storage": {
     "storage": {
-      "dependsOn": [],
+      "service": "S3",
       "providerPlugin": "awscloudformation",
-      "service": "S3"
+      "dependsOn": []
     }
   }
 }

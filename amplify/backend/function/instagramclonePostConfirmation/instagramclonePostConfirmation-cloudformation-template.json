@@ -360,14 +360,6 @@
       "Value": {
         "Ref": "AWS::Region"
       }
-    },
-    "LambdaExecutionRoleArn": {
-      "Value": {
-        "Fn::GetAtt": [
-          "LambdaExecutionRole",
-          "Arn"
-        ]
-      }
     }
   }
 }

@@ -3,15 +3,12 @@
 
 const awsmobile = {
     "aws_project_region": "sa-east-1",
-    "aws_appsync_graphqlEndpoint": "https://4w5uw6wefzflpoaipz36nazbbi.appsync-api.sa-east-1.amazonaws.com/graphql",
-    "aws_appsync_region": "sa-east-1",
-    "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS",
-    "aws_cognito_identity_pool_id": "sa-east-1:84d369b1-3471-402d-9c87-c22e62f904a7",
+    "aws_cognito_identity_pool_id": "sa-east-1:2727b3de-8893-45b6-8d8d-9c003dd4f9ff",
     "aws_cognito_region": "sa-east-1",
-    "aws_user_pools_id": "sa-east-1_joWVi7ss0",
-    "aws_user_pools_web_client_id": "76huf6ivppgr79mdavinn3vvpu",
+    "aws_user_pools_id": "sa-east-1_LyxA6i6Pb",
+    "aws_user_pools_web_client_id": "2492307oi6q3uclgm3v4vfi336",
     "oauth": {
-        "domain": "urz4hctfbkgw-production.auth.sa-east-1.amazoncognito.com",
+        "domain": "urz4hctfbkgw-develop.auth.sa-east-1.amazoncognito.com",
         "scope": [
             "phone",
             "email",
@@ -48,7 +45,10 @@ const awsmobile = {
     "aws_cognito_verification_mechanisms": [
         "EMAIL"
     ],
-    "aws_user_files_s3_bucket": "instagramclone-joa-media03802-production",
+    "aws_appsync_graphqlEndpoint": "https://h3hx2njwz5ffhm2lzggh6jsski.appsync-api.sa-east-1.amazonaws.com/graphql",
+    "aws_appsync_region": "sa-east-1",
+    "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS",
+    "aws_user_files_s3_bucket": "instagramclone-joa-media230015-develop",
     "aws_user_files_s3_bucket_region": "sa-east-1"
 };
 

@@ -53,6 +53,7 @@ const Post = ({post, isVisible}: Props) => {
   const navigateToComments = () => {
     navigation.navigate('Comments', {postId: post.id});
   };
+
   const navigateToProfile = () => {
     navigation.navigate('UserProfile', {
       userId: post.userID,

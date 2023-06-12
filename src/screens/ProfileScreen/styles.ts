@@ -38,6 +38,9 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'transparent',
   },
+  buttonUnfollow: {
+    backgroundColor: colors.error,
+  },
   buttonSignOut: {
     backgroundColor: colors.error,
   },

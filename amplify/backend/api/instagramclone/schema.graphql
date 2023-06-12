@@ -90,6 +90,29 @@ type User
   Likes: [Like] @hasMany(indexName: "byUser", fields: ["id"])
   Comments: [Comment] @hasMany(indexName: "byUser", fields: ["id"])
   CommentLikes: [CommentLike] @hasMany(indexName: "byUser", fields: ["id"])
+
+  Followers: [UserFollow] @hasMany(indexName: "byFollowee", fields: ["id"])
+  Followings: [UserFollow] @hasMany(indexName: "byFollower", fields: ["id"])
+}
+
+type UserFollow
+  @model
+  @auth(rules: [{allow: private, operations: [read]}, {allow: owner}]) {
+  id: ID!
+  followerID: ID!
+    @index(
+      name: "byFollower"
+      sortKeyFields: ["followeeID"]
+      queryField: "userFollowings"
+    )
+  followeeID: ID!
+    @index(
+      name: "byFollowee"
+      sortKeyFields: ["followerID"]
+      queryField: "userFollowers"
+    )
+  Follower: User @belongsTo(fields: ["followerID"])
+  Followee: User @belongsTo(fields: ["followeeID"])
 }
 
 type Subscription {

@@ -88,6 +88,8 @@ export type User = {
   Likes?: ModelLikeConnection | null,
   Comments?: ModelCommentConnection | null,
   CommentLikes?: ModelCommentLikeConnection | null,
+  Followers?: ModelUserFollowConnection | null,
+  Followings?: ModelUserFollowConnection | null,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -173,6 +175,28 @@ export type CommentLike = {
   commentID: string,
   User?: User | null,
   Comment?: Comment | null,
+  createdAt: string,
+  updatedAt: string,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
+  owner?: string | null,
+};
+
+export type ModelUserFollowConnection = {
+  __typename: "ModelUserFollowConnection",
+  items:  Array<UserFollow | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
+};
+
+export type UserFollow = {
+  __typename: "UserFollow",
+  id: string,
+  followerID: string,
+  followeeID: string,
+  Follower?: User | null,
+  Followee?: User | null,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -386,6 +410,33 @@ export type DeleteUserInput = {
   _version?: number | null,
 };
 
+export type CreateUserFollowInput = {
+  id?: string | null,
+  followerID: string,
+  followeeID: string,
+  _version?: number | null,
+};
+
+export type ModelUserFollowConditionInput = {
+  followerID?: ModelIDInput | null,
+  followeeID?: ModelIDInput | null,
+  and?: Array< ModelUserFollowConditionInput | null > | null,
+  or?: Array< ModelUserFollowConditionInput | null > | null,
+  not?: ModelUserFollowConditionInput | null,
+};
+
+export type UpdateUserFollowInput = {
+  id: string,
+  followerID?: string | null,
+  followeeID?: string | null,
+  _version?: number | null,
+};
+
+export type DeleteUserFollowInput = {
+  id: string,
+  _version?: number | null,
+};
+
 export type ModelLikeFilterInput = {
   id?: ModelIDInput | null,
   userID?: ModelIDInput | null,
@@ -483,105 +534,13 @@ export type ModelUserConnection = {
   startedAt?: number | null,
 };
 
-export type ModelSubscriptionLikeFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  userID?: ModelSubscriptionIDInput | null,
-  postID?: ModelSubscriptionIDInput | null,
-  and?: Array< ModelSubscriptionLikeFilterInput | null > | null,
-  or?: Array< ModelSubscriptionLikeFilterInput | null > | null,
-};
-
-export type ModelSubscriptionIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  in?: Array< string | null > | null,
-  notIn?: Array< string | null > | null,
-};
-
-export type ModelSubscriptionCommentLikeFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  userID?: ModelSubscriptionIDInput | null,
-  commentID?: ModelSubscriptionIDInput | null,
-  and?: Array< ModelSubscriptionCommentLikeFilterInput | null > | null,
-  or?: Array< ModelSubscriptionCommentLikeFilterInput | null > | null,
-};
-
-export type ModelSubscriptionCommentFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  comment?: ModelSubscriptionStringInput | null,
-  createdAt?: ModelSubscriptionStringInput | null,
-  userID?: ModelSubscriptionIDInput | null,
-  postID?: ModelSubscriptionIDInput | null,
-  numberOfLikes?: ModelSubscriptionIntInput | null,
-  and?: Array< ModelSubscriptionCommentFilterInput | null > | null,
-  or?: Array< ModelSubscriptionCommentFilterInput | null > | null,
-};
-
-export type ModelSubscriptionStringInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  in?: Array< string | null > | null,
-  notIn?: Array< string | null > | null,
-};
-
-export type ModelSubscriptionIntInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  in?: Array< number | null > | null,
-  notIn?: Array< number | null > | null,
-};
-
-export type ModelSubscriptionPostFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  description?: ModelSubscriptionStringInput | null,
-  createdAt?: ModelSubscriptionStringInput | null,
-  type?: ModelSubscriptionStringInput | null,
-  location?: ModelSubscriptionStringInput | null,
-  image?: ModelSubscriptionStringInput | null,
-  images?: ModelSubscriptionStringInput | null,
-  video?: ModelSubscriptionStringInput | null,
-  numberOfComments?: ModelSubscriptionIntInput | null,
-  numberOfLikes?: ModelSubscriptionIntInput | null,
-  userID?: ModelSubscriptionIDInput | null,
-  untitledfield?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionPostFilterInput | null > | null,
-  or?: Array< ModelSubscriptionPostFilterInput | null > | null,
-};
-
-export type ModelSubscriptionUserFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  name?: ModelSubscriptionStringInput | null,
-  image?: ModelSubscriptionStringInput | null,
-  bio?: ModelSubscriptionStringInput | null,
-  username?: ModelSubscriptionStringInput | null,
-  website?: ModelSubscriptionStringInput | null,
-  email?: ModelSubscriptionStringInput | null,
-  numberOfPosts?: ModelSubscriptionIntInput | null,
-  numberOfFollowers?: ModelSubscriptionIntInput | null,
-  numberOfFollowings?: ModelSubscriptionIntInput | null,
-  and?: Array< ModelSubscriptionUserFilterInput | null > | null,
-  or?: Array< ModelSubscriptionUserFilterInput | null > | null,
+export type ModelUserFollowFilterInput = {
+  id?: ModelIDInput | null,
+  followerID?: ModelIDInput | null,
+  followeeID?: ModelIDInput | null,
+  and?: Array< ModelUserFollowFilterInput | null > | null,
+  or?: Array< ModelUserFollowFilterInput | null > | null,
+  not?: ModelUserFollowFilterInput | null,
 };
 
 export type CreateLikeMutationVariables = {
@@ -624,6 +583,16 @@ export type CreateLikeMutation = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -735,6 +704,16 @@ export type UpdateLikeMutation = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -843,6 +822,16 @@ export type DeleteLikeMutation = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -948,6 +937,16 @@ export type CreateCommentLikeMutation = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -1068,6 +1067,16 @@ export type UpdateCommentLikeMutation = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1182,6 +1191,16 @@ export type DeleteCommentLikeMutation = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -1302,6 +1321,16 @@ export type CreateCommentMutation = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -1432,6 +1461,16 @@ export type UpdateCommentMutation = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1556,6 +1595,16 @@ export type DeleteCommentMutation = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -1692,6 +1741,16 @@ export type CreatePostMutation = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1795,6 +1854,16 @@ export type UpdatePostMutation = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1895,6 +1964,16 @@ export type DeletePostMutation = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -2045,6 +2124,40 @@ export type CreateUserMutation = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
+    Followers?:  {
+      __typename: "ModelUserFollowConnection",
+      items:  Array< {
+        __typename: "UserFollow",
+        id: string,
+        followerID: string,
+        followeeID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    Followings?:  {
+      __typename: "ModelUserFollowConnection",
+      items:  Array< {
+        __typename: "UserFollow",
+        id: string,
+        followerID: string,
+        followeeID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2140,6 +2253,40 @@ export type UpdateUserMutation = {
         id: string,
         userID: string,
         commentID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    Followers?:  {
+      __typename: "ModelUserFollowConnection",
+      items:  Array< {
+        __typename: "UserFollow",
+        id: string,
+        followerID: string,
+        followeeID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    Followings?:  {
+      __typename: "ModelUserFollowConnection",
+      items:  Array< {
+        __typename: "UserFollow",
+        id: string,
+        followerID: string,
+        followeeID: string,
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -2255,6 +2402,394 @@ export type DeleteUserMutation = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
+    Followers?:  {
+      __typename: "ModelUserFollowConnection",
+      items:  Array< {
+        __typename: "UserFollow",
+        id: string,
+        followerID: string,
+        followeeID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    Followings?:  {
+      __typename: "ModelUserFollowConnection",
+      items:  Array< {
+        __typename: "UserFollow",
+        id: string,
+        followerID: string,
+        followeeID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type CreateUserFollowMutationVariables = {
+  input: CreateUserFollowInput,
+  condition?: ModelUserFollowConditionInput | null,
+};
+
+export type CreateUserFollowMutation = {
+  createUserFollow?:  {
+    __typename: "UserFollow",
+    id: string,
+    followerID: string,
+    followeeID: string,
+    Follower?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      image?: string | null,
+      bio?: string | null,
+      username?: string | null,
+      website?: string | null,
+      email?: string | null,
+      numberOfPosts: number,
+      numberOfFollowers: number,
+      numberOfFollowings: number,
+      Posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CommentLikes?:  {
+        __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    Followee?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      image?: string | null,
+      bio?: string | null,
+      username?: string | null,
+      website?: string | null,
+      email?: string | null,
+      numberOfPosts: number,
+      numberOfFollowers: number,
+      numberOfFollowings: number,
+      Posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CommentLikes?:  {
+        __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateUserFollowMutationVariables = {
+  input: UpdateUserFollowInput,
+  condition?: ModelUserFollowConditionInput | null,
+};
+
+export type UpdateUserFollowMutation = {
+  updateUserFollow?:  {
+    __typename: "UserFollow",
+    id: string,
+    followerID: string,
+    followeeID: string,
+    Follower?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      image?: string | null,
+      bio?: string | null,
+      username?: string | null,
+      website?: string | null,
+      email?: string | null,
+      numberOfPosts: number,
+      numberOfFollowers: number,
+      numberOfFollowings: number,
+      Posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CommentLikes?:  {
+        __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    Followee?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      image?: string | null,
+      bio?: string | null,
+      username?: string | null,
+      website?: string | null,
+      email?: string | null,
+      numberOfPosts: number,
+      numberOfFollowers: number,
+      numberOfFollowings: number,
+      Posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CommentLikes?:  {
+        __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteUserFollowMutationVariables = {
+  input: DeleteUserFollowInput,
+  condition?: ModelUserFollowConditionInput | null,
+};
+
+export type DeleteUserFollowMutation = {
+  deleteUserFollow?:  {
+    __typename: "UserFollow",
+    id: string,
+    followerID: string,
+    followeeID: string,
+    Follower?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      image?: string | null,
+      bio?: string | null,
+      username?: string | null,
+      website?: string | null,
+      email?: string | null,
+      numberOfPosts: number,
+      numberOfFollowers: number,
+      numberOfFollowings: number,
+      Posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CommentLikes?:  {
+        __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    Followee?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      image?: string | null,
+      bio?: string | null,
+      username?: string | null,
+      website?: string | null,
+      email?: string | null,
+      numberOfPosts: number,
+      numberOfFollowers: number,
+      numberOfFollowings: number,
+      Posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CommentLikes?:  {
+        __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2303,6 +2838,16 @@ export type GetLikeQuery = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -2612,6 +3157,16 @@ export type GetCommentLikeQuery = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -2909,6 +3464,16 @@ export type GetCommentQuery = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -3264,6 +3829,16 @@ export type GetPostQuery = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -3603,6 +4178,40 @@ export type GetUserQuery = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
+    Followers?:  {
+      __typename: "ModelUserFollowConnection",
+      items:  Array< {
+        __typename: "UserFollow",
+        id: string,
+        followerID: string,
+        followeeID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    Followings?:  {
+      __typename: "ModelUserFollowConnection",
+      items:  Array< {
+        __typename: "UserFollow",
+        id: string,
+        followerID: string,
+        followeeID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -3650,6 +4259,16 @@ export type ListUsersQuery = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -3704,6 +4323,16 @@ export type SyncUsersQuery = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -3762,6 +4391,396 @@ export type UsersByUsernameQuery = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type GetUserFollowQueryVariables = {
+  id: string,
+};
+
+export type GetUserFollowQuery = {
+  getUserFollow?:  {
+    __typename: "UserFollow",
+    id: string,
+    followerID: string,
+    followeeID: string,
+    Follower?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      image?: string | null,
+      bio?: string | null,
+      username?: string | null,
+      website?: string | null,
+      email?: string | null,
+      numberOfPosts: number,
+      numberOfFollowers: number,
+      numberOfFollowings: number,
+      Posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CommentLikes?:  {
+        __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    Followee?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      image?: string | null,
+      bio?: string | null,
+      username?: string | null,
+      website?: string | null,
+      email?: string | null,
+      numberOfPosts: number,
+      numberOfFollowers: number,
+      numberOfFollowings: number,
+      Posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CommentLikes?:  {
+        __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListUserFollowsQueryVariables = {
+  filter?: ModelUserFollowFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListUserFollowsQuery = {
+  listUserFollows?:  {
+    __typename: "ModelUserFollowConnection",
+    items:  Array< {
+      __typename: "UserFollow",
+      id: string,
+      followerID: string,
+      followeeID: string,
+      Follower?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        image?: string | null,
+        bio?: string | null,
+        username?: string | null,
+        website?: string | null,
+        email?: string | null,
+        numberOfPosts: number,
+        numberOfFollowers: number,
+        numberOfFollowings: number,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      Followee?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        image?: string | null,
+        bio?: string | null,
+        username?: string | null,
+        website?: string | null,
+        email?: string | null,
+        numberOfPosts: number,
+        numberOfFollowers: number,
+        numberOfFollowings: number,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type SyncUserFollowsQueryVariables = {
+  filter?: ModelUserFollowFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncUserFollowsQuery = {
+  syncUserFollows?:  {
+    __typename: "ModelUserFollowConnection",
+    items:  Array< {
+      __typename: "UserFollow",
+      id: string,
+      followerID: string,
+      followeeID: string,
+      Follower?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        image?: string | null,
+        bio?: string | null,
+        username?: string | null,
+        website?: string | null,
+        email?: string | null,
+        numberOfPosts: number,
+        numberOfFollowers: number,
+        numberOfFollowings: number,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      Followee?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        image?: string | null,
+        bio?: string | null,
+        username?: string | null,
+        website?: string | null,
+        email?: string | null,
+        numberOfPosts: number,
+        numberOfFollowers: number,
+        numberOfFollowings: number,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type UserFollowingsQueryVariables = {
+  followerID: string,
+  followeeID?: ModelIDKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserFollowFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type UserFollowingsQuery = {
+  userFollowings?:  {
+    __typename: "ModelUserFollowConnection",
+    items:  Array< {
+      __typename: "UserFollow",
+      id: string,
+      followerID: string,
+      followeeID: string,
+      Follower?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        image?: string | null,
+        bio?: string | null,
+        username?: string | null,
+        website?: string | null,
+        email?: string | null,
+        numberOfPosts: number,
+        numberOfFollowers: number,
+        numberOfFollowings: number,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      Followee?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        image?: string | null,
+        bio?: string | null,
+        username?: string | null,
+        website?: string | null,
+        email?: string | null,
+        numberOfPosts: number,
+        numberOfFollowers: number,
+        numberOfFollowings: number,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type UserFollowersQueryVariables = {
+  followeeID: string,
+  followerID?: ModelIDKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserFollowFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type UserFollowersQuery = {
+  userFollowers?:  {
+    __typename: "ModelUserFollowConnection",
+    items:  Array< {
+      __typename: "UserFollow",
+      id: string,
+      followerID: string,
+      followeeID: string,
+      Follower?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        image?: string | null,
+        bio?: string | null,
+        username?: string | null,
+        website?: string | null,
+        email?: string | null,
+        numberOfPosts: number,
+        numberOfFollowers: number,
+        numberOfFollowings: number,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      Followee?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        image?: string | null,
+        bio?: string | null,
+        username?: string | null,
+        website?: string | null,
+        email?: string | null,
+        numberOfPosts: number,
+        numberOfFollowers: number,
+        numberOfFollowings: number,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -3816,6 +4835,16 @@ export type OnCreateCommentByPostIdSubscription = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -3901,7 +4930,6 @@ export type OnCreateCommentByPostIdSubscription = {
 };
 
 export type OnCreateLikeSubscriptionVariables = {
-  filter?: ModelSubscriptionLikeFilterInput | null,
   owner?: string | null,
 };
 
@@ -3940,6 +4968,16 @@ export type OnCreateLikeSubscription = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -4009,7 +5047,6 @@ export type OnCreateLikeSubscription = {
 };
 
 export type OnUpdateLikeSubscriptionVariables = {
-  filter?: ModelSubscriptionLikeFilterInput | null,
   owner?: string | null,
 };
 
@@ -4048,6 +5085,16 @@ export type OnUpdateLikeSubscription = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -4117,7 +5164,6 @@ export type OnUpdateLikeSubscription = {
 };
 
 export type OnDeleteLikeSubscriptionVariables = {
-  filter?: ModelSubscriptionLikeFilterInput | null,
   owner?: string | null,
 };
 
@@ -4156,6 +5202,16 @@ export type OnDeleteLikeSubscription = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -4225,7 +5281,6 @@ export type OnDeleteLikeSubscription = {
 };
 
 export type OnCreateCommentLikeSubscriptionVariables = {
-  filter?: ModelSubscriptionCommentLikeFilterInput | null,
   owner?: string | null,
 };
 
@@ -4264,6 +5319,16 @@ export type OnCreateCommentLikeSubscription = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -4342,7 +5407,6 @@ export type OnCreateCommentLikeSubscription = {
 };
 
 export type OnUpdateCommentLikeSubscriptionVariables = {
-  filter?: ModelSubscriptionCommentLikeFilterInput | null,
   owner?: string | null,
 };
 
@@ -4381,6 +5445,16 @@ export type OnUpdateCommentLikeSubscription = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -4459,7 +5533,6 @@ export type OnUpdateCommentLikeSubscription = {
 };
 
 export type OnDeleteCommentLikeSubscriptionVariables = {
-  filter?: ModelSubscriptionCommentLikeFilterInput | null,
   owner?: string | null,
 };
 
@@ -4498,6 +5571,16 @@ export type OnDeleteCommentLikeSubscription = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -4576,7 +5659,6 @@ export type OnDeleteCommentLikeSubscription = {
 };
 
 export type OnCreateCommentSubscriptionVariables = {
-  filter?: ModelSubscriptionCommentFilterInput | null,
   owner?: string | null,
 };
 
@@ -4618,6 +5700,16 @@ export type OnCreateCommentSubscription = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -4703,7 +5795,6 @@ export type OnCreateCommentSubscription = {
 };
 
 export type OnUpdateCommentSubscriptionVariables = {
-  filter?: ModelSubscriptionCommentFilterInput | null,
   owner?: string | null,
 };
 
@@ -4745,6 +5836,16 @@ export type OnUpdateCommentSubscription = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -4830,7 +5931,6 @@ export type OnUpdateCommentSubscription = {
 };
 
 export type OnDeleteCommentSubscriptionVariables = {
-  filter?: ModelSubscriptionCommentFilterInput | null,
   owner?: string | null,
 };
 
@@ -4872,6 +5972,16 @@ export type OnDeleteCommentSubscription = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -4957,7 +6067,6 @@ export type OnDeleteCommentSubscription = {
 };
 
 export type OnCreatePostSubscriptionVariables = {
-  filter?: ModelSubscriptionPostFilterInput | null,
   owner?: string | null,
 };
 
@@ -5005,6 +6114,16 @@ export type OnCreatePostSubscription = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -5060,7 +6179,6 @@ export type OnCreatePostSubscription = {
 };
 
 export type OnUpdatePostSubscriptionVariables = {
-  filter?: ModelSubscriptionPostFilterInput | null,
   owner?: string | null,
 };
 
@@ -5108,6 +6226,16 @@ export type OnUpdatePostSubscription = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -5163,7 +6291,6 @@ export type OnUpdatePostSubscription = {
 };
 
 export type OnDeletePostSubscriptionVariables = {
-  filter?: ModelSubscriptionPostFilterInput | null,
   owner?: string | null,
 };
 
@@ -5211,6 +6338,16 @@ export type OnDeletePostSubscription = {
       } | null,
       CommentLikes?:  {
         __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -5266,7 +6403,6 @@ export type OnDeletePostSubscription = {
 };
 
 export type OnCreateUserSubscriptionVariables = {
-  filter?: ModelSubscriptionUserFilterInput | null,
   owner?: string | null,
 };
 
@@ -5361,6 +6497,40 @@ export type OnCreateUserSubscription = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
+    Followers?:  {
+      __typename: "ModelUserFollowConnection",
+      items:  Array< {
+        __typename: "UserFollow",
+        id: string,
+        followerID: string,
+        followeeID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    Followings?:  {
+      __typename: "ModelUserFollowConnection",
+      items:  Array< {
+        __typename: "UserFollow",
+        id: string,
+        followerID: string,
+        followeeID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -5371,7 +6541,6 @@ export type OnCreateUserSubscription = {
 };
 
 export type OnUpdateUserSubscriptionVariables = {
-  filter?: ModelSubscriptionUserFilterInput | null,
   owner?: string | null,
 };
 
@@ -5466,6 +6635,40 @@ export type OnUpdateUserSubscription = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
+    Followers?:  {
+      __typename: "ModelUserFollowConnection",
+      items:  Array< {
+        __typename: "UserFollow",
+        id: string,
+        followerID: string,
+        followeeID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    Followings?:  {
+      __typename: "ModelUserFollowConnection",
+      items:  Array< {
+        __typename: "UserFollow",
+        id: string,
+        followerID: string,
+        followeeID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -5476,7 +6679,6 @@ export type OnUpdateUserSubscription = {
 };
 
 export type OnDeleteUserSubscriptionVariables = {
-  filter?: ModelSubscriptionUserFilterInput | null,
   owner?: string | null,
 };
 
@@ -5570,6 +6772,391 @@ export type OnDeleteUserSubscription = {
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
+    } | null,
+    Followers?:  {
+      __typename: "ModelUserFollowConnection",
+      items:  Array< {
+        __typename: "UserFollow",
+        id: string,
+        followerID: string,
+        followeeID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    Followings?:  {
+      __typename: "ModelUserFollowConnection",
+      items:  Array< {
+        __typename: "UserFollow",
+        id: string,
+        followerID: string,
+        followeeID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnCreateUserFollowSubscriptionVariables = {
+  owner?: string | null,
+};
+
+export type OnCreateUserFollowSubscription = {
+  onCreateUserFollow?:  {
+    __typename: "UserFollow",
+    id: string,
+    followerID: string,
+    followeeID: string,
+    Follower?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      image?: string | null,
+      bio?: string | null,
+      username?: string | null,
+      website?: string | null,
+      email?: string | null,
+      numberOfPosts: number,
+      numberOfFollowers: number,
+      numberOfFollowings: number,
+      Posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CommentLikes?:  {
+        __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    Followee?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      image?: string | null,
+      bio?: string | null,
+      username?: string | null,
+      website?: string | null,
+      email?: string | null,
+      numberOfPosts: number,
+      numberOfFollowers: number,
+      numberOfFollowings: number,
+      Posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CommentLikes?:  {
+        __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdateUserFollowSubscriptionVariables = {
+  owner?: string | null,
+};
+
+export type OnUpdateUserFollowSubscription = {
+  onUpdateUserFollow?:  {
+    __typename: "UserFollow",
+    id: string,
+    followerID: string,
+    followeeID: string,
+    Follower?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      image?: string | null,
+      bio?: string | null,
+      username?: string | null,
+      website?: string | null,
+      email?: string | null,
+      numberOfPosts: number,
+      numberOfFollowers: number,
+      numberOfFollowings: number,
+      Posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CommentLikes?:  {
+        __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    Followee?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      image?: string | null,
+      bio?: string | null,
+      username?: string | null,
+      website?: string | null,
+      email?: string | null,
+      numberOfPosts: number,
+      numberOfFollowers: number,
+      numberOfFollowings: number,
+      Posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CommentLikes?:  {
+        __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteUserFollowSubscriptionVariables = {
+  owner?: string | null,
+};
+
+export type OnDeleteUserFollowSubscription = {
+  onDeleteUserFollow?:  {
+    __typename: "UserFollow",
+    id: string,
+    followerID: string,
+    followeeID: string,
+    Follower?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      image?: string | null,
+      bio?: string | null,
+      username?: string | null,
+      website?: string | null,
+      email?: string | null,
+      numberOfPosts: number,
+      numberOfFollowers: number,
+      numberOfFollowings: number,
+      Posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CommentLikes?:  {
+        __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    Followee?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      image?: string | null,
+      bio?: string | null,
+      username?: string | null,
+      website?: string | null,
+      email?: string | null,
+      numberOfPosts: number,
+      numberOfFollowers: number,
+      numberOfFollowings: number,
+      Posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CommentLikes?:  {
+        __typename: "ModelCommentLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followers?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Followings?:  {
+        __typename: "ModelUserFollowConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
