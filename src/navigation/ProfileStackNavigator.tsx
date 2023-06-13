@@ -5,6 +5,7 @@ import EditProfile from '@screens/EditProfileScreen';
 import {useAuthContext} from '@context/AuthContext';
 import {ProfileStackNavigator as IProfileStackNavigator} from './types';
 import {View} from 'react-native';
+import {UserFollowers, UserFollowings} from '@screens/UserFollow';
 
 const Stack = createNativeStackNavigator<IProfileStackNavigator>();
 
@@ -17,6 +18,16 @@ const ProfileStackNavigator = () => {
         name="Profile"
         component={ProfileScreen}
         options={{title: 'Profile'}}
+      />
+      <Stack.Screen
+        name="FollowersScreen"
+        component={UserFollowers}
+        options={{title: 'Followers'}}
+      />
+      <Stack.Screen
+        name="FollowingsScreen"
+        component={UserFollowings}
+        options={{title: 'Followings'}}
       />
       <Stack.Screen
         name="EditProfile"

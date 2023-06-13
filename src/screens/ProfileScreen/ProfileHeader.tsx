@@ -1,6 +1,13 @@
 import Button from '@components/Button';
 import React, {useEffect, useState} from 'react';
-import {View, Text, Image, ActivityIndicator, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  ActivityIndicator,
+  Alert,
+  Pressable,
+} from 'react-native';
 import {styles} from './styles';
 import {colors} from '@theme/colors';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -68,8 +75,6 @@ const ProfileHeader = ({
     },
   });
 
-  console.log(userFollowingData?.userFollowings?.items, 'aa');
-
   const isUserFollowing = userFollowingData?.userFollowings?.items.filter(
     item => !item?._deleted,
   )[0];
@@ -78,7 +83,9 @@ const ProfileHeader = ({
     navigation.navigate('EditProfile');
   };
 
-  console.log(!!isUserFollowing);
+  const navigateFollowerScreen = () => {
+    navigation.navigate('FollowersScreen', {followeeId: id});
+  };
 
   const onFollow = async () => {
     if (!isUserFollowing) {
@@ -115,10 +122,12 @@ const ProfileHeader = ({
             <Text style={styles.data}>{numberOfPosts}</Text>
             <Text style={styles.dataTitle}>post</Text>
           </View>
-          <View style={{alignItems: 'center'}}>
+          <Pressable
+            onPress={navigateFollowerScreen}
+            style={{alignItems: 'center'}}>
             <Text style={styles.data}>{numberOfFollowers}</Text>
             <Text style={styles.dataTitle}>followers</Text>
-          </View>
+          </Pressable>
           <View style={{alignItems: 'center'}}>
             <Text style={styles.data}>{numberOfFollowings}</Text>
             <Text style={styles.dataTitle}>following</Text>
