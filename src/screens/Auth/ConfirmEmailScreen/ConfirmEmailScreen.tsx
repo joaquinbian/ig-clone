@@ -35,7 +35,6 @@ const ConfirmEmailScreen = () => {
     setIsLoading(true);
     try {
       const res = await Auth.confirmSignUp(data.email, data.code);
-      console.log({res});
       navigation.navigate('Sign in');
     } catch (error) {
       console.log({error});

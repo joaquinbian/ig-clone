@@ -34,7 +34,6 @@ const SignUpScreen = () => {
         attributes: {name, email},
       });
       navigation.navigate('Confirm email', {email});
-      console.log({res});
     } catch (error) {
       console.log({error});
     } finally {

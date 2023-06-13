@@ -48,7 +48,6 @@ const ProfileHeader = ({
   image,
 }: ProfileHeaderProps) => {
   const navigation = useNavigation<ProfileNavigatorProps>();
-  console.log({image}, 'IMAGE EN PROFILE HEADER');
   const {user} = useAuthContext();
 
   const [follow, {loading}] = useMutation<
@@ -84,7 +83,18 @@ const ProfileHeader = ({
   };
 
   const navigateFollowerScreen = () => {
-    navigation.navigate('FollowersScreen', {followeeId: id});
+    navigation.navigate('UserFollowTab', {
+      screen: 'Followers',
+      id,
+    });
+    // navigation.navigate('FollowersScreen', {followeeId: id});
+  };
+  const navigateFolloweeScreen = () => {
+    navigation.navigate('UserFollowTab', {
+      screen: 'Followings',
+      id,
+    });
+    // navigation.navigate('FollowersScreen', {followeeId: id});
   };
 
   const onFollow = async () => {
@@ -128,10 +138,12 @@ const ProfileHeader = ({
             <Text style={styles.data}>{numberOfFollowers}</Text>
             <Text style={styles.dataTitle}>followers</Text>
           </Pressable>
-          <View style={{alignItems: 'center'}}>
+          <Pressable
+            onPress={navigateFolloweeScreen}
+            style={{alignItems: 'center'}}>
             <Text style={styles.data}>{numberOfFollowings}</Text>
             <Text style={styles.dataTitle}>following</Text>
-          </View>
+          </Pressable>
         </View>
       </View>
       <View style={{marginTop: 5}}>

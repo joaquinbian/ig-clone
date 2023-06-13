@@ -45,7 +45,6 @@ export default function PostOptions({post}: IPostOptions) {
         await Promise.all(post.images.map(image => Storage.remove(image)));
       }
       const response = await onDeletePost();
-      console.log({response}, 'delete post');
     } catch (error) {
       Alert.alert('error deleting post');
     }

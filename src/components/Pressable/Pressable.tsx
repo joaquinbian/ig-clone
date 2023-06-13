@@ -29,7 +29,6 @@ const Pressable = ({
           onPress?.();
         }, 500);
       }
-      console.log(tap - lastTap.current);
 
       lastTap.current = Date.now();
     } else {

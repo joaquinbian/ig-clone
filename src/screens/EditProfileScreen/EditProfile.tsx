@@ -87,7 +87,6 @@ const EditProfile = () => {
     });
 
     if (!didCancel && !errorCode && assets) {
-      console.log({assets});
       setImageSelected(assets[0].uri);
     }
   };
