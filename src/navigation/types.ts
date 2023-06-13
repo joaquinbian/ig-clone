@@ -67,9 +67,18 @@ export type PostLikesRouteProp = RouteProp<
 export type ProfileStackNavigator = {
   Profile: {userId?: string; username?: string};
   EditProfile: undefined;
+  UserFollowTab: NavigatorScreenParams<UserFollowTabNavigatorParamList> & {
+    id: string;
+  };
+  //SACAR DSP
   FollowersScreen: {followeeId: string};
   FollowingsScreen: {followerId: string};
 };
+
+export type UserFollowTabRouteProps = RouteProp<
+  ProfileStackNavigator,
+  'UserFollowTab'
+>;
 
 export type FollowersScreenRouteProps = RouteProp<
   ProfileStackNavigator,
@@ -148,3 +157,10 @@ export type CreatePostNavigationProp = CompositeNavigationProp<
   NativeStackNavigationProp<UploadStackNavigatorParamList, 'CreatePost'>,
   BottomTabNavigationProp<BottomNavigatorParamList>
 >;
+
+//--------- UserFollowTabNavigator ----------
+
+export type UserFollowTabNavigatorParamList = {
+  Followers: undefined;
+  Followings: undefined;
+};
