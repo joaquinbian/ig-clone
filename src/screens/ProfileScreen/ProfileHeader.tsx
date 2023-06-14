@@ -78,6 +78,8 @@ const ProfileHeader = ({
     item => !item?._deleted,
   )[0];
 
+  console.log(userFollowingData?.userFollowings?.items);
+
   const navigateToEditProfile = () => {
     navigation.navigate('EditProfile');
   };
@@ -109,8 +111,8 @@ const ProfileHeader = ({
         await unfollow({
           variables: {
             input: {
-              id: userFollowingData?.userFollowings?.items[0]?.id,
-              _version: userFollowingData?.userFollowings?.items[0]?._version,
+              id: isUserFollowing.id,
+              _version: isUserFollowing._version,
             },
           },
         });
