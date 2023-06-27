@@ -55,54 +55,55 @@ const handleEvent = async record => {
       'numberOfFollowings',
       1,
     );
-  } else if (
-    record.eventName === 'MODIFY' &&
-    !record.dynamodb.OldImage._deleted?.BOOL &&
-    !!record.dynamodb.NewImage._deleted?.BOOL
-  ) {
-    console.log('Unfollow event');
-    console.log(
-      'decrease number of followers of user ',
-      record.dynamodb.NewImage.followeeID.S,
-    );
-    await updateUserFollowers(
-      record.dynamodb.NewImage.followeeID.S,
-      'numberOfFollowers',
-      -1,
-    );
-    console.log(
-      'decrease number of followings of user ',
-      record.dynamodb.NewImage.followerID.S,
-    );
-    await updateUserFollowers(
-      record.dynamodb.NewImage.followerID.S,
-      'numberOfFollowings',
-      -1,
-    );
-  }
-  if (
-    !!record.dynamodb.OldImage._deleted?.BOOL &&
-    !record.dynamodb.NewImage._deleted?.BOOL
-  ) {
-    console.log('Re-follow event');
-    console.log(
-      'Increase number of followers for ',
-      dynamodb.NewImage.followeeID.S,
-    );
-    await updateUserFollowers(
-      dynamodb.NewImage.followeeID.S,
-      'numberOfFollowers',
-      1,
-    );
-    console.log(
-      'Increase number of followings for ',
-      dynamodb.NewImage.followerID.S,
-    );
-    await updateUserFollowers(
-      dynamodb.NewImage.followerID.S,
-      'numberOfFollowings',
-      1,
-    );
+  } else if (record.eventName === 'MODIFY') {
+    if (
+      !dynamodb.OldImage._deleted?.BOOL &&
+      !!dynamodb.NewImage._deleted?.BOOL
+    ) {
+      console.log('Unfollow event');
+      console.log(
+        'decrease number of followers of user ',
+        record.dynamodb.NewImage.followeeID.S,
+      );
+      await updateUserFollowers(
+        record.dynamodb.NewImage.followeeID.S,
+        'numberOfFollowers',
+        -1,
+      );
+      console.log(
+        'Decrease number of followings for ',
+        record.dynamodb.NewImage.followerID.S,
+      );
+      await updateUserFollowers(
+        record.dynamodb.NewImage.followerID.S,
+        'numberOfFollowings',
+        -1,
+      );
+    }
+    if (
+      !!record.dynamodb.OldImage._deleted?.BOOL &&
+      !record.dynamodb.NewImage._deleted?.BOOL
+    ) {
+      console.log('Re-follow event');
+      console.log(
+        'Increase number of followers for ',
+        record.dynamodb.NewImage.followeeID.S,
+      );
+      await updateUserFollowers(
+        record.dynamodb.NewImage.followeeID.S,
+        'numberOfFollowers',
+        1,
+      );
+      console.log(
+        'Increase number of followings for ',
+        record.dynamodb.NewImage.followerID.S,
+      );
+      await updateUserFollowers(
+        record.dynamodb.NewImage.followerID.S,
+        'numberOfFollowings',
+        1,
+      );
+    }
   }
 };
 

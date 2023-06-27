@@ -28,6 +28,10 @@ type UserFollowMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
+type UserFeedPostMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
 export declare class Comment {
   readonly id: string;
   readonly comment: string;
@@ -112,4 +116,17 @@ export declare class UserFollow {
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<UserFollow, UserFollowMetaData>);
   static copyOf(source: UserFollow, mutator: (draft: MutableModel<UserFollow, UserFollowMetaData>) => MutableModel<UserFollow, UserFollowMetaData> | void): UserFollow;
+}
+
+export declare class UserFeedPost {
+  readonly id: string;
+  readonly userID: string;
+  readonly postID: string;
+  readonly postCreatedAt: string;
+  readonly postOwnerID: string;
+  readonly Post?: Post | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  constructor(init: ModelInit<UserFeedPost, UserFeedPostMetaData>);
+  static copyOf(source: UserFeedPost, mutator: (draft: MutableModel<UserFeedPost, UserFeedPostMetaData>) => MutableModel<UserFeedPost, UserFeedPostMetaData> | void): UserFeedPost;
 }
