@@ -1,17 +1,14 @@
 import React, {useEffect} from 'react';
 import ProfileHeader from './ProfileHeader';
 import FeedGridView from '@components/FeedGridView';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {
-  BottomNavigatorParamList,
   UserProfileNavigatorProps,
-  ProfileBottomRouteProp,
-  UserProfileRouteProp,
   ProfileBottomNavigatorProp,
+  ProfileRouteProps,
 } from '@navigation/types';
 import {useQuery} from '@apollo/client';
-import {getUserById, GetUserQueryById} from './queries';
+import {getUserById} from './queries';
 import {GetUserQuery, GetUserQueryVariables} from 'src/API';
 import Loading from '@components/Loading';
 import ApiErrorMessage from '@components/ApiErrorMessage';
@@ -19,7 +16,8 @@ import {useAuthContext} from '@context/AuthContext';
 import UserOptions from './components/UserOptions';
 
 const ProfileScreen = () => {
-  const route = useRoute<ProfileBottomRouteProp | UserProfileRouteProp>();
+  const route = useRoute<ProfileRouteProps>();
+
   const {user} = useAuthContext();
 
   const {data, error, loading, refetch} = useQuery<
@@ -29,7 +27,7 @@ const ProfileScreen = () => {
     variables: {
       /* id:
         route.name === 'UserProfile'
-          ? route.params?.userId!
+          ? route.params?.userId
           : user?.attributes.sub, */
       id: route.params?.userId ?? user?.attributes.sub,
     },
@@ -45,14 +43,14 @@ const ProfileScreen = () => {
   useEffect(() => {
     navigation.setOptions({
       title:
-        route.name === 'UserProfile'
+        user?.attributes.sub === data?.getUser?.id
           ? route.params.username
           : data?.getUser?.username ?? 'Profile',
     });
   }, [navigation]);
 
   useEffect(() => {
-    if (route.name === 'UserProfile') {
+    if (user?.attributes.sub !== data?.getUser?.id) {
       navigation.setOptions({
         headerRight: () => <UserOptions />,
       });

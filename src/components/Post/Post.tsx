@@ -56,8 +56,11 @@ const Post = ({post, isVisible}: Props) => {
 
   const navigateToProfile = () => {
     navigation.navigate('UserProfile', {
-      userId: post.userID,
-      username: post.User?.username ?? undefined,
+      screen: 'Profile',
+      params: {
+        userId: post.userID,
+        username: post.User?.username ?? undefined,
+      },
     });
     //nos lleva al primer screen en el stack
     //navigation.popToTop();

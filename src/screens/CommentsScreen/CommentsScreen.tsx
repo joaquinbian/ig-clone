@@ -95,7 +95,6 @@ const CommentsScreen = () => {
     setIsFetchingMore(true);
     const response = await fetchMore({variables: {nextToken}});
     //console.log('Loading more comments');4
-    console.log({response}, 'is fetching mroe');
 
     setIsFetchingMore(false);
   };

@@ -1,6 +1,13 @@
 import Button from '@components/Button';
 import React, {useEffect, useState} from 'react';
-import {View, Text, Image, ActivityIndicator, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  ActivityIndicator,
+  Alert,
+  Pressable,
+} from 'react-native';
 import {styles} from './styles';
 import {colors} from '@theme/colors';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -41,7 +48,6 @@ const ProfileHeader = ({
   image,
 }: ProfileHeaderProps) => {
   const navigation = useNavigation<ProfileNavigatorProps>();
-  console.log({image}, 'IMAGE EN PROFILE HEADER');
   const {user} = useAuthContext();
 
   const [follow, {loading}] = useMutation<
@@ -68,17 +74,30 @@ const ProfileHeader = ({
     },
   });
 
-  console.log(userFollowingData?.userFollowings?.items, 'aa');
-
   const isUserFollowing = userFollowingData?.userFollowings?.items.filter(
     item => !item?._deleted,
   )[0];
+
+  console.log(userFollowingData?.userFollowings?.items);
 
   const navigateToEditProfile = () => {
     navigation.navigate('EditProfile');
   };
 
-  console.log(!!isUserFollowing);
+  const navigateFollowerScreen = () => {
+    navigation.navigate('UserFollowTab', {
+      screen: 'Followers',
+      id,
+    });
+    // navigation.navigate('FollowersScreen', {followeeId: id});
+  };
+  const navigateFolloweeScreen = () => {
+    navigation.navigate('UserFollowTab', {
+      screen: 'Followings',
+      id,
+    });
+    // navigation.navigate('FollowersScreen', {followeeId: id});
+  };
 
   const onFollow = async () => {
     if (!isUserFollowing) {
@@ -92,8 +111,8 @@ const ProfileHeader = ({
         await unfollow({
           variables: {
             input: {
-              id: userFollowingData?.userFollowings?.items[0]?.id,
-              _version: userFollowingData?.userFollowings?.items[0]?._version,
+              id: isUserFollowing.id,
+              _version: isUserFollowing._version,
             },
           },
         });
@@ -115,14 +134,18 @@ const ProfileHeader = ({
             <Text style={styles.data}>{numberOfPosts}</Text>
             <Text style={styles.dataTitle}>post</Text>
           </View>
-          <View style={{alignItems: 'center'}}>
+          <Pressable
+            onPress={navigateFollowerScreen}
+            style={{alignItems: 'center'}}>
             <Text style={styles.data}>{numberOfFollowers}</Text>
             <Text style={styles.dataTitle}>followers</Text>
-          </View>
-          <View style={{alignItems: 'center'}}>
+          </Pressable>
+          <Pressable
+            onPress={navigateFolloweeScreen}
+            style={{alignItems: 'center'}}>
             <Text style={styles.data}>{numberOfFollowings}</Text>
             <Text style={styles.dataTitle}>following</Text>
-          </View>
+          </Pressable>
         </View>
       </View>
       <View style={{marginTop: 5}}>

@@ -1865,3 +1865,213 @@ export const userFollowers = /* GraphQL */ `
     }
   }
 `;
+export const getUserFeedPost = /* GraphQL */ `
+  query GetUserFeedPost($id: ID!) {
+    getUserFeedPost(id: $id) {
+      id
+      userID
+      postID
+      postCreatedAt
+      postOwnerID
+      Post {
+        id
+        description
+        createdAt
+        type
+        location
+        image
+        images
+        video
+        numberOfComments
+        numberOfLikes
+        userID
+        untitledfield
+        User {
+          id
+          name
+          image
+          bio
+          username
+          website
+          email
+          numberOfPosts
+          numberOfFollowers
+          numberOfFollowings
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const listUserFeedPosts = /* GraphQL */ `
+  query ListUserFeedPosts(
+    $filter: ModelUserFeedPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserFeedPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID
+        postID
+        postCreatedAt
+        postOwnerID
+        Post {
+          id
+          description
+          createdAt
+          type
+          location
+          image
+          images
+          video
+          numberOfComments
+          numberOfLikes
+          userID
+          untitledfield
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncUserFeedPosts = /* GraphQL */ `
+  query SyncUserFeedPosts(
+    $filter: ModelUserFeedPostFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncUserFeedPosts(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        userID
+        postID
+        postCreatedAt
+        postOwnerID
+        Post {
+          id
+          description
+          createdAt
+          type
+          location
+          image
+          images
+          video
+          numberOfComments
+          numberOfLikes
+          userID
+          untitledfield
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const userFeed = /* GraphQL */ `
+  query UserFeed(
+    $userID: ID!
+    $postCreatedAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFeedPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    userFeed(
+      userID: $userID
+      postCreatedAt: $postCreatedAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userID
+        postID
+        postCreatedAt
+        postOwnerID
+        Post {
+          id
+          description
+          createdAt
+          type
+          location
+          image
+          images
+          video
+          numberOfComments
+          numberOfLikes
+          userID
+          untitledfield
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;

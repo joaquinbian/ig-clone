@@ -61,7 +61,6 @@ export const useLikes = (post: IPost) => {
           },
         },
       });
-      console.log({res});
     } catch (error) {
       Alert.alert('error during like operation');
     }

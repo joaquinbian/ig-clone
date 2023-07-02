@@ -1,5 +1,6 @@
 import {
   CompositeNavigationProp,
+  NavigatorScreenParams,
   Route,
   RouteProp,
 } from '@react-navigation/native';
@@ -36,7 +37,9 @@ export type ProfileBottomRouteProp = RouteProp<
 
 export type HomeStackNavigator = {
   Feed: undefined;
-  UserProfile: {userId: string; username?: string};
+  UserProfile: NavigatorScreenParams<ProfileStackNavigator>;
+  /* FollowersScreen: {followeeId: string};
+  FollowingsScreen: {followerId: string}; */
   EditPostScreen: {postID: string};
   PostLikesScreen: {postID: string};
 };
@@ -62,10 +65,29 @@ export type PostLikesRouteProp = RouteProp<
 >;
 
 export type ProfileStackNavigator = {
-  Profile: undefined;
+  Profile: {userId?: string; username?: string};
   EditProfile: undefined;
+  UserFollowTab: NavigatorScreenParams<UserFollowTabNavigatorParamList> & {
+    id: string;
+  };
+  //SACAR DSP
+  FollowersScreen: {followeeId: string};
+  FollowingsScreen: {followerId: string};
 };
 
+export type UserFollowTabRouteProps = RouteProp<
+  ProfileStackNavigator,
+  'UserFollowTab'
+>;
+
+export type FollowersScreenRouteProps = RouteProp<
+  ProfileStackNavigator,
+  'FollowersScreen'
+>;
+export type FollowingsScreenRouteProps = RouteProp<
+  ProfileStackNavigator,
+  'FollowingsScreen'
+>;
 export type ProfileNavigatorProps = NativeStackNavigationProp<
   ProfileStackNavigator,
   'Profile'
@@ -135,3 +157,10 @@ export type CreatePostNavigationProp = CompositeNavigationProp<
   NativeStackNavigationProp<UploadStackNavigatorParamList, 'CreatePost'>,
   BottomTabNavigationProp<BottomNavigatorParamList>
 >;
+
+//--------- UserFollowTabNavigator ----------
+
+export type UserFollowTabNavigatorParamList = {
+  Followers: undefined;
+  Followings: undefined;
+};

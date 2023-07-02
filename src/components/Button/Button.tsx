@@ -26,7 +26,6 @@ const Button = ({
   ...rest
 }: ICustomButton) => {
   // return <ButtonRN title={title} onPress={onPress} {...rest} />;
-  console.log(title);
 
   return (
     <TouchableOpacity

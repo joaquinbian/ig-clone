@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import {DEFAULT_USER_IMAGE} from 'src/config';
 import {styles} from './styles';
 import {Storage} from 'aws-amplify';
+import useUserAvatar from '@hooks/useUserAvatar/useUserAvatar';
 
 interface IUserImage {
   image?: string | undefined | null;
@@ -14,19 +15,8 @@ export default function UserImage({
   width = 100,
   style = {},
 }: IUserImage) {
-  const [avatar, setAvatar] = useState<string | undefined>();
-  useEffect(() => {
-    getUserAvatar();
-  }, []);
+  const avatar = useUserAvatar(image);
 
-  const getUserAvatar = async () => {
-    try {
-      if (image) {
-        const userAvatar = await Storage.get(image);
-        setAvatar(userAvatar);
-      }
-    } catch (error) {}
-  };
   return (
     <Image
       source={{uri: image ? avatar : DEFAULT_USER_IMAGE}}

@@ -26,8 +26,6 @@ const VideoPlayer = ({source: uri, isVisible, onLikePost}: IProps) => {
   };
 
   useEffect(() => {
-    console.log('me ejecuto is visible');
-
     togglePaused();
   }, [isVisible]);
   return (
