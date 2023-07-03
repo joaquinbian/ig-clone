@@ -19,7 +19,7 @@ const appSyncId = process.env.API_INSTAGRAMCLONE_GRAPHQLAPIIDOUTPUT;
 
 const TableName = `User-${appSyncId}-${env}`;
 
-exports.handler = event => {
+exports.handler = async event => {
   console.log(`EVENT: ${JSON.stringify(event)}`);
   /*  event.Records.forEach(record => {
     console.log(record.eventID);
@@ -30,7 +30,7 @@ exports.handler = event => {
     await handleEvent(record)
   } */
 
-  Promise.all(event.Records.map(handleEvent));
+  await Promise.all(event.Records.map(handleEvent));
   return Promise.resolve('Successfully processed DynamoDB record');
 };
 
@@ -57,8 +57,8 @@ const handleEvent = async record => {
     );
   } else if (record.eventName === 'MODIFY') {
     if (
-      !dynamodb.OldImage._deleted?.BOOL &&
-      !!dynamodb.NewImage._deleted?.BOOL
+      !record.dynamodb.OldImage._deleted?.BOOL &&
+      !!record.dynamodb.NewImage._deleted?.BOOL
     ) {
       console.log('Unfollow event');
       console.log(
@@ -119,7 +119,8 @@ const updateUserFollowers = async (userId, field, value) => {
   };
   try {
     await documentClient.update(params).promise();
+    console.log(`${field} updated successfully for user ${userId}`);
   } catch (e) {
-    console.log(e);
+    console.log(e, 'error');
   }
 };

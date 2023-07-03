@@ -54,7 +54,7 @@
         },
         "UserFollowTrigger": {
           "deploymentBucketName": "amplify-instagramclone-develop-230015-deployment",
-          "s3Key": "amplify-builds/UserFollowTrigger-46333939424236443832-build.zip"
+          "s3Key": "amplify-builds/UserFollowTrigger-5477664a4c756f62366b-build.zip"
         },
         "FeedGenerator": {
           "deploymentBucketName": "amplify-instagramclone-develop-230015-deployment",
