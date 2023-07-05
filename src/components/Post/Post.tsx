@@ -10,7 +10,7 @@ import BoldText from '@components/BoldText';
 import Pressable from '@components/Pressable';
 import {useNavigation} from '@react-navigation/native';
 import {FeedNavigatorProps} from '@navigation/types';
-import {Post as IPost, Like as ILike} from 'src/API';
+import {UserFeedPost, Like as ILike} from 'src/API';
 
 import PostOptions from './components/PostOptions';
 import {useLikes} from '@hooks/useLikes/useLikes';
@@ -20,7 +20,7 @@ import PostContent from './components/PostContent';
 import UserImage from '@components/UserImage';
 
 interface Props {
-  post: IPost;
+  post: UserFeedPost;
   isVisible?: boolean;
 }
 
@@ -28,11 +28,11 @@ const Post = ({post, isVisible}: Props) => {
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const [viewMore, setViewMore] = useState<boolean>(false);
   const navigation = useNavigation<FeedNavigatorProps>();
-  const {toggleLike, isLiked, onLikePost: likePost} = useLikes(post);
+  const {toggleLike, isLiked, onLikePost: likePost} = useLikes(post.Post!);
 
   const isTooLong = useMemo(
-    () => post?.description?.length ?? 0 >= 20,
-    [post?.description],
+    () => post.Post?.description?.length ?? 0 >= 20,
+    [post.Post?.description],
   );
 
   const onLikePost = useCallback(async () => {
@@ -58,8 +58,8 @@ const Post = ({post, isVisible}: Props) => {
     navigation.navigate('UserProfile', {
       screen: 'Profile',
       params: {
-        userId: post.userID,
-        username: post.User?.username ?? undefined,
+        userId: post.Post?.userID,
+        username: post?.Post?.User?.username ?? undefined,
       },
     });
     //nos lleva al primer screen en el stack
@@ -70,7 +70,8 @@ const Post = ({post, isVisible}: Props) => {
     navigation.navigate('PostLikesScreen', {postID: post.id});
   };
 
-  const postLikes = post.Likes?.items.filter(like => !like?._deleted) ?? [];
+  const postLikes =
+    post.Post?.Likes?.items.filter(like => !like?._deleted) ?? [];
 
   /*   const COMMENTS_FILTERED =
     post.Comments?.items.filter(comment => !comment?._deleted) ?? []; */
@@ -82,33 +83,33 @@ const Post = ({post, isVisible}: Props) => {
       <View style={[styles.postHeader]}>
         <View style={[styles.userInfo]}>
           <Pressable onPress={navigateToProfile}>
-            <UserImage image={post?.User?.image} style={styles.avatar} />
+            <UserImage image={post?.Post?.User?.image} style={styles.avatar} />
           </Pressable>
           <View>
             <Pressable onPress={navigateToProfile}>
               <BoldText style={{color: colors.black}}>
-                {post.User?.username ?? 'valeria'}
+                {post.Post?.User?.username ?? 'valeria'}
               </BoldText>
             </Pressable>
-            {post.location && (
+            {post.Post?.location && (
               <Text
                 style={{
                   fontWeight: weight.thin,
                   color: colors.gray,
                   fontSize: size.sm,
                 }}>
-                {post.location}
+                {post.Post?.location}
               </Text>
             )}
           </View>
         </View>
-        <PostOptions post={post} />
+        <PostOptions post={post.Post!} />
       </View>
 
       {/* POST IMAGE */}
 
       <PostContent
-        post={post}
+        post={post.Post!}
         isVisible={!!isVisible}
         onLikePost={onLikePost}
       />
@@ -168,7 +169,7 @@ const Post = ({post, isVisible}: Props) => {
                 <Text style={{textAlign: 'center', alignSelf: 'center'}}>
                   {' '}
                   and
-                  <BoldText>{` ${post.numberOfLikes - 1} others`}</BoldText>
+                  <BoldText>{` ${postLikes.length - 1} others`}</BoldText>
                 </Text>
               </TouchableOpacity>
             )}
@@ -176,12 +177,12 @@ const Post = ({post, isVisible}: Props) => {
         )}
 
         {/* description */}
-        {post.description?.length && (
+        {post.Post?.description?.length && (
           <Text
             style={{color: colors.black, marginHorizontal: 5}}
             numberOfLines={isTooLong && !viewMore ? 2 : 0}>
-            <BoldText>{post.User?.name ?? 'el pepe'}</BoldText>{' '}
-            {post.description ?? 'description'}
+            <BoldText>{post.Post?.User?.name ?? 'el pepe'}</BoldText>{' '}
+            {post.Post?.description ?? 'description'}
           </Text>
         )}
         {isTooLong && !viewMore && (
@@ -193,7 +194,7 @@ const Post = ({post, isVisible}: Props) => {
         )}
         <Pressable onPress={navigateToComments}>
           <Text style={{color: colors.lightgray, marginHorizontal: 5}}>
-            view all {post.numberOfComments} comments
+            view all {post.Post?.numberOfComments} comments
           </Text>
         </Pressable>
         <Text

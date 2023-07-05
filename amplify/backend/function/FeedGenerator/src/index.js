@@ -17,7 +17,7 @@ exports.handler = async event => {
     console.log(record.eventName);
     console.log('DynamoDB Record: %j', record.dynamodb);
   }); */
-  for (const record in event.Records) {
+  for (const record of event.Records) {
     await handleRecord(record);
   }
   return Promise.resolve('Successfully processed DynamoDB record');
@@ -28,10 +28,10 @@ const handleRecord = async record => {
   console.log(record.eventName);
   console.log('DynamoDB Record: %j', record.dynamodb);
 
-  if (record.dynamodb.eventSourceARN.includes('Post')) {
+  if (record.eventSourceARN.includes('Post')) {
     //post event
     await postHandler(record);
-  } else if (record.dynamodb.eventSourceARN.includes('UserFollow')) {
+  } else if (record.eventSourceARN.includes('UserFollow')) {
     //follow event
   }
 };

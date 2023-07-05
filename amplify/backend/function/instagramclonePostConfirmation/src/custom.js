@@ -33,7 +33,7 @@ const saveUser = async user => {
   try {
     const Item = {
       ...user,
-      __typename: '',
+      __typename: 'User',
       _lastChangedAt: timestamp,
       createdAt: dateString,
       updatedAt: dateString,

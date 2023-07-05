@@ -13,15 +13,18 @@ import {
   GetPostsByDateQuery,
   GetPostsByDateQueryVariables,
   ModelSortDirection,
+  UserFeedQuery,
+  UserFeedQueryVariables,
   Post as IPost,
 } from 'src/API';
 import {gql, useQuery} from '@apollo/client';
-import {listPosts} from './queries';
+import {listPosts, userFeed} from './queries';
 import Loading from '@components/Loading';
 import ApiErrorMessage from '@components/ApiErrorMessage';
 import Pressable from '@components/Pressable';
 import {colors} from '@theme/colors';
 import {weight} from '@theme/fonts';
+import {useAuthContext} from '@context/AuthContext';
 
 interface IOnViewableItemsChanged {
   viewableItems: ViewToken[];
@@ -34,13 +37,14 @@ const viewabilityConfig: ViewabilityConfig = {
 const FeedScreen = () => {
   const [currentItem, setCurrentItem] = useState<null | string>(null);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
+  const {userId} = useAuthContext();
   const {data, loading, error, refetch, fetchMore} = useQuery<
-    GetPostsByDateQuery,
-    GetPostsByDateQueryVariables
-  >(listPosts, {
+    UserFeedQuery,
+    UserFeedQueryVariables
+  >(userFeed, {
     variables: {
       sortDirection: ModelSortDirection.DESC,
-      type: 'POST',
+      userID: userId,
       limit: 4,
     },
   });
@@ -54,7 +58,7 @@ const FeedScreen = () => {
     },
   );
 
-  const nextToken = data?.getPostsByDate?.nextToken;
+  const nextToken = data?.userFeed?.nextToken;
   const getMorePosts = async () => {
     //console.log({nextToken, isFetchingMore});
     if (!nextToken || isFetchingMore) {
@@ -84,8 +88,8 @@ const FeedScreen = () => {
     return <Loading text="loading posts..." />;
   }
 
-  const posts = (data?.getPostsByDate?.items ?? []).filter(
-    post => !post?._deleted,
+  const posts = (data?.userFeed?.items ?? []).filter(
+    post => !post?._deleted && !post?.Post?._deleted,
   );
 
   if (!posts.length) {

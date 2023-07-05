@@ -7,6 +7,7 @@ const env = process.env.ENV;
 const appSyncId = process.env.API_INSTAGRAMCLONE_GRAPHQLAPIIDOUTPUT;
 
 const TableName = `UserFollow-${appSyncId}-${env}`;
+const TableNameUserFeed = `UserFeedPost-${appSyncId}-${env}`;
 
 async function handle(record) {
   if (record.eventName !== 'INSERT') {
@@ -17,6 +18,43 @@ async function handle(record) {
   //push new post to their feeds
   const followers = await getFollowers(record.dynamodb.NewImage.userID.S);
   console.log({followers});
+
+  await Promise.all(
+    followers.map(follower =>
+      pushPostToUserFeed(record.dynamodb.NewImage, follower.followerID),
+    ),
+  );
+}
+
+async function pushPostToUserFeed(image, userId) {
+  const date = new Date();
+  const timestamp = date.getTime();
+  const dateString = date.toISOString();
+  try {
+    const Item = {
+      id: `${userId}::${image.id.S}`,
+      owner: `${userId}::${userId}`,
+      postID: image.id.S,
+      postOwnerID: image.userID.S,
+      postCreatedAt: image.createdAt.S,
+      userID: userId,
+      _version: 1,
+      _lastChangedAt: timestamp,
+      updatedAt: dateString,
+      createdAt: dateString,
+      __typename: 'UserFeedPost',
+    };
+
+    console.log({Item});
+    const params = {
+      TableName: TableNameUserFeed,
+      Item,
+    };
+
+    const response = await documentClient.put(params).promise();
+  } catch (error) {
+    console.log('error', error);
+  }
 }
 
 async function getFollowers(id) {
@@ -28,12 +66,13 @@ async function getFollowers(id) {
     ExpressionAttributeValues: {
       ':followeeID': id,
     },
-    ExpressionAttributeValues: {
+    ExpressionAttributeNames: {
       '#deleted': '_deleted',
     },
   };
   try {
-    await documentClient.query(params).promise();
+    const followers = await documentClient.query(params).promise();
+    return followers.Items ?? [];
   } catch (e) {
     console.log(e);
   }
