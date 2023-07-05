@@ -115,7 +115,9 @@ type UserFollow
   Followee: User @belongsTo(fields: ["followeeID"])
 }
 
-type UserFeedPost @model @auth(rules: [{allow: owner}]) {
+type UserFeedPost
+  @model
+  @auth(rules: [{allow: private, operations: [read]}, {allow: owner}]) {
   id: ID!
 
   userID: ID!
