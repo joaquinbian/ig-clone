@@ -4,7 +4,6 @@ import ProfileScreen from '@screens/ProfileScreen';
 import EditProfile from '@screens/EditProfileScreen';
 import {useAuthContext} from '@context/AuthContext';
 import {ProfileStackNavigator as IProfileStackNavigator} from './types';
-import {View} from 'react-native';
 import {UserFollowers, UserFollowings} from '@screens/UserFollow';
 import UserFollowTabNavigator from './UserFollowTabNavigator';
 

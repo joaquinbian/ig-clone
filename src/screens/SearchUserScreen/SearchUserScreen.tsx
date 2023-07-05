@@ -7,6 +7,8 @@ import {useQuery} from '@apollo/client';
 import {ListUsersQuery, ListUsersQueryVariables} from 'src/API';
 import ApiErrorMessage from '@components/ApiErrorMessage';
 import Loading from '@components/Loading';
+import {useNavigation} from '@react-navigation/native';
+import {SearchScreenNavigationProp} from '@navigation/types';
 
 const users = comments.map(comment => comment.user);
 
@@ -15,6 +17,15 @@ const SearchUserScreen = () => {
     ListUsersQuery,
     ListUsersQueryVariables
   >(listSearchUsers);
+
+  const navigation = useNavigation<SearchScreenNavigationProp>();
+
+  const onPressUser = (userId: string, username: string) => {
+    navigation.navigate('ProfileStack', {
+      screen: 'Profile',
+      params: {userId, username},
+    });
+  };
 
   const users = data?.listUsers?.items.filter(user => !user?._deleted);
 
@@ -42,6 +53,9 @@ const SearchUserScreen = () => {
             username={item?.username}
             name={item?.name ?? ''}
             image={item?.image}
+            onPressUser={() =>
+              onPressUser(item?.id as string, item?.username as string)
+            }
           />
         )}
       />

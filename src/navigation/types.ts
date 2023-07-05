@@ -4,7 +4,10 @@ import {
   Route,
   RouteProp,
 } from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {
+  NativeStackNavigationProp,
+  createNativeStackNavigator,
+} from '@react-navigation/native-stack';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 
 //-------- RootNavigator ---------
@@ -21,7 +24,7 @@ export type CommentsRouteProp = RouteProp<RootNavigatorParamList, 'Comments'>;
 
 export type BottomNavigatorParamList = {
   HomeStack: undefined;
-  Search: undefined;
+  Search: NavigatorScreenParams<SearchUserStackNavigatorParamList>;
   UploadPost: undefined;
   Notifications: undefined;
   ProfileStack: undefined;
@@ -38,8 +41,6 @@ export type ProfileBottomRouteProp = RouteProp<
 export type HomeStackNavigator = {
   Feed: undefined;
   UserProfile: NavigatorScreenParams<ProfileStackNavigator>;
-  /* FollowersScreen: {followeeId: string};
-  FollowingsScreen: {followerId: string}; */
   EditPostScreen: {postID: string};
   PostLikesScreen: {postID: string};
 };
@@ -164,3 +165,13 @@ export type UserFollowTabNavigatorParamList = {
   Followers: undefined;
   Followings: undefined;
 };
+
+//--------- SearchUserStackNavigator ----------
+export type SearchUserStackNavigatorParamList = {
+  Search: undefined;
+  ProfileStack: NavigatorScreenParams<ProfileStackNavigator>;
+};
+export type SearchScreenNavigationProp = NativeStackNavigationProp<
+  SearchUserStackNavigatorParamList,
+  'Search'
+>;

@@ -12,6 +12,7 @@ import ProfileStackNavigator from './ProfileStackNavigator';
 import {BottomNavigatorParamList} from './types';
 import SearchUserScreen from '@screens/SearchUserScreen';
 import UploadPostStackNavigator from './UploadPostStackNavigator';
+import SearchUserStackNavigator from './SearchUserStackNavigator';
 
 const BottomTab = createBottomTabNavigator<BottomNavigatorParamList>();
 
@@ -35,11 +36,12 @@ const BottomTabNavigator = () => {
       />
       <BottomTab.Screen
         name="Search"
-        component={SearchUserScreen}
+        component={SearchUserStackNavigator}
         options={{
           tabBarIcon: ({color, size}) => (
             <MaterialIcons name="search" size={size} color={color} />
           ),
+          headerShown: false,
         }}
       />
       <BottomTab.Screen
