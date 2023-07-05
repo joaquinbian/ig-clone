@@ -37,9 +37,7 @@ const viewabilityConfig: ViewabilityConfig = {
 const FeedScreen = () => {
   const [currentItem, setCurrentItem] = useState<null | string>(null);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
-  const {userId, user} = useAuthContext();
-
-  console.log({userId});
+  const {userId} = useAuthContext();
 
   const {data, loading, error, refetch, fetchMore} = useQuery<
     UserFeedQuery,
