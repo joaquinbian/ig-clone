@@ -44,7 +44,7 @@ const typePolicies: TypePolicies = {
           };
         },
       },
-      getPostsByDate: {
+      userFeed: {
         keyArgs: ['type', 'createdAt', 'sortDirection', 'filter'],
         merge: (existing = {}, incoming) => {
           // console.log({existing, incoming});

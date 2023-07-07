@@ -66,11 +66,12 @@ const FeedScreen = () => {
       return;
     }
     try {
-      // console.log('entro a busca mas');
+      //console.log('entro a busca mas');
 
       setIsFetchingMore(true);
       await fetchMore({variables: {nextToken}});
     } catch (error) {
+      console.log(error);
     } finally {
       setIsFetchingMore(false);
     }
@@ -92,7 +93,6 @@ const FeedScreen = () => {
   const posts = (data?.userFeed?.items ?? []).filter(
     post => !post?._deleted && !post?.Post?._deleted,
   );
-  console.log({posts});
 
   if (!posts.length) {
     return (

@@ -412,6 +412,67 @@
                   ]
                 }
               ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:Query"
+              ],
+              "Resource": [
+                {
+                  "Fn::Sub": [
+                    "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}/index/*",
+                    {
+                      "tablename": {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "Post-",
+                            {
+                              "Ref": "apiinstagramcloneGraphQLAPIIdOutput"
+                            },
+                            "-",
+                            {
+                              "Ref": "env"
+                            }
+                          ]
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:PutItem",
+                "dynamodb:BatchWrite*"
+              ],
+              "Resource": [
+                {
+                  "Fn::Sub": [
+                    "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
+                    {
+                      "tablename": {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "UserFeedPost-",
+                            {
+                              "Ref": "apiinstagramcloneGraphQLAPIIdOutput"
+                            },
+                            "-",
+                            {
+                              "Ref": "env"
+                            }
+                          ]
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }

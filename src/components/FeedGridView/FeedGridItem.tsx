@@ -5,11 +5,13 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {colors} from '@theme/colors';
 import {Post} from 'src/API';
 import {DEFAULT_USER_IMAGE} from 'src/config';
+import useUserAvatar from '@hooks/useUserAvatar/useUserAvatar';
 
 interface IFeedGridItem {
   post: Post;
 }
 const FeedGridItem = ({post}: IFeedGridItem) => {
+  const image = useUserAvatar(post.images ? post.images[0] : post.image);
   return (
     <View
       style={{
@@ -20,12 +22,12 @@ const FeedGridItem = ({post}: IFeedGridItem) => {
       }}>
       <Image
         source={{
-          uri:
-            (post.images ? post.images[0] : post.image) ?? DEFAULT_USER_IMAGE,
+          uri: image ?? DEFAULT_USER_IMAGE,
         }}
         style={{
           flex: 1,
         }}
+        loadingIndicatorSource={{uri: image ?? DEFAULT_USER_IMAGE}}
       />
       {post.images && (
         <MaterialIcons
