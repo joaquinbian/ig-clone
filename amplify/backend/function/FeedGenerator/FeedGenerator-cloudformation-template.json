@@ -447,12 +447,45 @@
               "Effect": "Allow",
               "Action": [
                 "dynamodb:PutItem",
-                "dynamodb:BatchWrite*"
+                "dynamodb:BatchWrite*",
+                "dynamodb:Query"
               ],
               "Resource": [
                 {
                   "Fn::Sub": [
                     "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
+                    {
+                      "tablename": {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "UserFeedPost-",
+                            {
+                              "Ref": "apiinstagramcloneGraphQLAPIIdOutput"
+                            },
+                            "-",
+                            {
+                              "Ref": "env"
+                            }
+                          ]
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:PutItem",
+                "dynamodb:BatchWrite*",
+                "dynamodb:Query"
+              ],
+              "Resource": [
+                {
+                  "Fn::Sub": [
+                    "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}/index/*",
                     {
                       "tablename": {
                         "Fn::Join": [

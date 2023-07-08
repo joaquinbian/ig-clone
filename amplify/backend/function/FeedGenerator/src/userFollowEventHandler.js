@@ -28,8 +28,44 @@ async function handle({eventName, dynamodb}) {
   }
 }
 
-async function removePostsFromFolloweerFeed(followerID, followeeID) {}
+async function removePostsFromFolloweerFeed(followerID, followeeID) {
+  // get userFeedpost on followerID feed created by by followee id
+  const posts = await getUserFeedPosts(followerID, followeeID);
 
+  const timesToSlice = Math.ceil(posts.length / BATCH_SIZE);
+  for (let i = 0; i < timesToSlice; i++) {
+    const chunk = posts.slice(i * BATCH_SIZE, BATCH_SIZE * (i + 1));
+    console.log(chunk);
+    await removePostsFromUserFeed(chunk);
+  }
+  console.log(`deleting ${posts.length} posts`);
+  //batch delete them
+}
+
+async function getUserFeedPosts(followerID, followeeID) {
+  const params = {
+    TableName: TableNameUserFeed,
+    IndexName: 'byUser',
+    KeyConditionExpression: 'userID = :userID',
+    FilterExpression:
+      'attribute_not_exists(#deleted) AND postOwnerID = :postOwnerID',
+    ExpressionAttributeValues: {
+      ':userID': followerID,
+      ':postOwnerID': followeeID,
+    },
+    ExpressionAttributeNames: {
+      '#deleted': '_deleted',
+    },
+  };
+  try {
+    const posts = await documentClient.query(params).promise();
+    return posts.Items;
+  } catch (e) {
+    console.log(e);
+
+    return [];
+  }
+}
 async function addPostToFollowerFeed(followerID, followeeID) {
   //query all post by user id
   const posts = await getPostsByUserId(followeeID);
@@ -91,6 +127,20 @@ async function addPostsToUserFeed(followerID, posts) {
   }
 }
 
+async function removePostsFromUserFeed(posts) {
+  const params = {
+    RequestItems: {
+      [TableNameUserFeed]: posts.map(generateDeleteRequest),
+    },
+  };
+
+  try {
+    await documentClient.batchWrite(params).promise();
+  } catch (error) {
+    console.log('error', error);
+  }
+}
+
 function generatePutRequest(post, userID) {
   const date = new Date();
   const timestamp = date.getTime();
@@ -110,6 +160,16 @@ function generatePutRequest(post, userID) {
         owner: `${userID}::${userID}`,
         _version: 1,
         __typename: 'UserFeedPost',
+      },
+    },
+  };
+}
+
+function generateDeleteRequest(post) {
+  return {
+    DeleteRequest: {
+      Key: {
+        id: post.id,
       },
     },
   };
