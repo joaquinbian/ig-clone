@@ -10,6 +10,7 @@ Amplify Params - DO NOT EDIT */
  */
 
 const AWS = require('aws-sdk');
+const {v4} = require('uuid');
 
 const documentClient = new AWS.DynamoDB.DocumentClient();
 
@@ -18,6 +19,7 @@ const env = process.env.ENV;
 const appSyncId = process.env.API_INSTAGRAMCLONE_GRAPHQLAPIIDOUTPUT;
 
 const TableName = `User-${appSyncId}-${env}`;
+const NotificationTableName = `Notification-${appSyncId}-${env}`;
 
 exports.handler = async event => {
   console.log(`EVENT: ${JSON.stringify(event)}`);
@@ -54,6 +56,11 @@ const handleEvent = async record => {
       record.dynamodb.NewImage.followerID.S,
       'numberOfFollowings',
       1,
+    );
+
+    await createFollowNotification(
+      record.dynamodb.NewImage.followeeID.S,
+      record.dynamodb.NewImage.followerID.S,
     );
   } else if (record.eventName === 'MODIFY') {
     if (
@@ -123,4 +130,48 @@ const updateUserFollowers = async (userId, field, value) => {
   } catch (e) {
     console.log(e, 'error');
   }
+};
+
+const createFollowNotification = async (userID, actorID) => {
+  const date = new Date();
+  const timestamp = date.getTime();
+  const dateString = date.toISOString();
+
+  const Item = {
+    type: 'NEW_FOLLOWER',
+    actorID,
+    userID,
+    id: v4(),
+    readAt: 0,
+    owner: `${actorID}::${actorID}`,
+    updatedAt: dateString,
+    createdAt: dateString,
+    _lastChangedAt: timestamp,
+    _version: 1,
+    __typename: 'Notification',
+  };
+
+  /* {
+    "id": "95de1733-6e94-42ac-a274-317e06be411c",
+    "actorID": "f4dd6f36-97aa-4c44-921f-5e7e9b2213b9",
+    "createdAt": "2023-07-14T00:32:25.307Z",
+    "notificationPostId": "0287dd44-e05f-453f-986c-c2c5f614d293",
+    "owner": "f4dd6f36-97aa-4c44-921f-5e7e9b2213b9::f4dd6f36-97aa-4c44-921f-5e7e9b2213b9",
+    "readAt": 0,
+    "type": "NEW_LIKE",
+    "updatedAt": "2023-07-14T00:32:25.307Z",
+    "userID": "d176dde6-d30b-41a8-930c-ed5bc7fa6f78",
+    "_lastChangedAt": 1689294745337,
+    "_version": 1,
+    "__typename": "Notification"
+   } */
+
+  const params = {
+    TableName: NotificationTableName,
+    Item,
+  };
+
+  try {
+    await documentClient.put(params).promise();
+  } catch (error) {}
 };
