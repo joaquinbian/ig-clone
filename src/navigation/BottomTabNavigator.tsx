@@ -13,6 +13,7 @@ import {BottomNavigatorParamList} from './types';
 import SearchUserScreen from '@screens/SearchUserScreen';
 import UploadPostStackNavigator from './UploadPostStackNavigator';
 import SearchUserStackNavigator from './SearchUserStackNavigator';
+import NotificationScreen from '@screens/NotificationScreen';
 
 const BottomTab = createBottomTabNavigator<BottomNavigatorParamList>();
 
@@ -60,7 +61,7 @@ const BottomTabNavigator = () => {
       />
       <BottomTab.Screen
         name="Notifications"
-        component={ProfileScreen}
+        component={NotificationScreen}
         options={{
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons
