@@ -1,6 +1,10 @@
 import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplify/datastore";
 
-
+export enum NotificationType {
+  NEW_FOLLOWER = "NEW_FOLLOWER",
+  NEW_LIKE = "NEW_LIKE",
+  NEW_COMMENT = "NEW_COMMENT"
+}
 
 
 
@@ -26,6 +30,10 @@ type CommentLikeMetaData = {
 
 type UserFollowMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+type NotificationMetaData = {
+  readOnlyFields: 'updatedAt';
 }
 
 type UserFeedPostMetaData = {
@@ -62,6 +70,8 @@ export declare class User {
   readonly CommentLikes?: (CommentLike | null)[] | null;
   readonly Followers?: (UserFollow | null)[] | null;
   readonly Followings?: (UserFollow | null)[] | null;
+  readonly Notification?: (Notification | null)[] | null;
+  readonly fcmToken?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<User, UserMetaData>);
@@ -116,6 +126,20 @@ export declare class UserFollow {
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<UserFollow, UserFollowMetaData>);
   static copyOf(source: UserFollow, mutator: (draft: MutableModel<UserFollow, UserFollowMetaData>) => MutableModel<UserFollow, UserFollowMetaData> | void): UserFollow;
+}
+
+export declare class Notification {
+  readonly id: string;
+  readonly type: NotificationType | keyof typeof NotificationType;
+  readonly createdAt: string;
+  readonly User?: User | null;
+  readonly Actor?: User | null;
+  readonly Post?: Post | null;
+  readonly readAt: number;
+  readonly updatedAt?: string | null;
+  readonly notificationPostId?: string | null;
+  constructor(init: ModelInit<Notification, NotificationMetaData>);
+  static copyOf(source: Notification, mutator: (draft: MutableModel<Notification, NotificationMetaData>) => MutableModel<Notification, NotificationMetaData> | void): Notification;
 }
 
 export declare class UserFeedPost {

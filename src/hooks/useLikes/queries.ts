@@ -94,3 +94,162 @@ export const updatePost = /* GraphQL */ gql`
     }
   }
 `;
+
+export const createNotification = /* GraphQL */ gql`
+  mutation CreateNotification(
+    $input: CreateNotificationInput!
+    $condition: ModelNotificationConditionInput
+  ) {
+    createNotification(input: $input, condition: $condition) {
+      id
+      type
+      createdAt
+      userID
+      actorID
+      User {
+        id
+        name
+        image
+        bio
+        username
+        website
+        numberOfPosts
+        numberOfFollowers
+        numberOfFollowings
+        Posts {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        Notification {
+          nextToken
+          startedAt
+        }
+        fcmToken
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      Actor {
+        id
+        name
+        image
+        bio
+        username
+        website
+        numberOfPosts
+        numberOfFollowers
+        numberOfFollowings
+        Posts {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        Notification {
+          nextToken
+          startedAt
+        }
+        fcmToken
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      Post {
+        id
+        description
+        createdAt
+        type
+        location
+        image
+        images
+        video
+        numberOfComments
+        numberOfLikes
+        userID
+        untitledfield
+        User {
+          id
+          name
+          image
+          bio
+          username
+          website
+          numberOfPosts
+          numberOfFollowers
+          numberOfFollowings
+          fcmToken
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      readAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      notificationPostId
+      owner
+    }
+  }
+`;

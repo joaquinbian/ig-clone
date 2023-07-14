@@ -93,6 +93,9 @@ type User
 
   Followers: [UserFollow] @hasMany(indexName: "byFollowee", fields: ["id"])
   Followings: [UserFollow] @hasMany(indexName: "byFollower", fields: ["id"])
+  Notification: [Notification] @hasMany(indexName: "byUser", fields: ["id"])
+
+  fcmToken: String
 }
 
 type UserFollow
@@ -132,6 +135,31 @@ type UserFeedPost
   postOwnerID: ID! @index(name: "byPostOwner")
 
   Post: Post @hasOne(fields: ["postID"])
+}
+
+enum NotificationType {
+  NEW_FOLLOWER
+  NEW_LIKE
+  NEW_COMMENT
+}
+type Notification
+  @model
+  @auth(rules: [{allow: private, operations: [read]}, {allow: owner}]) {
+  id: ID!
+  type: NotificationType!
+  createdAt: AWSDateTime!
+  userID: ID!
+    @index(
+      name: "byUser"
+      queryField: "userNotifications"
+      sortKeyFields: ["createdAt"]
+    )
+  actorID: ID!
+
+  User: User @belongsTo(fields: ["userID"])
+  Actor: User @belongsTo(fields: ["actorID"])
+  Post: Post @hasOne
+  readAt: AWSTimestamp!
 }
 
 type Subscription {
