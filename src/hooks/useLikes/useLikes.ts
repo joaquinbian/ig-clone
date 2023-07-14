@@ -2,6 +2,7 @@ import {Alert} from 'react-native';
 import {useMutation, useQuery} from '@apollo/client';
 import {
   createLike as createLikeQuery,
+  createNotification,
   deleteLike as deleteLikeQuery,
   likeForPostByUserId,
   updatePost,
@@ -17,6 +18,9 @@ import {
   Post as IPost,
   UpdatePostMutation,
   UpdatePostMutationVariables,
+  CreateNotificationMutation,
+  CreateNotificationMutationVariables,
+  NotificationType,
 } from 'src/API';
 import {useAuthContext} from '@context/AuthContext';
 export const useLikes = (post: IPost) => {
@@ -48,6 +52,21 @@ export const useLikes = (post: IPost) => {
   >(createLikeQuery, {
     variables: {input: {postID: post.id, userID: userId}},
     refetchQueries: ['LikeForPostByUserId'],
+  });
+
+  const [onCreateNotification] = useMutation<
+    CreateNotificationMutation,
+    CreateNotificationMutationVariables
+  >(createNotification, {
+    variables: {
+      input: {
+        type: NotificationType.NEW_LIKE,
+        userID: post.userID,
+        actorID: userId,
+        readAt: 0,
+        notificationPostId: post.id,
+      },
+    },
   });
 
   const incrementLikes = async () => {
@@ -94,14 +113,14 @@ export const useLikes = (post: IPost) => {
       deleteLike(like);
       decrementLikes();
     } else {
-      likePost();
-      incrementLikes();
+      onLikePost();
     }
   };
 
   const onLikePost = () => {
     likePost();
     incrementLikes();
+    onCreateNotification();
   };
 
   return {
