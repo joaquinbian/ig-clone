@@ -135,9 +135,11 @@ export declare class Notification {
   readonly User?: User | null;
   readonly Actor?: User | null;
   readonly Post?: Post | null;
+  readonly Comment?: Comment | null;
   readonly readAt: number;
   readonly updatedAt?: string | null;
   readonly notificationPostId?: string | null;
+  readonly notificationCommentId?: string | null;
   constructor(init: ModelInit<Notification, NotificationMetaData>);
   static copyOf(source: Notification, mutator: (draft: MutableModel<Notification, NotificationMetaData>) => MutableModel<Notification, NotificationMetaData> | void): Notification;
 }

@@ -5,15 +5,19 @@ import {
   deleteComment as deleteCommentMutation,
   getPost,
   updatePost,
+  createNotification,
 } from './queries';
 import {
   Comment,
   CreateCommentMutation,
   CreateCommentMutationVariables,
+  CreateNotificationMutation,
+  CreateNotificationMutationVariables,
   DeleteCommentMutation,
   DeleteCommentMutationVariables,
   GetPostQuery,
   GetPostQueryVariables,
+  NotificationType,
   UpdatePostMutation,
   UpdatePostMutationVariables,
 } from 'src/API';
@@ -44,7 +48,10 @@ export const useComment = (postID: string) => {
     UpdatePostMutation,
     UpdatePostMutationVariables
   >(updatePost);
-
+  const [onCreateNotification] = useMutation<
+    CreateNotificationMutation,
+    CreateNotificationMutationVariables
+  >(createNotification);
   const addComment = async (comment: string) => {
     try {
       let nOfComments = data?.getPost?.numberOfComments ?? 0;
@@ -57,10 +64,25 @@ export const useComment = (postID: string) => {
           },
         },
       });
+
       const response = await onCreateComment({
         variables: {input: {comment, postID, userID: userId, numberOfLikes: 0}},
       });
+      /*       await onCreateNotification({
+        variables: {
+          input: {
+            actorID: userId,
+            readAt: 0,
+            type: NotificationType.NEW_COMMENT,
+            userID: data?.getPost?.userID as string,
+            notificationPostId: data?.getPost?.id,
+            notificationCommentId: response.data?.createComment?.id,
+          },
+        },
+      }) */
     } catch (error) {
+      console.log(error);
+
       Alert.alert('error adding comment');
     }
   };

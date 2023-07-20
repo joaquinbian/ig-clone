@@ -1523,6 +1523,7 @@ export const createUser = /* GraphQL */ `
           _deleted
           _lastChangedAt
           notificationPostId
+          notificationCommentId
           owner
         }
         nextToken
@@ -1667,6 +1668,7 @@ export const updateUser = /* GraphQL */ `
           _deleted
           _lastChangedAt
           notificationPostId
+          notificationCommentId
           owner
         }
         nextToken
@@ -1811,6 +1813,7 @@ export const deleteUser = /* GraphQL */ `
           _deleted
           _lastChangedAt
           notificationPostId
+          notificationCommentId
           owner
         }
         nextToken
@@ -2511,12 +2514,68 @@ export const createNotification = /* GraphQL */ `
         _lastChangedAt
         owner
       }
+      Comment {
+        id
+        comment
+        createdAt
+        userID
+        postID
+        numberOfLikes
+        User {
+          id
+          name
+          image
+          bio
+          username
+          website
+          email
+          numberOfPosts
+          numberOfFollowers
+          numberOfFollowings
+          fcmToken
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        Post {
+          id
+          description
+          createdAt
+          type
+          location
+          image
+          images
+          video
+          numberOfComments
+          numberOfLikes
+          userID
+          untitledfield
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
       readAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
       notificationPostId
+      notificationCommentId
       owner
     }
   }
@@ -2672,12 +2731,68 @@ export const updateNotification = /* GraphQL */ `
         _lastChangedAt
         owner
       }
+      Comment {
+        id
+        comment
+        createdAt
+        userID
+        postID
+        numberOfLikes
+        User {
+          id
+          name
+          image
+          bio
+          username
+          website
+          email
+          numberOfPosts
+          numberOfFollowers
+          numberOfFollowings
+          fcmToken
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        Post {
+          id
+          description
+          createdAt
+          type
+          location
+          image
+          images
+          video
+          numberOfComments
+          numberOfLikes
+          userID
+          untitledfield
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
       readAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
       notificationPostId
+      notificationCommentId
       owner
     }
   }
@@ -2833,12 +2948,68 @@ export const deleteNotification = /* GraphQL */ `
         _lastChangedAt
         owner
       }
+      Comment {
+        id
+        comment
+        createdAt
+        userID
+        postID
+        numberOfLikes
+        User {
+          id
+          name
+          image
+          bio
+          username
+          website
+          email
+          numberOfPosts
+          numberOfFollowers
+          numberOfFollowings
+          fcmToken
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        Post {
+          id
+          description
+          createdAt
+          type
+          location
+          image
+          images
+          video
+          numberOfComments
+          numberOfLikes
+          userID
+          untitledfield
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        CommentLikes {
+          nextToken
+          startedAt
+        }
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
       readAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
       notificationPostId
+      notificationCommentId
       owner
     }
   }

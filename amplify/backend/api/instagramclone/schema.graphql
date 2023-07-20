@@ -159,6 +159,7 @@ type Notification
   User: User @belongsTo(fields: ["userID"])
   Actor: User @belongsTo(fields: ["actorID"])
   Post: Post @hasOne
+  Comment: Comment @hasOne
   readAt: AWSTimestamp!
 }
 
