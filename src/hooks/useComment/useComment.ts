@@ -82,11 +82,7 @@ export const useComment = (postID: string) => {
           },
         },
       });
-
-      console.log('log: created');
     } catch (error) {
-      console.log(error);
-
       Alert.alert('error adding comment');
     }
   };
