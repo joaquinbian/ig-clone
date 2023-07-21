@@ -48,6 +48,7 @@ export const useComment = (postID: string) => {
   const addComment = async (comment: string) => {
     try {
       let nOfComments = data?.getPost?.numberOfComments ?? 0;
+
       await onUpdatePost({
         variables: {
           input: {
@@ -61,6 +62,8 @@ export const useComment = (postID: string) => {
         variables: {input: {comment, postID, userID: userId, numberOfLikes: 0}},
       });
     } catch (error) {
+      console.log(error);
+
       Alert.alert('error adding comment');
     }
   };
