@@ -50,6 +50,7 @@ export const getPost = /* GraphQL */ gql`
     getPost(id: $id) {
       id
       numberOfComments
+      userID
       createdAt
       updatedAt
       _version

@@ -69,6 +69,7 @@ export const useComment = (postID: string) => {
       const response = await onCreateComment({
         variables: {input: {comment, postID, userID: userId, numberOfLikes: 0}},
       });
+
       await onCreateNotification({
         variables: {
           input: {
@@ -81,6 +82,8 @@ export const useComment = (postID: string) => {
           },
         },
       });
+
+      console.log('log: created');
     } catch (error) {
       console.log(error);
 
