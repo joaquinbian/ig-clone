@@ -948,6 +948,20 @@ export const schema = {
                         "targetName": "notificationPostId"
                     }
                 },
+                "Comment": {
+                    "name": "Comment",
+                    "isArray": false,
+                    "type": {
+                        "model": "Comment"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": "id",
+                        "targetName": "notificationCommentId"
+                    }
+                },
                 "readAt": {
                     "name": "readAt",
                     "isArray": false,
@@ -965,6 +979,13 @@ export const schema = {
                 },
                 "notificationPostId": {
                     "name": "notificationPostId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "notificationCommentId": {
+                    "name": "notificationCommentId",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": false,
@@ -1160,5 +1181,5 @@ export const schema = {
         }
     },
     "nonModels": {},
-    "version": "f6f9e8fda718649be5ad810834153178"
+    "version": "ba432caab3b6fb9093a6f4a361c1044b"
 };
