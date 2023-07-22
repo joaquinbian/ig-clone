@@ -142,17 +142,15 @@ enum NotificationType {
   NEW_LIKE
   NEW_COMMENT
 }
-type Notification
-  @model
-  @auth(rules: [{allow: private, operations: [read]}, {allow: owner}]) {
+type Notification @model @auth(rules: [{allow: private}]) {
   id: ID!
   type: NotificationType!
   createdAt: AWSDateTime!
   userID: ID!
     @index(
       name: "byUser"
-      queryField: "userNotifications"
       sortKeyFields: ["createdAt"]
+      queryField: "userNotifications"
     )
   actorID: ID!
 

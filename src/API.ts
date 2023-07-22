@@ -232,7 +232,6 @@ export type Notification = {
   _lastChangedAt: number,
   notificationPostId?: string | null,
   notificationCommentId?: string | null,
-  owner?: string | null,
 };
 
 export enum NotificationType {
@@ -2424,7 +2423,6 @@ export type CreateUserMutation = {
         _lastChangedAt: number,
         notificationPostId?: string | null,
         notificationCommentId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -2585,7 +2583,6 @@ export type UpdateUserMutation = {
         _lastChangedAt: number,
         notificationPostId?: string | null,
         notificationCommentId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -2746,7 +2743,6 @@ export type DeleteUserMutation = {
         _lastChangedAt: number,
         notificationPostId?: string | null,
         notificationCommentId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -3606,7 +3602,6 @@ export type CreateNotificationMutation = {
     _lastChangedAt: number,
     notificationPostId?: string | null,
     notificationCommentId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -3849,7 +3844,6 @@ export type UpdateNotificationMutation = {
     _lastChangedAt: number,
     notificationPostId?: string | null,
     notificationCommentId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -4092,7 +4086,6 @@ export type DeleteNotificationMutation = {
     _lastChangedAt: number,
     notificationPostId?: string | null,
     notificationCommentId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -5564,7 +5557,6 @@ export type GetUserQuery = {
         _lastChangedAt: number,
         notificationPostId?: string | null,
         notificationCommentId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -6646,7 +6638,6 @@ export type GetNotificationQuery = {
     _lastChangedAt: number,
     notificationPostId?: string | null,
     notificationCommentId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -6747,7 +6738,6 @@ export type ListNotificationsQuery = {
       _lastChangedAt: number,
       notificationPostId?: string | null,
       notificationCommentId?: string | null,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -6852,7 +6842,6 @@ export type SyncNotificationsQuery = {
       _lastChangedAt: number,
       notificationPostId?: string | null,
       notificationCommentId?: string | null,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -6959,7 +6948,6 @@ export type UserNotificationsQuery = {
       _lastChangedAt: number,
       notificationPostId?: string | null,
       notificationCommentId?: string | null,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -8808,7 +8796,6 @@ export type OnCreateUserSubscription = {
         _lastChangedAt: number,
         notificationPostId?: string | null,
         notificationCommentId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -8968,7 +8955,6 @@ export type OnUpdateUserSubscription = {
         _lastChangedAt: number,
         notificationPostId?: string | null,
         notificationCommentId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -9128,7 +9114,6 @@ export type OnDeleteUserSubscription = {
         _lastChangedAt: number,
         notificationPostId?: string | null,
         notificationCommentId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -9743,10 +9728,6 @@ export type OnDeleteUserFeedPostSubscription = {
   } | null,
 };
 
-export type OnCreateNotificationSubscriptionVariables = {
-  owner?: string | null,
-};
-
 export type OnCreateNotificationSubscription = {
   onCreateNotification?:  {
     __typename: "Notification",
@@ -9981,12 +9962,7 @@ export type OnCreateNotificationSubscription = {
     _lastChangedAt: number,
     notificationPostId?: string | null,
     notificationCommentId?: string | null,
-    owner?: string | null,
   } | null,
-};
-
-export type OnUpdateNotificationSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnUpdateNotificationSubscription = {
@@ -10223,12 +10199,7 @@ export type OnUpdateNotificationSubscription = {
     _lastChangedAt: number,
     notificationPostId?: string | null,
     notificationCommentId?: string | null,
-    owner?: string | null,
   } | null,
-};
-
-export type OnDeleteNotificationSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnDeleteNotificationSubscription = {
@@ -10465,6 +10436,5 @@ export type OnDeleteNotificationSubscription = {
     _lastChangedAt: number,
     notificationPostId?: string | null,
     notificationCommentId?: string | null,
-    owner?: string | null,
   } | null,
 };

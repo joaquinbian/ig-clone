@@ -1610,7 +1610,6 @@ export const onCreateUser = /* GraphQL */ `
           _lastChangedAt
           notificationPostId
           notificationCommentId
-          owner
         }
         nextToken
         startedAt
@@ -1752,7 +1751,6 @@ export const onUpdateUser = /* GraphQL */ `
           _lastChangedAt
           notificationPostId
           notificationCommentId
-          owner
         }
         nextToken
         startedAt
@@ -1894,7 +1892,6 @@ export const onDeleteUser = /* GraphQL */ `
           _lastChangedAt
           notificationPostId
           notificationCommentId
-          owner
         }
         nextToken
         startedAt
@@ -2426,8 +2423,8 @@ export const onDeleteUserFeedPost = /* GraphQL */ `
   }
 `;
 export const onCreateNotification = /* GraphQL */ `
-  subscription OnCreateNotification($owner: String) {
-    onCreateNotification(owner: $owner) {
+  subscription OnCreateNotification {
+    onCreateNotification {
       id
       type
       createdAt
@@ -2635,13 +2632,12 @@ export const onCreateNotification = /* GraphQL */ `
       _lastChangedAt
       notificationPostId
       notificationCommentId
-      owner
     }
   }
 `;
 export const onUpdateNotification = /* GraphQL */ `
-  subscription OnUpdateNotification($owner: String) {
-    onUpdateNotification(owner: $owner) {
+  subscription OnUpdateNotification {
+    onUpdateNotification {
       id
       type
       createdAt
@@ -2849,13 +2845,12 @@ export const onUpdateNotification = /* GraphQL */ `
       _lastChangedAt
       notificationPostId
       notificationCommentId
-      owner
     }
   }
 `;
 export const onDeleteNotification = /* GraphQL */ `
-  subscription OnDeleteNotification($owner: String) {
-    onDeleteNotification(owner: $owner) {
+  subscription OnDeleteNotification {
+    onDeleteNotification {
       id
       type
       createdAt
@@ -3063,7 +3058,6 @@ export const onDeleteNotification = /* GraphQL */ `
       _lastChangedAt
       notificationPostId
       notificationCommentId
-      owner
     }
   }
 `;

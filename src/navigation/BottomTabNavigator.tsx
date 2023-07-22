@@ -14,10 +14,12 @@ import SearchUserScreen from '@screens/SearchUserScreen';
 import UploadPostStackNavigator from './UploadPostStackNavigator';
 import SearchUserStackNavigator from './SearchUserStackNavigator';
 import NotificationScreen from '@screens/NotificationScreen';
+import {useNotifications} from '@context/NotificationContext';
 
 const BottomTab = createBottomTabNavigator<BottomNavigatorParamList>();
 
 const BottomTabNavigator = () => {
+  const {newNotifications} = useNotifications();
   return (
     <BottomTab.Navigator
       screenOptions={{
@@ -70,6 +72,7 @@ const BottomTabNavigator = () => {
               color={color}
             />
           ),
+          tabBarBadge: newNotifications || undefined,
         }}
       />
       <BottomTab.Screen

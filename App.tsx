@@ -11,6 +11,7 @@ import {AuthProvider} from '@context/AuthContext';
 import Client from 'src/apollo/client';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import * as dayjs from 'dayjs';
+import {NotificationContextProvider} from '@context/NotificationContext';
 dayjs.extend(relativeTime);
 
 async function urlOpener(url: string, redirectUrl: string) {
@@ -36,7 +37,9 @@ const App = () => {
     <MenuProvider>
       <AuthProvider>
         <Client>
-          <Navigation />
+          <NotificationContextProvider>
+            <Navigation />
+          </NotificationContextProvider>
         </Client>
       </AuthProvider>
     </MenuProvider>

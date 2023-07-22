@@ -91,3 +91,41 @@ export const userNotifications = /* GraphQL */ gql`
     }
   }
 `;
+export const updateNotification = /* GraphQL */ gql`
+  mutation UpdateNotification(
+    $input: UpdateNotificationInput!
+    $condition: ModelNotificationConditionInput
+  ) {
+    updateNotification(input: $input, condition: $condition) {
+      id
+      type
+      createdAt
+      userID
+      actorID
+      readAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      notificationPostId
+    }
+  }
+`;
+export const onCreateNotification = /* GraphQL */ gql`
+  subscription OnCreateNotification {
+    onCreateNotification {
+      id
+      type
+      createdAt
+      userID
+      actorID
+      readAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      notificationPostId
+      notificationCommentId
+    }
+  }
+`;

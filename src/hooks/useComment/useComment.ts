@@ -52,6 +52,7 @@ export const useComment = (postID: string) => {
     CreateNotificationMutation,
     CreateNotificationMutationVariables
   >(createNotification);
+
   const addComment = async (comment: string) => {
     try {
       let nOfComments = data?.getPost?.numberOfComments ?? 0;
