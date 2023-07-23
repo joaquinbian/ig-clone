@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "76295311979",
+    "project_id": "joaphotos",
+    "storage_bucket": "joaphotos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:76295311979:android:1821c8a65dcbe4b597172e",
+        "android_client_info": {
+          "package_name": "com.joaphotos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "76295311979-d20eudbfa31kvlij4ji76bnr4b9ium3c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.joaphotos",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "76295311979-7ae22iktgdj4g29qp81kpgq3fr1f2709.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLWGhHlaWAX-ddbf58n8jgkU2_iiE_Hys"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "76295311979-7ae22iktgdj4g29qp81kpgq3fr1f2709.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
