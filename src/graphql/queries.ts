@@ -1368,6 +1368,7 @@ export const getUser = /* GraphQL */ `
           _lastChangedAt
           notificationPostId
           notificationCommentId
+          owner
         }
         nextToken
         startedAt
@@ -2373,6 +2374,7 @@ export const getNotification = /* GraphQL */ `
       _lastChangedAt
       notificationPostId
       notificationCommentId
+      owner
     }
   }
 `;
@@ -2466,6 +2468,7 @@ export const listNotifications = /* GraphQL */ `
         _lastChangedAt
         notificationPostId
         notificationCommentId
+        owner
       }
       nextToken
       startedAt
@@ -2568,6 +2571,7 @@ export const syncNotifications = /* GraphQL */ `
         _lastChangedAt
         notificationPostId
         notificationCommentId
+        owner
       }
       nextToken
       startedAt
@@ -2674,6 +2678,7 @@ export const userNotifications = /* GraphQL */ `
         _lastChangedAt
         notificationPostId
         notificationCommentId
+        owner
       }
       nextToken
       startedAt

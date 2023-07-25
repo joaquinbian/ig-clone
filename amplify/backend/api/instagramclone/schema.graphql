@@ -142,7 +142,9 @@ enum NotificationType {
   NEW_LIKE
   NEW_COMMENT
 }
-type Notification @model @auth(rules: [{allow: private}]) {
+type Notification
+  @model
+  @auth(rules: [{allow: private, operations: [read, update]}, {allow: owner}]) {
   id: ID!
   type: NotificationType!
   createdAt: AWSDateTime!

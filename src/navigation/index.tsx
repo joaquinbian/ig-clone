@@ -12,6 +12,7 @@ import {getUser, GetUserQuery} from './queries';
 import {useQuery} from '@apollo/client';
 import {GetUserQueryVariables} from 'src/API';
 import EditProfile from '@screens/EditProfileScreen';
+import PushNotifications from 'src/services/PushNotifications';
 
 const Stack = createNativeStackNavigator<RootNavigatorParamList>();
 
@@ -91,6 +92,7 @@ const Navigation = () => {
 
   return (
     <NavigationContainer linking={linking}>
+      <PushNotifications />
       <Stack.Navigator>{screens}</Stack.Navigator>
     </NavigationContainer>
   );

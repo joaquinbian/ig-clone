@@ -60,7 +60,7 @@ export default function NotificationScreen() {
     readNotifications();
   }, [NOTIFICATIONS]);
 
-  useEffect(() => {
+  /*  useEffect(() => {
     if (!subscribeToMore || !userID) {
       return;
     }
@@ -83,6 +83,8 @@ export default function NotificationScreen() {
       },
     });
   }, [subscribeToMore, userID]);
+ */
+  console.log({NOTIFICATIONS});
 
   if (loading) {
     return <Loading />;
