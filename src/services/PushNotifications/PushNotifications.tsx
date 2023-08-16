@@ -9,6 +9,15 @@ import {
   requestNotifications,
 } from 'react-native-permissions';
 import {useNavigation} from '@react-navigation/native';
+import {useMutation, useQuery} from '@apollo/client';
+import {getUser, updateUser} from './queries';
+import {
+  GetUserQuery,
+  GetUserQueryVariables,
+  UpdateUserMutation,
+  UpdateUserMutationVariables,
+} from 'src/API';
+import {useAuthContext} from '@context/AuthContext';
 
 messaging().setBackgroundMessageHandler(async remoteMessage => {
   console.log('setBackgroundMessageHandler app');
@@ -19,6 +28,15 @@ export default function PushNotifications() {
   const [enabled, setEnabled] = useState(false);
   const [token, setToken] = useState<null | string>(null);
   const navigation = useNavigation();
+  const {userId: id} = useAuthContext();
+  const {loading, data} = useQuery<GetUserQuery, GetUserQueryVariables>(
+    getUser,
+    {variables: {id}},
+  );
+  const [onUpdateUser] = useMutation<
+    UpdateUserMutation,
+    UpdateUserMutationVariables
+  >(updateUser);
 
   useEffect(() => {
     async function requestUserPermission() {
@@ -34,19 +52,34 @@ export default function PushNotifications() {
         }
       } else {
         const {status} = await checkNotifications();
+
         if (status === 'denied') {
-          const {status} = await requestNotifications({});
+          const {status} = await requestNotifications([]);
           if (status === 'granted') {
             setEnabled(true);
             await getPushToken();
           } else {
             setEnabled(false);
           }
+        } else if (status === 'granted') {
+          setEnabled(true);
+          await getPushToken();
         }
       }
     }
     requestUserPermission();
   }, []);
+
+  useEffect(() => {
+    if (!token || !data?.getUser?.id) {
+      return;
+    }
+    onUpdateUser({
+      variables: {
+        input: {id, _version: data?.getUser?._version, fcmToken: token},
+      },
+    });
+  }, [data?.getUser?.id, token]);
 
   function handleNotifications(
     remoteMessage: FirebaseMessagingTypes.RemoteMessage | null,
@@ -78,8 +111,6 @@ export default function PushNotifications() {
   async function getPushToken() {
     await messaging().registerDeviceForRemoteMessages();
     const newToken = await messaging().getToken();
-
-    console.log({newToken});
 
     setToken(newToken);
   }

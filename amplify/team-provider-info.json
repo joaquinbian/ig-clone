@@ -28,6 +28,10 @@
         "FeedGenerator": {
           "deploymentBucketName": "amplify-instagramclone-develop-230015-deployment",
           "s3Key": "amplify-builds/FeedGenerator-304d704f484b6638672b-build.zip"
+        },
+        "NotificationTrigger": {
+          "deploymentBucketName": "amplify-instagramclone-develop-230015-deployment",
+          "s3Key": "amplify-builds/NotificationTrigger-73706a5a786f722b4b73-build.zip"
         }
       }
     }
