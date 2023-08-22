@@ -15,7 +15,7 @@ import {
   UserNotificationsQueryVariables,
 } from 'src/API';
 import {useAuthContext} from '@context/AuthContext';
-import Loading from '@components/Loading/Loading';
+import Loading from '@components/Loading';
 import NotificationItem from './components/NotificationItem';
 import {Text} from 'react-native-svg';
 

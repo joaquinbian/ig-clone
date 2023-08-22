@@ -4,7 +4,7 @@ import {useRoute} from '@react-navigation/native';
 import {useQuery} from '@apollo/client';
 import {userFollowings} from './queries';
 import {UserFollowingsQuery, UserFollowingsQueryVariables} from 'src/API';
-import Loading from '@components/Loading/Loading';
+import Loading from '@components/Loading';
 import UserItem from '@components/UserItem/UserItem';
 import ApiErrorMessage from '@components/ApiErrorMessage/ApiErrorMessage';
 

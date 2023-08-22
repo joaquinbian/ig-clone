@@ -23,38 +23,32 @@ const region = config.aws_appsync_region;
 
 const httpLink = createHttpLink({uri: url});
 
+export const mergeList = (existing = {}, incoming = {}) => {
+  if (existing.nextToken === incoming.nextToken) {
+    return {
+      ...existing,
+      ...incoming,
+      items: [...incoming.items, ...(existing.items ?? [])],
+    };
+  }
+
+  return {
+    ...existing,
+    ...incoming,
+    items: [...(existing?.items ?? []), ...incoming.items],
+  };
+};
+
 const typePolicies: TypePolicies = {
   Query: {
     fields: {
       getCommentsByPost: {
         keyArgs: ['postID', 'createdAt', 'sortDirection', 'filter'],
-        merge: (existing = {}, incoming, {args, variables}) => {
-          if (existing.nextToken === incoming.nextToken) {
-            return {
-              ...existing,
-              ...incoming,
-              items: [...incoming.items, ...(existing.items ?? [])],
-            };
-          }
-
-          return {
-            ...existing,
-            ...incoming,
-            items: [...(existing?.items ?? []), ...incoming.items],
-          };
-        },
+        merge: mergeList,
       },
       userFeed: {
         keyArgs: ['type', 'createdAt', 'sortDirection', 'filter'],
-        merge: (existing = {}, incoming) => {
-          // console.log({existing, incoming});
-
-          return {
-            ...existing,
-            ...incoming,
-            items: [...(existing?.items ?? []), ...incoming.items],
-          };
-        },
+        merge: mergeList,
       },
     },
   },

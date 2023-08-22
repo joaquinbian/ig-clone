@@ -3,7 +3,7 @@ import React from 'react';
 import {useQuery} from '@apollo/client';
 import {userFollowers} from './queries';
 import {UserFollowersQuery, UserFollowersQueryVariables} from 'src/API';
-import Loading from '@components/Loading/Loading';
+import Loading from '@components/Loading';
 import UserItem from '@components/UserItem/UserItem';
 import ApiErrorMessage from '@components/ApiErrorMessage/ApiErrorMessage';
 
