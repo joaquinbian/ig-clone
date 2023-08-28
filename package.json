@@ -32,7 +32,7 @@
     "graphql": "^14.7.0",
     "react": "18.1.0",
     "react-hook-form": "^7.31.2",
-    "react-native": "0.79.0",
+    "react-native": "0.70.0",
     "react-native-get-random-values": "^1.8.0",
     "react-native-image-picker": "^4.10.0",
     "react-native-inappbrowser-reborn": "^3.7.0",
@@ -52,6 +52,8 @@
     "@babel/core": "^7.12.9",
     "@babel/runtime": "^7.12.5",
     "@react-native-community/eslint-config": "^2.0.0",
+    "@testing-library/jest-native": "^5.4.2",
+    "@testing-library/react-native": "^12.2.2",
     "@types/jest": "^26.0.23",
     "@types/react-native": "^0.67.3",
     "@types/react-native-video": "^5.0.13",
@@ -90,7 +92,7 @@
     "transformIgnorePatterns": [
       "node_modules/(?!(jest-)?react-native|@react-navigation|aws-amplify-react-native|@aws-amplify|expo-camera|expo-modules-core|@react-native-firebase|@react-native|aws-amplify-react-native|react-(native|universal|navigation)-(.*)|@react-native-community/(.*)|@react-navigation/(.*)|bs-platform|(@[a-zA-Z]+/)?(bs|reason|rescript)-(.*)+)"
     ],
-    "setupFiles": [
+    "setupFilesAfterEnv": [
       "<rootDir>/jest.setup.js"
     ]
   }

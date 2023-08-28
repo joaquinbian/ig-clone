@@ -1,4 +1,5 @@
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock';
+import '@testing-library/jest-native/extend-expect';
 
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo);
 
